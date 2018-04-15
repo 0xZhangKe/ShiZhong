@@ -1,5 +1,7 @@
 package com.zhangke.shizhong.data;
 
+import android.graphics.Bitmap;
+
 import java.io.File;
 
 /**
@@ -18,6 +20,8 @@ public interface DiskStorage {
      * 清除整个文件夹
      */
     String clearAll();
-    
-    String saveFile(String key, File file);
+
+    String deleteFile(File file);
+
+    boolean saveBitmap(String fileName, Bitmap bitmap);
 }
