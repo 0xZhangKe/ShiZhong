@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include layout="@layout/toolbar" />
-
         <LinearLayout
+            android:id="@+id/ll_search"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
             android:orientation="vertical">
@@ -34,6 +36,7 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="80dp">
+
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -46,30 +49,38 @@
                         android:layout_marginLeft="30dp"
                         android:layout_marginRight="30dp"
                         android:background="@drawable/common_btn_bg"
-                        android:text="搜寻"
+                        android:text="@string/search_name_text"
                         android:textColor="#FFF" />
                 </FrameLayout>
 
                 <ProgressBar
                     android:id="@+id/progress_bar"
+                    style="@style/Progress_circle"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:visibility="gone"
-                    style="@style/Progress_circle"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:visibility="gone" />
             </FrameLayout>
         </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="20dp"
+            android:alpha="0.7"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:text="@string/statement"
+            android:textSize="10.0sp" />
+
+        <com.zhangke.shizhong.widget.PullToRefreshRecyclerView
+            android:id="@+id/pull_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:background="#FFF"/>
+
     </FrameLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="20dp"
-        android:alpha="0.7"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
-        android:text="@string/statement"
-        android:textSize="10.0sp" />
-
-</FrameLayout>
+</LinearLayout>
