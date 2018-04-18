@@ -14,7 +14,7 @@ import retrofit2.http.Headers;
 public interface ApiStores {
 
     @Headers("cat: 1005")
-    @GET("j/search?q=%s&start=%s&cat=1005")
-    Call<ResponseBody> get163MusicUsers(@Header("p") String p, @Header("start") int start);
+    @GET("j/search")
+    Call<ResponseBody> get163MusicUsers(@Header("q") String q, @Header("start") int start);
 
 }

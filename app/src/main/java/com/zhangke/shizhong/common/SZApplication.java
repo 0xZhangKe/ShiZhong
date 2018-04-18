@@ -13,13 +13,11 @@ public class SZApplication extends MultiDexApplication {
 
     private static final String TAG = "ZLDApplication";
     private static SZApplication application;
-    public static Context mContext;
 
     @Override
     public void onCreate() {
         super.onCreate();
         application = this;
-        mContext = getApplicationContext();
 
     }
 
