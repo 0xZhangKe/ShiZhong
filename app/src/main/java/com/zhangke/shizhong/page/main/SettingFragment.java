@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.zhangke.shizhong.R;
 import com.zhangke.shizhong.page.base.BaseFragment;
-import com.zhangke.shizhong.page.poster.InputNameActivity;
+import com.zhangke.shizhong.page.poster.inputName.InputNameActivity;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;

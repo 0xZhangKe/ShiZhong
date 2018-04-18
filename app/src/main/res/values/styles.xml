@@ -19,4 +19,11 @@
     <style name="Progress_circle">
         <item name="android:indeterminateDrawable">@drawable/custom_progress_color</item>
     </style>
+
+    <!-- 默认分割线样式 -->
+    <style name="default_diver">
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@color/gray_diver</item>
+    </style>
 </resources>

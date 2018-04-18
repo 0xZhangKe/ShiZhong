@@ -3,4 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!-- 所有的分割线颜色 -->
+    <color name="gray_diver">#207F7F7F</color>
+
+    <!-- 字体颜色（黑色） -->
+    <color name="text_black">#3A3A3A</color>
+    <color name="text_default_color">#ff777777</color>
 </resources>
