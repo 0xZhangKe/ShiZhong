@@ -2,11 +2,13 @@ package com.zhangke.shizhong.page.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.zhangke.shizhong.R;
 import com.zhangke.shizhong.util.UiUtils;
 import com.zhangke.shizhong.widget.RoundProgressDialog;
 
@@ -19,12 +21,15 @@ public abstract class BaseActivity extends AppCompatActivity implements IBasePag
 
     protected final String TAG = this.getClass().getSimpleName();
 
+    private Snackbar snackbar;
+
     private RoundProgressDialog roundProgressDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResId());
+        roundProgressDialog = new RoundProgressDialog(this);
         initView(savedInstanceState);
     }
 
@@ -93,5 +98,11 @@ public abstract class BaseActivity extends AppCompatActivity implements IBasePag
                 roundProgressDialog.closeProgressDialog();
             }
         });
+    }
+
+    @Override
+    public void showNoActionSnackbar(String msg) {
+        snackbar = Snackbar.make(findViewById(R.id.coordinator), msg, Snackbar.LENGTH_SHORT);
+        snackbar.show();
     }
 }

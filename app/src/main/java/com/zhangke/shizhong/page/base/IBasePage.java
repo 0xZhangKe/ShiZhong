@@ -1,5 +1,7 @@
 package com.zhangke.shizhong.page.base;
 
+import android.view.View;
+
 /**
  * BaseActivity 及 BaseFragment 必须提供的方法,
  * 这么做除了要统一 Activity 与 Fragment 之外，MVP 模式中也经常需要这么做。
@@ -23,4 +25,9 @@ public interface IBasePage {
     void closeRoundProgressDialog();
 
     void showToastMessage(String msg);
+
+    /**
+     * 如果需要调用此方法，布局文件中必须包含 R.id.coordinator 控件
+     */
+    void showNoActionSnackbar(String msg);
 }

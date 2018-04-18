@@ -3,11 +3,13 @@ package com.zhangke.shizhong.page.base;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.zhangke.shizhong.R;
 import com.zhangke.shizhong.util.UiUtils;
 import com.zhangke.shizhong.widget.RoundProgressDialog;
 
@@ -19,6 +21,9 @@ import com.zhangke.shizhong.widget.RoundProgressDialog;
 public abstract class BaseFragment extends Fragment implements IBasePage {
 
     protected final String TAG = this.getClass().getSimpleName();
+
+    private Snackbar snackbar;
+
     /**
      * rootView是否初始化标志，防止回调函数在rootView为空的时候触发
      */
@@ -169,5 +174,11 @@ public abstract class BaseFragment extends Fragment implements IBasePage {
                 roundProgressDialog.closeProgressDialog();
             }
         });
+    }
+
+    @Override
+    public void showNoActionSnackbar(String msg) {
+        snackbar = Snackbar.make(rootView.findViewById(R.id.coordinator), msg, Snackbar.LENGTH_SHORT);
+        snackbar.show();
     }
 }
