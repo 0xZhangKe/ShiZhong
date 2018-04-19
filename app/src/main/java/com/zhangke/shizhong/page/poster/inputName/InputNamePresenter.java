@@ -46,6 +46,11 @@ public class InputNamePresenter implements IInputNameContract.Presenter {
     }
 
     @Override
+    public void clearUsers() {
+        inputNameModel.reset();
+    }
+
+    @Override
     public void loadMore() {
         getDoubanUsers(false);
     }

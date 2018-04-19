@@ -2,9 +2,11 @@ package com.zhangke.shizhong.common;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
+import retrofit2.http.Query;
 
 /**
  * Server 接口仓库
@@ -13,8 +15,7 @@ import retrofit2.http.Headers;
 
 public interface ApiStores {
 
-    @Headers("cat: 1005")
-    @GET("j/search")
-    Call<ResponseBody> get163MusicUsers(@Header("q") String q, @Header("start") int start);
+    @GET("j/search?cat=1005")
+    Call<ResponseBody> get163MusicUsers(@Query("q") String q, @Query("start") int start);
 
 }

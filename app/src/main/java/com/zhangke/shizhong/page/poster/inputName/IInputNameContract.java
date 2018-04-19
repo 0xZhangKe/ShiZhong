@@ -54,6 +54,8 @@ public interface IInputNameContract {
          * 加载下一页
          */
         void loadMore();
+
+        void clearUsers();
     }
 
     interface Model {

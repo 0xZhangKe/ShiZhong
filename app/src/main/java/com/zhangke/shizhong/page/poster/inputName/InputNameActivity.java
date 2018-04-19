@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -71,7 +73,6 @@ public class InputNameActivity extends BaseActivity implements IInputNameContrac
 
         inputNamePresenter = new InputNamePresenter(this, this, type);
 
-
         userAdapter = new UserAdapter(this, userList);
         pullRecyclerView.setAdapter(userAdapter);
         pullRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -113,14 +114,20 @@ public class InputNameActivity extends BaseActivity implements IInputNameContrac
     public void showNameList() {
         llSearch.setVisibility(View.GONE);
         pullRecyclerView.setVisibility(View.VISIBLE);
+        pullRecyclerView.requestLayout();
+
+        Animation translateAnimation = AnimationUtils.loadAnimation(this, R.anim.right_to_left_in);
+        pullRecyclerView.startAnimation(translateAnimation);
     }
 
     @Override
     public void closeNameList() {
+        inputNamePresenter.clearUsers();
         userList.clear();
         userAdapter.notifyDataSetChanged();
         llSearch.setVisibility(View.VISIBLE);
         pullRecyclerView.setVisibility(View.GONE);
+        pullRecyclerView.requestLayout();
     }
 
     @Override
