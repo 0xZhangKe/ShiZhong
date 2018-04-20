@@ -36,7 +36,6 @@ public class InputNamePresenter implements IInputNameContract.Presenter {
     @Override
     public void searchUserFromName(String name) {
         this.searchName = name;
-        inputNameView.setButtonLoading(true);
         inputNameModel.reset();
         if (type == 0) {
             getDoubanUsers(true);
@@ -56,11 +55,13 @@ public class InputNamePresenter implements IInputNameContract.Presenter {
     }
 
     private void getDoubanUsers(boolean firstPage) {
+        if(firstPage){
+            inputNameView.showRoundProgressDialog();
+        }
         inputNameModel.getDoubanUsers(searchName,
                 response -> {
                     if (firstPage) {
-                        inputNameView.showNameList();
-                        inputNameView.setButtonLoading(false);
+                        inputNameView.closeRoundProgressDialog();
                     } else {
                         inputNameView.closeLoadMoreView();
                     }
@@ -68,7 +69,7 @@ public class InputNamePresenter implements IInputNameContract.Presenter {
                 },
                 cause -> {
                     if (firstPage) {
-                        inputNameView.setButtonLoading(false);
+                        inputNameView.closeRoundProgressDialog();
                     } else {
                         inputNameView.closeLoadMoreView();
                     }

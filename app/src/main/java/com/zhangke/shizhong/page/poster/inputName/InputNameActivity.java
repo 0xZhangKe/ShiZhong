@@ -1,13 +1,18 @@
 package com.zhangke.shizhong.page.poster.inputName;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -19,6 +24,8 @@ import com.zhangke.shizhong.widget.PullToRefreshRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,7 +36,7 @@ import butterknife.OnClick;
  * Created by ZhangKe on 2018/4/15.
  */
 
-public class InputNameActivity extends BaseActivity implements IInputNameContract.View {
+public class InputNameActivity extends BaseActivity{
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -39,21 +46,12 @@ public class InputNameActivity extends BaseActivity implements IInputNameContrac
     EditText etName;
     @BindView(R.id.btn_search)
     Button btnSearch;
-    @BindView(R.id.progress_bar)
-    ProgressBar progressBar;
-    @BindView(R.id.pull_recycler_view)
-    PullToRefreshRecyclerView pullRecyclerView;
 
     /**
      * 0-豆瓣电影海报
      * 1-云音乐封面
      */
     private int type = 0;
-
-    private IInputNameContract.Presenter inputNamePresenter;
-
-    private List<UserBean> userList = new ArrayList<>();
-    private UserAdapter userAdapter;
 
     @Override
     protected int getLayoutResId() {
@@ -70,88 +68,19 @@ public class InputNameActivity extends BaseActivity implements IInputNameContrac
         }
 
         initToolbar(toolbar, type == 0 ? "豆瓣电影海报" : "云音乐封面", true);
-
-        inputNamePresenter = new InputNamePresenter(this, this, type);
-
-        userAdapter = new UserAdapter(this, userList);
-        pullRecyclerView.setAdapter(userAdapter);
-        pullRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        pullRecyclerView.setOnPullToBottomListener(() -> {
-            inputNamePresenter.loadMore();
-        });
-
-        userAdapter.setOnItemClickListener((View view, int position) -> {
-//            Intent intent = new Intent(this, MovieActivity.class);
-//            intent.putExtra(INTENT_ARG_01, listData.get(position).getUserId() + "");
-//            startActivity(intent);
-        });
     }
 
     @OnClick(R.id.btn_search)
     public void onViewClick(View view) {
-        inputNamePresenter.searchUserFromName(etName.getText().toString());
-    }
-
-    @Override
-    public void resetView() {
-        userList.clear();
-        userAdapter.notifyDataSetChanged();
-        llSearch.setVisibility(View.VISIBLE);
-        pullRecyclerView.setVisibility(View.GONE);
-        btnSearch.setText(getString(R.string.search_name_text));
-        progressBar.setVisibility(View.GONE);
-        etName.setText("");
-    }
-
-    @Override
-    public void notifyUserListChanged(List<UserBean> list) {
-        userList.clear();
-        userList.addAll(list);
-        userAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void showNameList() {
-        llSearch.setVisibility(View.GONE);
-        pullRecyclerView.setVisibility(View.VISIBLE);
-        pullRecyclerView.requestLayout();
-
-        Animation translateAnimation = AnimationUtils.loadAnimation(this, R.anim.right_to_left_in);
-        pullRecyclerView.startAnimation(translateAnimation);
-    }
-
-    @Override
-    public void closeNameList() {
-        inputNamePresenter.clearUsers();
-        userList.clear();
-        userAdapter.notifyDataSetChanged();
-        llSearch.setVisibility(View.VISIBLE);
-        pullRecyclerView.setVisibility(View.GONE);
-        pullRecyclerView.requestLayout();
-    }
-
-    @Override
-    public void setButtonLoading(boolean loading) {
-        if (loading) {
-            btnSearch.setText("");
-            progressBar.setVisibility(View.VISIBLE);
-        } else {
-            btnSearch.setText(getString(R.string.search_name_text));
-            progressBar.setVisibility(View.GONE);
+        String name = etName.getText().toString();
+        if(TextUtils.isEmpty(name)){
+            showNoActionSnackbar("请输入用户名");
+            return;
         }
+        Intent intent = new Intent(this, SearchResultActivity.class);
+        intent.putExtra(INTENT_ARG_01, type);
+        intent.putExtra(INTENT_ARG_02, etName.getText().toString());
+        startActivity(intent);
     }
 
-    @Override
-    public void closeLoadMoreView() {
-        pullRecyclerView.closeLoading();
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (pullRecyclerView.getVisibility() == View.VISIBLE) {
-            closeNameList();
-        } else {
-            super.onBackPressed();
-        }
-    }
 }

@@ -14,27 +14,6 @@ import java.util.List;
 public interface IInputNameContract {
 
     interface View extends IBasePage {
-        /**
-         * 设置 View 到初始状态
-         */
-        void resetView();
-
-        /**
-         * 显示用户列表
-         */
-        void showNameList();
-
-        /**
-         * 关闭用户列表
-         */
-        void closeNameList();
-
-        /**
-         * 设置按钮上的加载框状态
-         *
-         * @param loading 是否显示加载框
-         */
-        void setButtonLoading(boolean loading);
 
         void notifyUserListChanged(List<UserBean> list);
 
