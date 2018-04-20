@@ -1,14 +1,20 @@
 package com.zhangke.shizhong.page.poster.inputName;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.widget.EditText;
 
 import com.zhangke.shizhong.R;
 import com.zhangke.shizhong.page.base.BaseActivity;
@@ -19,6 +25,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 用户名搜索结果界面
@@ -33,6 +40,10 @@ public class SearchResultActivity extends BaseActivity implements IInputNameCont
     CoordinatorLayout coordinator;
     @BindView(R.id.pull_to_refresh)
     PullToRefreshRecyclerView pullRecyclerView;
+    @BindView(R.id.floating_btn)
+    FloatingActionButton floatingBtn;
+
+    private Dialog mInputPeopleIdDialog;
 
     /**
      * 0-豆瓣电影海报
@@ -95,5 +106,26 @@ public class SearchResultActivity extends BaseActivity implements IInputNameCont
     @Override
     public void closeLoadMoreView() {
         pullRecyclerView.closeLoading();
+    }
+
+    @OnClick(R.id.floating_btn)
+    public void onFloatingClick(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.poster_input_people_id_dialog, null, false);
+        EditText etId = (EditText) dialogView.findViewById(R.id.et_people_id);
+        dialogView.findViewById(R.id.tv_go).setOnClickListener((View v) -> {
+            mInputPeopleIdDialog.dismiss();
+            String id = etId.getText().toString();
+            if (TextUtils.isEmpty(id)) {
+                showNoActionSnackbar("请输入用户 ID");
+                return;
+            }
+            Intent intent = new Intent(this, SearchResultActivity.class);
+            intent.putExtra(INTENT_ARG_01, id);
+            startActivity(intent);
+        });
+        builder.setView(dialogView);
+        mInputPeopleIdDialog = builder.create();
+        mInputPeopleIdDialog.show();
     }
 }
