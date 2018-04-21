@@ -1,4 +1,4 @@
-package com.zhangke.shizhong.page.poster.inputName;
+package com.zhangke.shizhong.page.poster.inputname;
 
 import com.zhangke.shizhong.common.NetWorkResponseListener;
 import com.zhangke.shizhong.page.base.IBasePage;

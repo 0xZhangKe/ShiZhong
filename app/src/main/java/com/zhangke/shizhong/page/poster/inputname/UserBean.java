@@ -1,4 +1,4 @@
-package com.zhangke.shizhong.page.poster.inputName;
+package com.zhangke.shizhong.page.poster.inputname;
 
 import android.text.TextUtils;
 import android.util.Log;
