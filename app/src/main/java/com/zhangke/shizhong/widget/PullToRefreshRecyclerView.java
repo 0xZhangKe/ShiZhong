@@ -1,6 +1,9 @@
 package com.zhangke.shizhong.widget;
 
 import android.content.Context;
+import android.content.res.Configuration;
+import android.graphics.Rect;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -11,6 +14,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
@@ -96,6 +100,13 @@ public class PullToRefreshRecyclerView extends FrameLayout implements SwipeRefre
         mScroller = new Scroller(getContext());
 
         deviationY = UiUtils.dip2px(getContext(), 5);
+
+        getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                requestLayout();
+            }
+        });
     }
 
     public void setLayoutManager(RecyclerView.LayoutManager layout) {
