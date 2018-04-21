@@ -41,7 +41,7 @@ public class InputNameActivity extends BaseActivity{
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.poster_activity_input_name;
+        return R.layout.activity_input_name;
     }
 
     @Override

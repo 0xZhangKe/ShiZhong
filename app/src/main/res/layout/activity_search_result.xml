@@ -14,7 +14,8 @@
         <com.zhangke.shizhong.widget.PullToRefreshRecyclerView
             android:id="@+id/pull_to_refresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="#FFF" />
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton

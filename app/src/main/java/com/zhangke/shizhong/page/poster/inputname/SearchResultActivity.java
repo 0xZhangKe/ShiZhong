@@ -59,7 +59,7 @@ public class SearchResultActivity extends BaseActivity implements IInputNameCont
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.input_name_activity_search_result;
+        return R.layout.activity_search_result;
     }
 
     @Override
