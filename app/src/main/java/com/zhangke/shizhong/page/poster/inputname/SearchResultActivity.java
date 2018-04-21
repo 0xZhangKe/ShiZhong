@@ -1,11 +1,13 @@
 package com.zhangke.shizhong.page.poster.inputname;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +20,9 @@ import android.widget.EditText;
 
 import com.zhangke.shizhong.R;
 import com.zhangke.shizhong.page.base.BaseActivity;
+import com.zhangke.shizhong.page.poster.showposter.ShowMoviePosterActivity;
+import com.zhangke.shizhong.page.poster.showposter.ShowMusicPosterActivity;
+import com.zhangke.shizhong.util.PermissionUtil;
 import com.zhangke.shizhong.widget.PullToRefreshRecyclerView;
 
 import java.util.ArrayList;
@@ -87,9 +92,14 @@ public class SearchResultActivity extends BaseActivity implements IInputNameCont
         });
 
         userAdapter.setOnItemClickListener((View view, int position) -> {
-//            Intent intent = new Intent(this, MovieActivity.class);
-//            intent.putExtra(INTENT_ARG_01, listData.get(position).getUserId() + "");
-//            startActivity(intent);
+            if (PermissionUtil.isLacksOfPermission(SearchResultActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                ActivityCompat.requestPermissions(SearchResultActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0x12);
+            } else {
+                Intent intent = new Intent(this, type == 0 ? ShowMoviePosterActivity.class : ShowMusicPosterActivity.class);
+                intent.putExtra(INTENT_ARG_01, userList.get(position).getUserId() + "");
+                intent.putExtra(INTENT_ARG_02, userList.get(position).getNickName() + "");
+                startActivity(intent);
+            }
         });
 
         LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_anim_right_to_left);

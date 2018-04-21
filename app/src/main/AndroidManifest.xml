@@ -3,6 +3,8 @@
     package="com.zhangke.shizhong">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
 
     <application
         android:name=".common.SZApplication"
@@ -19,8 +21,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".page.poster.inputName.InputNameActivity" />
-        <activity android:name=".page.poster.inputName.SearchResultActivity"/>
+        <activity android:name=".page.poster.inputname.InputNameActivity" />
+        <activity android:name=".page.poster.inputname.SearchResultActivity"/>
+        <activity android:name=".page.poster.showposter.ShowMusicPosterActivity"/>
+        <activity android:name=".page.poster.showposter.ShowMoviePosterActivity"/>
     </application>
 
 </manifest>
