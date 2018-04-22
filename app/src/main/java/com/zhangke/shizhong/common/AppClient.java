@@ -16,33 +16,51 @@ import retrofit2.Retrofit;
 
 public class AppClient {
 
-    private static Retrofit retrofit = null;
+    private static Retrofit doubanRetrofit = null;
+    private static Retrofit moviePosterRetrofit = null;
 
-    public static Retrofit retrofit() {
-        if (retrofit == null) {
+    public static Retrofit doubanRetrofit() {
+        if (doubanRetrofit == null) {
             synchronized (AppClient.class) {
-                if (retrofit == null) {
-                    OkHttpClient.Builder builder = new OkHttpClient.Builder();
-
-                    builder.connectTimeout(15, TimeUnit.SECONDS);
-                    builder.readTimeout(20, TimeUnit.SECONDS);
-                    builder.writeTimeout(20, TimeUnit.SECONDS);
-                    builder.retryOnConnectionFailure(true);
-
-                    if (BuildConfig.DEBUG) {
-                        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-                        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-                        builder.addInterceptor(loggingInterceptor);
-                    }
-
-                    OkHttpClient okHttpClient = builder.build();
-                    retrofit = new Retrofit.Builder()
-                            .client(okHttpClient)
+                if (doubanRetrofit == null) {
+                    doubanRetrofit = new Retrofit.Builder()
+                            .client(getHttpClient())
                             .baseUrl("https://www.douban.com/")
                             .build();
                 }
             }
         }
-        return retrofit;
+        return doubanRetrofit;
+    }
+
+    public static Retrofit moviePosterRetrofit() {
+        if (moviePosterRetrofit == null) {
+            synchronized (AppClient.class) {
+                if (moviePosterRetrofit == null) {
+                    moviePosterRetrofit = new Retrofit.Builder()
+                            .client(getHttpClient())
+                            .baseUrl("https://movie.douban.com/")
+                            .build();
+                }
+            }
+        }
+        return moviePosterRetrofit;
+    }
+
+    private static OkHttpClient getHttpClient() {
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+
+        builder.connectTimeout(15, TimeUnit.SECONDS);
+        builder.readTimeout(20, TimeUnit.SECONDS);
+        builder.writeTimeout(20, TimeUnit.SECONDS);
+        builder.retryOnConnectionFailure(true);
+
+        if (BuildConfig.DEBUG) {
+            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            builder.addInterceptor(loggingInterceptor);
+        }
+
+        return builder.build();
     }
 }

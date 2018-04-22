@@ -1,13 +1,17 @@
 package com.zhangke.shizhong.util;
 
+import android.graphics.Bitmap;
 import android.os.Environment;
 import android.util.Log;
 
 import com.zhangke.shizhong.common.SZApplication;
 import com.zhangke.zlog.ZLog;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -31,7 +35,7 @@ public class FileUtils {
         if (file == null) {
             file = getExtSDCardPath();
         }
-        if(file == null){
+        if (file == null) {
             file = SZApplication.getInstance().getExternalFilesDir(null);
         }
         return file;
@@ -80,6 +84,25 @@ public class FileUtils {
             return new File(sdcardList.get(0));
         } else {
             return null;
+        }
+    }
+
+    /**
+     * 将图片保存到文件中
+     */
+    public static void saveBitmapToDisk(File file, Bitmap originBitmap) {
+        try {
+            if (!file.exists()) {
+                if (file.createNewFile()) {
+                    try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file))) {
+                        originBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                    } catch (IOException e) {
+                        ZLog.e(TAG, "saveBitmapToDisk: ", e);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            ZLog.e(TAG, "saveBitmapToDisk: ", e);
         }
     }
 }

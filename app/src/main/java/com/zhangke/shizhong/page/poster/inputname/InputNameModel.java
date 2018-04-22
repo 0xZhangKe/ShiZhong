@@ -42,8 +42,8 @@ public class InputNameModel implements IInputNameContract.Model {
     public void getDoubanUsers(String name,
                                NetWorkResponseListener.OnSuccessResponse<List<UserBean>> successResponseListener,
                                NetWorkResponseListener.OnError onErrorListener) {
-        ApiStores apiStores = AppClient.retrofit().create(ApiStores.class);
-        Call<ResponseBody> call = apiStores.get163MusicUsers(name, start);
+        ApiStores apiStores = AppClient.doubanRetrofit().create(ApiStores.class);
+        Call<ResponseBody> call = apiStores.getMovieUsers(name, start);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

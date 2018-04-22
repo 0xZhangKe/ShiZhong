@@ -20,7 +20,7 @@ public class APPConfig {
     /**
      * 获取豆瓣电影海报存储路径
      */
-    public static File getMoviewPosterRootFile() {
+    public static File getMoviePosterRootFile() {
         File file = new File(String.format("%s/%s/豆瓣电影海报/", FileUtils.getStorageRootPath(), STORAGE_ZS_ROOT_NAME));
         if (!file.exists()) {
             if (!new File(file.getParent()).exists()) {

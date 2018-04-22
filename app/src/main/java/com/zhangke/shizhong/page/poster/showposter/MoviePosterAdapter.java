@@ -1,14 +1,24 @@
 package com.zhangke.shizhong.page.poster.showposter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.zhangke.shizhong.R;
 import com.zhangke.shizhong.page.base.BaseRecyclerAdapter;
+import com.zhangke.shizhong.util.FileUtils;
+import com.zhangke.shizhong.util.PosterUtils;
 
+import java.io.File;
 import java.util.List;
 
 import butterknife.BindView;
@@ -21,8 +31,12 @@ import butterknife.ButterKnife;
 
 public class MoviePosterAdapter extends BaseRecyclerAdapter<MoviePosterAdapter.ViewHolder, MoviePosterBean> {
 
+    private ILoadBitmap loadBitmap;
+
     public MoviePosterAdapter(Context context, List<MoviePosterBean> listData) {
         super(context, listData);
+
+        loadBitmap = new GlideLoadBitmap(context);
     }
 
     @NonNull
@@ -33,7 +47,10 @@ public class MoviePosterAdapter extends BaseRecyclerAdapter<MoviePosterAdapter.V
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+        loadBitmap.loadBitmapIntoImageView(
+                listData.get(position).getMovieImageUrl(),
+                holder.imgView,
+                PosterUtils.getMoviePosterFileWithName(listData.get(position).getMovieName()));
     }
 
     class ViewHolder extends BaseRecyclerAdapter.ViewHolder {
@@ -41,7 +58,7 @@ public class MoviePosterAdapter extends BaseRecyclerAdapter<MoviePosterAdapter.V
         @BindView(R.id.img_view)
         ImageView imgView;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
