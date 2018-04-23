@@ -18,7 +18,7 @@ public class PosterUtils {
     public static File getMoviePosterFileWithName(File rootPath, String movieName) {
         movieName = movieName.replaceAll("\\\\", "-");
         movieName = movieName.replaceAll(" ", "-");
-        return new File(rootPath, String.format("%s.jgp", movieName));
+        return new File(rootPath, String.format("%s.jpg", movieName));
     }
 
     /**
