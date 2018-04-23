@@ -18,6 +18,7 @@ public class AppClient {
 
     private static Retrofit doubanRetrofit = null;
     private static Retrofit moviePosterRetrofit = null;
+    private static Retrofit musicRetrofit = null;
 
     public static Retrofit doubanRetrofit() {
         if (doubanRetrofit == null) {
@@ -45,6 +46,20 @@ public class AppClient {
             }
         }
         return moviePosterRetrofit;
+    }
+
+    public static Retrofit musicRetrofit() {
+        if (musicRetrofit == null) {
+            synchronized (AppClient.class) {
+                if (musicRetrofit == null) {
+                    musicRetrofit = new Retrofit.Builder()
+                            .client(getHttpClient())
+                            .baseUrl("https://api.imjad.cn/")
+                            .build();
+                }
+            }
+        }
+        return musicRetrofit;
     }
 
     private static OkHttpClient getHttpClient() {

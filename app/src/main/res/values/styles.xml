@@ -26,4 +26,10 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:background">@color/gray_diver</item>
     </style>
+
+    <declare-styleable name="CircleImageView">
+        <attr name="border_width" format="dimension"/>
+        <attr name="border_color" format="color"/>
+    </declare-styleable>
+
 </resources>

@@ -78,6 +78,38 @@ public class InputNameModel implements IInputNameContract.Model {
     public void get163MusicUsers(String name,
                                  NetWorkResponseListener.OnSuccessResponse successResponseListener,
                                  NetWorkResponseListener.OnError onErrorListener) {
+        ApiStores apiStores = AppClient.musicRetrofit().create(ApiStores.class);
+        Call<ResponseBody> call = apiStores.getMusicUsers(name);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (response.body() != null) {
+                        MusicSearchResultUserBean resultBean = JSON.parseObject(response.body().string(), new TypeReference<MusicSearchResultUserBean>() {
+                        });
+                        if(resultBean.getCode() == 200) {
+                            List<MusicSearchResultUserBean.ResultBean.UserprofilesBean> userList = resultBean.getResult().getUserprofiles();
+                            if (userList != null && !userList.isEmpty()) {
+                                for (MusicSearchResultUserBean.ResultBean.UserprofilesBean s : userList) {
+                                    listData.add(new UserBean(s));
+                                }
+                            }
+                            successResponseListener.onSuccess(listData);
+                        }else{
+                            onErrorListener.onError(SZApplication.getInstance().getString(R.string.data_error));
+                        }
+                    } else {
+                        onErrorListener.onError(SZApplication.getInstance().getString(R.string.data_error));
+                    }
+                } catch (IOException e) {
+                    onErrorListener.onError(SZApplication.getInstance().getString(R.string.data_error));
+                }
+            }
 
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                onErrorListener.onError(SZApplication.getInstance().getString(R.string.internet_error));
+            }
+        });
     }
 }

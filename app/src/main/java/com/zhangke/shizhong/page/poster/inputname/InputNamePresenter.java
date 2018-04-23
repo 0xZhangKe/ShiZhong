@@ -40,7 +40,7 @@ public class InputNamePresenter implements IInputNameContract.Presenter {
         if (type == 0) {
             getDoubanUsers(true);
         } else {
-            get163MusicUsers();
+            get163MusicUsers(true);
         }
     }
 
@@ -51,7 +51,11 @@ public class InputNamePresenter implements IInputNameContract.Presenter {
 
     @Override
     public void loadMore() {
-        getDoubanUsers(false);
+        if (type == 0) {
+            getDoubanUsers(false);
+        }else{
+            get163MusicUsers(false);
+        }
     }
 
     private void getDoubanUsers(boolean firstPage) {
@@ -77,7 +81,26 @@ public class InputNamePresenter implements IInputNameContract.Presenter {
                 });
     }
 
-    private void get163MusicUsers() {
-
+    private void get163MusicUsers(boolean firstPage) {
+        if(firstPage){
+            inputNameView.showRoundProgressDialog();
+        }
+        inputNameModel.get163MusicUsers(searchName,
+                response -> {
+                    if (firstPage) {
+                        inputNameView.closeRoundProgressDialog();
+                    } else {
+                        inputNameView.closeLoadMoreView();
+                    }
+                    inputNameView.notifyUserListChanged(response);
+                },
+                cause -> {
+                    if (firstPage) {
+                        inputNameView.closeRoundProgressDialog();
+                    } else {
+                        inputNameView.closeLoadMoreView();
+                    }
+                    inputNameView.showNoActionSnackbar(cause);
+                });
     }
 }

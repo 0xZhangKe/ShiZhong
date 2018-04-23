@@ -21,6 +21,7 @@ import android.widget.EditText;
 import com.zhangke.shizhong.R;
 import com.zhangke.shizhong.page.base.BaseActivity;
 import com.zhangke.shizhong.page.poster.showposter.ShowMoviePosterActivity;
+import com.zhangke.shizhong.page.poster.showposter.ShowMusicAlbumActivity;
 import com.zhangke.shizhong.page.poster.showposter.ShowMusicPosterActivity;
 import com.zhangke.shizhong.util.PermissionUtil;
 import com.zhangke.shizhong.widget.PullToRefreshRecyclerView;
@@ -95,9 +96,8 @@ public class SearchResultActivity extends BaseActivity implements IInputNameCont
             if (PermissionUtil.isLacksOfPermission(SearchResultActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                 ActivityCompat.requestPermissions(SearchResultActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0x12);
             } else {
-                Intent intent = new Intent(this, type == 0 ? ShowMoviePosterActivity.class : ShowMusicPosterActivity.class);
-                intent.putExtra(INTENT_ARG_01, userList.get(position).getUserId() + "");
-                intent.putExtra(INTENT_ARG_02, userList.get(position).getNickName() + "");
+                Intent intent = new Intent(this, type == 0 ? ShowMoviePosterActivity.class : ShowMusicAlbumActivity.class);
+                intent.putExtra(INTENT_ARG_01, userList.get(position));
                 startActivity(intent);
             }
         });

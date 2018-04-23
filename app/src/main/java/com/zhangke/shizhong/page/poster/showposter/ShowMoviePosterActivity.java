@@ -8,6 +8,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 
 import com.zhangke.shizhong.R;
 import com.zhangke.shizhong.page.base.BaseActivity;
+import com.zhangke.shizhong.page.poster.inputname.UserBean;
 import com.zhangke.shizhong.util.ISaveFileEngine;
 import com.zhangke.shizhong.util.SaveFileEngine;
 import com.zhangke.shizhong.widget.SpacesItemDecoration;
@@ -53,7 +54,8 @@ public class ShowMoviePosterActivity extends BaseActivity implements IShowMovieP
         recyclerView.addItemDecoration(new SpacesItemDecoration());
         recyclerView.setAdapter(adapter);
 
-        showMoviePosterModel = new ShowMoviePosterModel(this, this, getIntent().getStringExtra(INTENT_ARG_01));
+        UserBean userBean = (UserBean) getIntent().getSerializableExtra(INTENT_ARG_01);
+        showMoviePosterModel = new ShowMoviePosterModel(this, this, userBean.getNickName());
         showMoviePosterModel.getMoviePoster();
     }
 

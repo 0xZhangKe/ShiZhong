@@ -43,7 +43,7 @@ public interface IInputNameContract {
                             NetWorkResponseListener.OnSuccessResponse<List<UserBean>> successResponseListener,
                             NetWorkResponseListener.OnError onErrorListener);
         void get163MusicUsers(String name,
-                            NetWorkResponseListener.OnSuccessResponse successResponseListener,
+                            NetWorkResponseListener.OnSuccessResponse<List<UserBean>> successResponseListener,
                             NetWorkResponseListener.OnError onErrorListener);
     }
 }

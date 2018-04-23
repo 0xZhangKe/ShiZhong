@@ -25,6 +25,7 @@
         <activity android:name=".page.poster.inputname.SearchResultActivity"/>
         <activity android:name=".page.poster.showposter.ShowMusicPosterActivity"/>
         <activity android:name=".page.poster.showposter.ShowMoviePosterActivity"/>
+        <activity android:name=".page.poster.showposter.ShowMusicAlbumActivity"/>
     </application>
 
 </manifest>
