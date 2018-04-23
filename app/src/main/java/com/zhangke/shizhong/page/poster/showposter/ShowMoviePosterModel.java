@@ -46,7 +46,12 @@ public class ShowMoviePosterModel implements IShowMoviePosterContract.Model {
 
     @Override
     public void getMoviePoster() {
-        ApiStores apiStores = AppClient.doubanRetrofit().create(ApiStores.class);
+        showMovieView.showRoundProgressDialog();
+        performMoviePosterRequest();
+    }
+
+    private void performMoviePosterRequest(){
+        ApiStores apiStores = AppClient.moviePosterRetrofit().create(ApiStores.class);
         Call<ResponseBody> call = apiStores.getMoviePosters(userId, start);
         start += 15;
         call.enqueue(new Callback<ResponseBody>() {
@@ -57,15 +62,18 @@ public class ShowMoviePosterModel implements IShowMoviePosterContract.Model {
                         String responseBody = response.body().string();
                         analysisPosterFromHtml(responseBody);
                     } else {
+                        showMovieView.closeRoundProgressDialog();
                         showMovieView.showNoActionSnackbar(SZApplication.getInstance().getString(R.string.data_error));
                     }
                 } catch (IOException e) {
+                    showMovieView.closeRoundProgressDialog();
                     showMovieView.showNoActionSnackbar(SZApplication.getInstance().getString(R.string.data_error));
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                showMovieView.closeRoundProgressDialog();
                 showMovieView.showNoActionSnackbar(SZApplication.getInstance().getString(R.string.internet_error));
             }
         });
@@ -104,9 +112,10 @@ public class ShowMoviePosterModel implements IShowMoviePosterContract.Model {
         }
 
         if (isEmpty) {
+            showMovieView.closeRoundProgressDialog();
             showMovieView.notifyDataChanged(listData);
         } else {
-            getMoviePoster();
+            performMoviePosterRequest();
         }
     }
 }

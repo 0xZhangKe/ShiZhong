@@ -8,6 +8,8 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 
 import com.zhangke.shizhong.R;
 import com.zhangke.shizhong.page.base.BaseActivity;
+import com.zhangke.shizhong.util.ISaveFileEngine;
+import com.zhangke.shizhong.util.SaveFileEngine;
 import com.zhangke.shizhong.widget.SpacesItemDecoration;
 
 import java.util.ArrayList;
@@ -31,6 +33,8 @@ public class ShowMoviePosterActivity extends BaseActivity implements IShowMovieP
 
     private IShowMoviePosterContract.Model showMoviePosterModel;
 
+    private ISaveFileEngine saveFileEngine;
+
     @Override
     protected int getLayoutResId() {
         return R.layout.activity_show_music_poster;
@@ -41,13 +45,15 @@ public class ShowMoviePosterActivity extends BaseActivity implements IShowMovieP
         ButterKnife.bind(this);
         fullScreen();
 
-        showMoviePosterModel = new ShowMoviePosterModel(this, this, getIntent().getStringExtra(INTENT_ARG_01));
+        saveFileEngine = new SaveFileEngine();
+        ILoadBitmap loadBitmap = new GlideLoadBitmap(this, saveFileEngine);
 
-        adapter = new MoviePosterAdapter(this, posterList);
+        adapter = new MoviePosterAdapter(this, posterList, loadBitmap);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(5, StaggeredGridLayoutManager.VERTICAL));
         recyclerView.addItemDecoration(new SpacesItemDecoration());
         recyclerView.setAdapter(adapter);
 
+        showMoviePosterModel = new ShowMoviePosterModel(this, this, getIntent().getStringExtra(INTENT_ARG_01));
         showMoviePosterModel.getMoviePoster();
     }
 
@@ -56,5 +62,11 @@ public class ShowMoviePosterActivity extends BaseActivity implements IShowMovieP
         posterList.clear();
         posterList.addAll(list);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onDestroy() {
+        saveFileEngine.exit();
+        super.onDestroy();
     }
 }
