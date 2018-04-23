@@ -75,7 +75,9 @@ public class InputNameModel implements IInputNameContract.Model {
     }
 
     @Override
-    public void get163MusicUsers(String name, NetWorkResponseListener.OnSuccessResponse successResponseListener, NetWorkResponseListener.OnError onErrorListener) {
+    public void get163MusicUsers(String name,
+                                 NetWorkResponseListener.OnSuccessResponse successResponseListener,
+                                 NetWorkResponseListener.OnError onErrorListener) {
 
     }
 }

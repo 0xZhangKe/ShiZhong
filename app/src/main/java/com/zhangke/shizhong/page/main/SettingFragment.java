@@ -34,11 +34,13 @@ public class SettingFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.tv_douban_movie_poster: {
                 Intent intent = new Intent(mActivity, InputNameActivity.class);
+                intent.putExtra(INTENT_ARG_01, 0);
                 startActivity(intent);
                 return;
             }
             case R.id.tv_music_poster: {
                 Intent intent = new Intent(mActivity, InputNameActivity.class);
+                intent.putExtra(INTENT_ARG_01, 1);
                 startActivity(intent);
                 return;
             }
