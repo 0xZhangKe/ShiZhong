@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -31,18 +32,21 @@ import butterknife.ButterKnife;
 
 public class MoviePosterAdapter extends BaseRecyclerAdapter<MoviePosterAdapter.ViewHolder, MoviePosterBean> {
 
+    private static final String TAG = "MoviePosterAdapter";
+
     private ILoadBitmap loadBitmap;
 
-    public MoviePosterAdapter(Context context, List<MoviePosterBean> listData) {
+    MoviePosterAdapter(Context context,
+                       List<MoviePosterBean> listData,
+                       ILoadBitmap loadBitmap) {
         super(context, listData);
-
-        loadBitmap = new GlideLoadBitmap(context);
+        this.loadBitmap = loadBitmap;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(inflater.inflate(R.layout.adapter_movie_poster, parent, false));
+        return new ViewHolder(inflater.inflate(R.layout.adapter_movie_poster, null));
     }
 
     @Override

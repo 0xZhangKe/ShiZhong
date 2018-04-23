@@ -12,6 +12,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.zhangke.shizhong.util.FileUtils;
+import com.zhangke.shizhong.util.ISaveFileEngine;
 
 import java.io.File;
 
@@ -23,13 +24,17 @@ import java.io.File;
 public class GlideLoadBitmap implements ILoadBitmap {
 
     private Context mContext;
+    private ISaveFileEngine saveFileEngine;
 
-    GlideLoadBitmap(Context context) {
+    GlideLoadBitmap(Context context, ISaveFileEngine saveFileEngine) {
         this.mContext = context;
+        this.saveFileEngine = saveFileEngine;
     }
 
     @Override
-    public void loadBitmapIntoImageView(String url, ImageView imageView, File file) {
+    public void loadBitmapIntoImageView(final String url,
+                                        final ImageView imageView,
+                                        final File file) {
         if (file.exists()) {
             imageView.setImageBitmap(BitmapFactory.decodeFile(file.getPath()));
         } else {
@@ -37,7 +42,7 @@ public class GlideLoadBitmap implements ILoadBitmap {
                 @Override
                 public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                     imageView.setImageBitmap(resource);
-                    FileUtils.saveBitmapToDisk(file, resource);
+                    saveFileEngine.addFile(file, resource);
                 }
 
                 @Override
@@ -47,7 +52,7 @@ public class GlideLoadBitmap implements ILoadBitmap {
                 }
             };
             Glide.with(mContext)
-                    .load(imageView)
+                    .load(url)
                     .asBitmap()
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .into(target);
