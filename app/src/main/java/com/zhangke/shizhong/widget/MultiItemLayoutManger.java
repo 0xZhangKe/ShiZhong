@@ -1,14 +1,18 @@
 package com.zhangke.shizhong.widget;
 
+import android.nfc.Tag;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 /**
- * 具有多种 ItemViewType 的 LayoutManager
+ * 主页使用的 LayoutManger
  * <p>
  * Created by ZhangKe on 2018/4/8.
  */
 public class MultiItemLayoutManger extends RecyclerView.LayoutManager {
+
+    private static final String TAG = "MultiItemLayoutManger";
 
     public static final int BANNER_ITEM_TYPE = 0;
     public static final int TITLE_ITEM_TYPE = 1;
@@ -62,6 +66,13 @@ public class MultiItemLayoutManger extends RecyclerView.LayoutManager {
                 curWidth = 0;
                 lastHeight = height;
                 lastViewType = viewType;
+                Log.d(TAG, String.format("[viewType:%s, curLineTop:%s, curWidth:%s, horizontalCount:%s, lastHeight:%s, lastViewType:%s]",
+                        viewType,
+                        curLineTop,
+                        curWidth,
+                        horizontalCount,
+                        lastHeight,
+                        lastViewType));
             } else {
                 if (widthDivider == -1) {
                     widthDivider = (getWidth() - width * spanCount) / (spanCount + 1);
@@ -69,15 +80,22 @@ public class MultiItemLayoutManger extends RecyclerView.LayoutManager {
                 if (horizontalCount >= spanCount) {
                     curLineTop += lastHeight;
                     layoutDecorated(view, widthDivider, curLineTop, widthDivider + width, curLineTop + height);
-                    horizontalCount = 0;
+                    horizontalCount = 1;
                     curWidth = width + widthDivider * 2;
                     lastHeight = height;
                     lastViewType = viewType;
+                    Log.d(TAG, String.format("[viewType:%s, curLineTop:%s, curWidth:%s, horizontalCount:%s, lastHeight:%s, lastViewType:%s]",
+                            viewType,
+                            curLineTop,
+                            curWidth,
+                            horizontalCount,
+                            lastHeight,
+                            lastViewType));
                 } else {
                     if (curWidth == 0) {
                         curWidth = widthDivider;
                     }
-                    if (i != 0 && lastViewType != MENU_ITEM_TYPE) {
+                    if(i != 0 && lastViewType != MENU_ITEM_TYPE){
                         curLineTop += lastHeight;
                     }
                     layoutDecorated(view, curWidth, curLineTop, curWidth + width, curLineTop + height);
@@ -85,9 +103,16 @@ public class MultiItemLayoutManger extends RecyclerView.LayoutManager {
                     horizontalCount++;
                     lastHeight = height;
                     lastViewType = viewType;
+                    Log.d(TAG, String.format("[viewType:%s, curLineTop:%s, curWidth:%s, horizontalCount:%s, lastHeight:%s, lastViewType:%s]",
+                            viewType,
+                            curLineTop,
+                            curWidth,
+                            horizontalCount,
+                            lastHeight,
+                            lastViewType));
                 }
             }
-            if (i == getItemCount() - 1) {
+            if(i == getItemCount() - 1){
                 curLineTop += lastHeight;
             }
         }
