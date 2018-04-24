@@ -66,13 +66,6 @@ public class MultiItemLayoutManger extends RecyclerView.LayoutManager {
                 curWidth = 0;
                 lastHeight = height;
                 lastViewType = viewType;
-                Log.d(TAG, String.format("[viewType:%s, curLineTop:%s, curWidth:%s, horizontalCount:%s, lastHeight:%s, lastViewType:%s]",
-                        viewType,
-                        curLineTop,
-                        curWidth,
-                        horizontalCount,
-                        lastHeight,
-                        lastViewType));
             } else {
                 if (widthDivider == -1) {
                     widthDivider = (getWidth() - width * spanCount) / (spanCount + 1);
@@ -84,13 +77,6 @@ public class MultiItemLayoutManger extends RecyclerView.LayoutManager {
                     curWidth = width + widthDivider * 2;
                     lastHeight = height;
                     lastViewType = viewType;
-                    Log.d(TAG, String.format("[viewType:%s, curLineTop:%s, curWidth:%s, horizontalCount:%s, lastHeight:%s, lastViewType:%s]",
-                            viewType,
-                            curLineTop,
-                            curWidth,
-                            horizontalCount,
-                            lastHeight,
-                            lastViewType));
                 } else {
                     if (curWidth == 0) {
                         curWidth = widthDivider;
@@ -103,13 +89,6 @@ public class MultiItemLayoutManger extends RecyclerView.LayoutManager {
                     horizontalCount++;
                     lastHeight = height;
                     lastViewType = viewType;
-                    Log.d(TAG, String.format("[viewType:%s, curLineTop:%s, curWidth:%s, horizontalCount:%s, lastHeight:%s, lastViewType:%s]",
-                            viewType,
-                            curLineTop,
-                            curWidth,
-                            horizontalCount,
-                            lastHeight,
-                            lastViewType));
                 }
             }
             if(i == getItemCount() - 1){
