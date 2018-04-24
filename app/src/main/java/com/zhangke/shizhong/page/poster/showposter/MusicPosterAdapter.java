@@ -2,13 +2,17 @@ package com.zhangke.shizhong.page.poster.showposter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.zhangke.shizhong.R;
 import com.zhangke.shizhong.page.base.BaseRecyclerAdapter;
 import com.zhangke.shizhong.util.PosterUtils;
+import com.zhangke.shizhong.util.UiUtils;
 
 import java.util.List;
 
@@ -20,46 +24,61 @@ import butterknife.ButterKnife;
  * Created by ZhangKe on 2018/4/24.
  */
 
-public class MusicPosterAdapter  extends BaseRecyclerAdapter<MusicPosterAdapter.ViewHolder, MusicPosterBean.PlaylistBean.TracksBean> {
+public class MusicPosterAdapter extends BaseRecyclerAdapter<MusicPosterAdapter.ViewHolder, MusicPosterBean.PlaylistBean.TracksBean> {
 
     private static final String TAG = "MusicPosterAdapter";
 
-    private ILoadBitmap loadBitmap;
+    private int itemViewHeight = 0;
 
     MusicPosterAdapter(Context context,
-                       List<MusicPosterBean.PlaylistBean.TracksBean> listData,
-                       ILoadBitmap loadBitmap) {
+                       List<MusicPosterBean.PlaylistBean.TracksBean> listData) {
         super(context, listData);
-        this.loadBitmap = loadBitmap;
+
+        itemViewHeight = UiUtils.getScreenWidth(context) / 4;
     }
+
+    int createCount = 0;
 
     @NonNull
     @Override
     public MusicPosterAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new MusicPosterAdapter.ViewHolder(inflater.inflate(R.layout.adapter_movie_poster, null));
+        Log.d(TAG, String.format("onCreateViewHolder: 第%s次Create", ++createCount));
+        ImageView imageView = new ImageView(context);
+        imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.height = itemViewHeight;
+        imageView.setLayoutParams(layoutParams);
+        return new MusicPosterAdapter.ViewHolder(imageView);
     }
+
+    int bindCount = 0;
 
     @Override
     public void onBindViewHolder(@NonNull MusicPosterAdapter.ViewHolder holder, int position) {
         MusicPosterBean.PlaylistBean.TracksBean item = listData.get(position);
-        if(item.getAl() != null) {
-            loadBitmap.loadBitmapIntoImageView(
-                    item.getAl().getPicUrl(),
-                    holder.imgView,
-                    PosterUtils.getMusicFileWithName(item.getName(), item.getAl().getName()));
+        if (item.getAl() != null) {
+            holder.imgView.setVisibility(View.VISIBLE);
+            Glide.with(context)
+                    .load(item.getAl().getPicUrl())
+                    .crossFade()
+                    .into(holder.imgView);
         }else{
             holder.imgView.setVisibility(View.GONE);
         }
+
+        Log.d(TAG, String.format("onBindViewHolder: 第%s次Bind", ++bindCount));
     }
 
     class ViewHolder extends BaseRecyclerAdapter.ViewHolder {
 
-        @BindView(R.id.img_view)
+        //        @BindView(R.id.img_view)
         ImageView imgView;
 
-        ViewHolder(View itemView) {
+        ViewHolder(ImageView itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            this.imgView = itemView;
+//            ButterKnife.bind(this, itemView);
         }
     }
 }

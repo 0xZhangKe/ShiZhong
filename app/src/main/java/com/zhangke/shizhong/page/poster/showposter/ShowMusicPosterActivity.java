@@ -2,11 +2,15 @@ package com.zhangke.shizhong.page.poster.showposter;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.View;
 
 import com.zhangke.shizhong.R;
 import com.zhangke.shizhong.page.base.BaseActivity;
+import com.zhangke.shizhong.page.base.BaseRecyclerAdapter;
 import com.zhangke.shizhong.util.ISaveFileEngine;
 import com.zhangke.shizhong.util.SaveFileEngine;
 import com.zhangke.shizhong.widget.SpacesItemDecoration;
@@ -25,7 +29,6 @@ import butterknife.ButterKnife;
 
 public class ShowMusicPosterActivity extends BaseActivity implements IShowMusicPosterContract.View {
 
-
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
@@ -34,9 +37,9 @@ public class ShowMusicPosterActivity extends BaseActivity implements IShowMusicP
 
     private IShowMusicPosterContract.Model showMoviePosterModel;
 
-    private ISaveFileEngine saveFileEngine;
-
     private MusicAlbumBean.ResultBean.PlaylistsBean mAlbumBean;
+
+    private AlertDialog showPosterDialog;
 
     @Override
     protected int getLayoutResId() {
@@ -48,17 +51,25 @@ public class ShowMusicPosterActivity extends BaseActivity implements IShowMusicP
         ButterKnife.bind(this);
         fullScreen();
 
-        saveFileEngine = new SaveFileEngine();
-        ILoadBitmap loadBitmap = new GlideLoadBitmap(this, saveFileEngine);
-
-        adapter = new MusicPosterAdapter(this, posterList, loadBitmap);
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(5, StaggeredGridLayoutManager.VERTICAL));
+        adapter = new MusicPosterAdapter(this, posterList);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4);
+        recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.addItemDecoration(new SpacesItemDecoration());
         recyclerView.setAdapter(adapter);
 
         mAlbumBean = (MusicAlbumBean.ResultBean.PlaylistsBean) getIntent().getSerializableExtra(INTENT_ARG_01);
         showMoviePosterModel = new ShowMusicPosterModel(this, mAlbumBean);
         showMoviePosterModel.getMusicPoster();
+
+        adapter.setOnItemClickListener((View view, int position) -> {
+
+        });
+    }
+
+    private void showPosterDialog() {
+        if (showPosterDialog == null) {
+
+        }
     }
 
     @Override
@@ -70,7 +81,6 @@ public class ShowMusicPosterActivity extends BaseActivity implements IShowMusicP
 
     @Override
     protected void onDestroy() {
-        saveFileEngine.exit();
         super.onDestroy();
     }
 }
