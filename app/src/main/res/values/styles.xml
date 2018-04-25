@@ -27,9 +27,20 @@
         <item name="android:background">@color/gray_diver</item>
     </style>
 
+    <!--圆形图片样式-->
     <declare-styleable name="CircleImageView">
         <attr name="border_width" format="dimension"/>
         <attr name="border_color" format="color"/>
     </declare-styleable>
 
+    <!--透明背景的 dialog-->
+    <style name="TranslucentDialog" parent="android:style/Theme.Dialog">
+        <item name="android:background">#00000000</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+
+    <style name="MusicPosterDialogAnim">
+        <item name="android:windowEnterAnimation">@anim/dialog_show_scale</item>
+    </style>
 </resources>

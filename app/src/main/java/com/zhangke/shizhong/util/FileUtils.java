@@ -90,12 +90,14 @@ public class FileUtils {
     /**
      * 将图片保存到文件中
      */
-    public static void saveBitmapToDisk(File file, Bitmap originBitmap) {
+    public static boolean saveBitmapToDisk(File file, Bitmap originBitmap) {
+        boolean success = false;
         try {
             if (!file.exists()) {
                 if (file.createNewFile()) {
                     try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file))) {
                         originBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                        success = true;
                     } catch (IOException e) {
                         ZLog.e(TAG, "saveBitmapToDisk: ", e);
                     }
@@ -104,5 +106,6 @@ public class FileUtils {
         } catch (Exception e) {
             ZLog.e(TAG, "saveBitmapToDisk: ", e);
         }
+        return success;
     }
 }

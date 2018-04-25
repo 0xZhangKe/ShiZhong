@@ -33,7 +33,13 @@ public class PosterUtils {
     /**
      * 通过歌名及歌手名获取文件名
      */
-    public static File getMusicFileWithName(String musicName, String userName) {
+    public static File getMusicFileWithName(String albumName, String musicName, String userName) {
+        if (!TextUtils.isEmpty(albumName)) {
+            albumName = albumName.replaceAll("\\\\", "-");
+            albumName = albumName.replaceAll(" ", "-");
+        } else {
+            albumName = "其他";
+        }
         if (!TextUtils.isEmpty(musicName)) {
             musicName = musicName.replaceAll("\\\\", "-");
             musicName = musicName.replaceAll(" ", "-");
@@ -42,6 +48,15 @@ public class PosterUtils {
             userName = userName.replaceAll("\\\\", "-");
             userName = userName.replaceAll(" ", "-");
         }
-        return new File(APPConfig.getMusicPosterRootFile(), String.format("%s-%s.jpg", musicName, userName));
+        File parentFile = new File(String.format("%s/%s", APPConfig.getMusicPosterRootFile(), albumName));
+        if (!parentFile.exists()) {
+            if (parentFile.mkdirs()) {
+                return new File(parentFile, String.format("%s-%s.jpg", musicName, userName));
+            } else {
+                return new File(APPConfig.getMusicPosterRootFile(), String.format("%s-%s.jpg", musicName, userName));
+            }
+        } else {
+            return new File(parentFile, String.format("%s-%s.jpg", musicName, userName));
+        }
     }
 }

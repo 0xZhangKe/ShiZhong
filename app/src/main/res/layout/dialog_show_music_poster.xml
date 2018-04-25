@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.github.chrisbanes.photoview.PhotoView
+            android:id="@+id/photo_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scaleType="centerCrop" />
+
+        <View style="@style/default_diver" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp">
+
+            <ImageView
+                android:id="@+id/img_download"
+                android:layout_width="60dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center_vertical|right"
+                android:paddingLeft="17dp"
+                android:paddingRight="17dp"
+                android:src="@mipmap/download" />
+
+            <TextView
+                android:id="@+id/tv_music_name"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_gravity="center_vertical|left"
+                android:layout_marginRight="65dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="sdasd"
+                android:textColor="@color/text_black"
+                android:textIsSelectable="true" />
+        </FrameLayout>
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
