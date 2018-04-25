@@ -46,10 +46,6 @@ public class SearchResultActivity extends BaseActivity implements IInputNameCont
     CoordinatorLayout coordinator;
     @BindView(R.id.pull_to_refresh)
     PullToRefreshRecyclerView pullRecyclerView;
-    @BindView(R.id.floating_btn)
-    FloatingActionButton floatingBtn;
-
-    private Dialog mInputPeopleIdDialog;
 
     /**
      * 0-豆瓣电影海报
@@ -118,24 +114,4 @@ public class SearchResultActivity extends BaseActivity implements IInputNameCont
         pullRecyclerView.closeLoading();
     }
 
-    @OnClick(R.id.floating_btn)
-    public void onFloatingClick(View view) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View dialogView = LayoutInflater.from(this).inflate(R.layout.poster_input_people_id_dialog, null, false);
-        EditText etId = (EditText) dialogView.findViewById(R.id.et_people_id);
-        dialogView.findViewById(R.id.tv_go).setOnClickListener((View v) -> {
-            mInputPeopleIdDialog.dismiss();
-            String id = etId.getText().toString();
-            if (TextUtils.isEmpty(id)) {
-                showNoActionSnackbar("请输入用户 ID");
-                return;
-            }
-            Intent intent = new Intent(this, SearchResultActivity.class);
-            intent.putExtra(INTENT_ARG_01, id);
-            startActivity(intent);
-        });
-        builder.setView(dialogView);
-        mInputPeopleIdDialog = builder.create();
-        mInputPeopleIdDialog.show();
-    }
 }
