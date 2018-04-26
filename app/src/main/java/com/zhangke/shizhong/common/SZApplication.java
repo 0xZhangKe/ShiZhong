@@ -3,11 +3,12 @@ package com.zhangke.shizhong.common;
 import android.content.pm.ApplicationInfo;
 import android.support.multidex.MultiDexApplication;
 
+import com.zhangke.shizhong.db.DBManager;
 import com.zhangke.shizhong.util.CrashHandler;
 import com.zhangke.zlog.ZLog;
 
 /**
- * Application
+ * ApplicationInfo
  * <p>
  * Created by ZhangKe on 2018/4/12.
  */
@@ -23,6 +24,8 @@ public class SZApplication extends MultiDexApplication {
         application = this;
 
         ZLog.Init(String.format("%s/log/", getExternalFilesDir(null).getPath()));
+
+        DBManager.getInstance().init(this);
 
         CrashHandler crashHandler = CrashHandler.getInstance();
         crashHandler.init(this);

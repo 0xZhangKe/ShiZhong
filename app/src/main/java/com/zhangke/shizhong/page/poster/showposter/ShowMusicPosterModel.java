@@ -2,9 +2,7 @@ package com.zhangke.shizhong.page.poster.showposter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
-import android.view.View;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
