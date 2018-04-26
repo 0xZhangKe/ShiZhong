@@ -102,14 +102,14 @@ public class ShowMusicPosterModel implements IShowMusicPosterContract.Model {
                 if (FileUtils.saveBitmapToDisk(file, resource)) {
                     showMusicPosterView.showNoActionSnackbar("已下载至:" + file.getPath());
                 } else {
-                    showMusicPosterView.showNoActionSnackbar("下失败");
+                    showMusicPosterView.showNoActionSnackbar("下载失败");
                 }
             }
 
             @Override
             public void onLoadFailed(Exception e, Drawable errorDrawable) {
                 super.onLoadFailed(e, errorDrawable);
-                showMusicPosterView.showNoActionSnackbar("下失败");
+                showMusicPosterView.showNoActionSnackbar("下载失败");
             }
         };
         Glide.with(context)
