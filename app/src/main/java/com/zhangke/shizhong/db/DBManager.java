@@ -18,9 +18,11 @@ public class DBManager {
     private static DBManager dbManager;
 
     public static DBManager getInstance() {
-        if (dbManager != null) {
+        if (dbManager == null) {
             synchronized (DBManager.class) {
-                dbManager = new DBManager();
+                if (dbManager == null) {
+                    dbManager = new DBManager();
+                }
             }
         }
         return dbManager;

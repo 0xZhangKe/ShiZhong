@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zhangke.shizhong">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 
@@ -22,10 +22,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".page.poster.inputname.InputNameActivity" />
-        <activity android:name=".page.poster.inputname.SearchResultActivity"/>
-        <activity android:name=".page.poster.showposter.ShowMusicPosterActivity"/>
-        <activity android:name=".page.poster.showposter.ShowMoviePosterActivity"/>
-        <activity android:name=".page.poster.showposter.ShowMusicAlbumActivity"/>
+        <activity android:name=".page.poster.inputname.SearchResultActivity" />
+        <activity android:name=".page.poster.showposter.ShowMusicPosterActivity" />
+        <activity android:name=".page.poster.showposter.ShowMoviePosterActivity" />
+        <activity android:name=".page.poster.showposter.ShowMusicAlbumActivity" />
+        <activity android:name=".page.application.ApplicationStatisticsActivity" />
     </application>
 
 </manifest>

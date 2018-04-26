@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.View;
 
 import com.zhangke.shizhong.R;
+import com.zhangke.shizhong.page.application.ApplicationStatisticsActivity;
 import com.zhangke.shizhong.page.base.BaseFragment;
 import com.zhangke.shizhong.page.poster.inputname.InputNameActivity;
 
@@ -29,7 +30,7 @@ public class SettingFragment extends BaseFragment {
 
     }
 
-    @OnClick({R.id.tv_douban_movie_poster, R.id.tv_music_poster})
+    @OnClick({R.id.tv_douban_movie_poster, R.id.tv_music_poster, R.id.tv_app_manager})
     public void onViewClick(View view) {
         switch (view.getId()) {
             case R.id.tv_douban_movie_poster: {
@@ -43,6 +44,11 @@ public class SettingFragment extends BaseFragment {
                 intent.putExtra(INTENT_ARG_01, 1);
                 startActivity(intent);
                 return;
+            }
+            case R.id.tv_app_manager:{
+                Intent intent = new Intent(mActivity, ApplicationStatisticsActivity.class);
+                startActivity(intent);
+                break;
             }
         }
     }

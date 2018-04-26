@@ -34,7 +34,7 @@
             android:background="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:paddingLeft="20dp"
-            android:text="APP统计" />
+            android:text="应用录" />
     </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>

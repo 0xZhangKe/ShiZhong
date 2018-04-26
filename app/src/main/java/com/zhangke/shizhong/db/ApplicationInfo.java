@@ -107,4 +107,12 @@ public class ApplicationInfo implements Comparable<ApplicationInfo> {
     public void setIsSystemApp(boolean isSystemApp) {
         this.isSystemApp = isSystemApp;
     }
+
+    public Drawable getAppIcon() {
+        return appIcon;
+    }
+
+    public void setAppIcon(Drawable appIcon) {
+        this.appIcon = appIcon;
+    }
 }
