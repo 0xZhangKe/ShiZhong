@@ -89,13 +89,11 @@ public class SearchResultActivity extends BaseActivity implements IInputNameCont
         });
 
         userAdapter.setOnItemClickListener((View view, int position) -> {
-            if (PermissionUtil.isLacksOfPermission(SearchResultActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                ActivityCompat.requestPermissions(SearchResultActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0x12);
-            } else {
+            checkAndRequestPermission(() -> {
                 Intent intent = new Intent(this, type == 0 ? ShowMoviePosterActivity.class : ShowMusicAlbumActivity.class);
                 intent.putExtra(INTENT_ARG_01, userList.get(position));
                 startActivity(intent);
-            }
+            }, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         });
 
         LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_anim_right_to_left);
