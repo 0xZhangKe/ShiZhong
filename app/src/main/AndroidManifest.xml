@@ -27,6 +27,7 @@
         <activity android:name=".page.poster.showposter.ShowMoviePosterActivity" />
         <activity android:name=".page.poster.showposter.ShowMusicAlbumActivity" />
         <activity android:name=".page.application.ApplicationStatisticsActivity" />
+        <activity android:name=".page.application.SearchApplicationActivity"/>
     </application>
 
 </manifest>

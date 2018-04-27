@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
-        app:theme="@style/toolbar_them" />
+        app:theme="@style/toolbar_them"
+        android:transitionName="toolbar"/>
 
     <View
         android:layout_width="match_parent"
