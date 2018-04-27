@@ -14,9 +14,8 @@ import org.greenrobot.greendao.annotation.Generated;
 @Entity
 public class ApplicationInfo implements Comparable<ApplicationInfo> {
 
-    @Id(autoincrement = true)
-    private long id;
     private String appName; // 应用名
+    @Id
     private String packageName; // 包名
     private String versionName; // 版本名
     private int versionCode = 0; // 版本号
@@ -26,20 +25,19 @@ public class ApplicationInfo implements Comparable<ApplicationInfo> {
     private String sortTarget;
     private boolean isSystemApp = false;
 
-    @Generated(hash = 1914574166)
-    public ApplicationInfo(long id, String appName, String packageName, String versionName,
+    @Generated(hash = 126628142)
+    public ApplicationInfo() {
+    }
+
+    @Generated(hash = 1018086381)
+    public ApplicationInfo(String appName, String packageName, String versionName,
             int versionCode, String sortTarget, boolean isSystemApp) {
-        this.id = id;
         this.appName = appName;
         this.packageName = packageName;
         this.versionName = versionName;
         this.versionCode = versionCode;
         this.sortTarget = sortTarget;
         this.isSystemApp = isSystemApp;
-    }
-
-    @Generated(hash = 126628142)
-    public ApplicationInfo() {
     }
 
     @Override
@@ -52,12 +50,12 @@ public class ApplicationInfo implements Comparable<ApplicationInfo> {
         return this.sortTarget.compareTo(arg0.sortTarget);
     }
 
-    public long getId() {
-        return this.id;
+    public Drawable getAppIcon() {
+        return appIcon;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setAppIcon(Drawable appIcon) {
+        this.appIcon = appIcon;
     }
 
     public String getAppName() {
@@ -106,13 +104,5 @@ public class ApplicationInfo implements Comparable<ApplicationInfo> {
 
     public void setIsSystemApp(boolean isSystemApp) {
         this.isSystemApp = isSystemApp;
-    }
-
-    public Drawable getAppIcon() {
-        return appIcon;
-    }
-
-    public void setAppIcon(Drawable appIcon) {
-        this.appIcon = appIcon;
     }
 }

@@ -13,7 +13,7 @@ import org.greenrobot.greendao.database.DatabaseStatement;
 /** 
  * DAO for table "APPLICATION_INFO".
 */
-public class ApplicationInfoDao extends AbstractDao<ApplicationInfo, Long> {
+public class ApplicationInfoDao extends AbstractDao<ApplicationInfo, String> {
 
     public static final String TABLENAME = "APPLICATION_INFO";
 
@@ -22,13 +22,12 @@ public class ApplicationInfoDao extends AbstractDao<ApplicationInfo, Long> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Id = new Property(0, long.class, "id", true, "_id");
-        public final static Property AppName = new Property(1, String.class, "appName", false, "APP_NAME");
-        public final static Property PackageName = new Property(2, String.class, "packageName", false, "PACKAGE_NAME");
-        public final static Property VersionName = new Property(3, String.class, "versionName", false, "VERSION_NAME");
-        public final static Property VersionCode = new Property(4, int.class, "versionCode", false, "VERSION_CODE");
-        public final static Property SortTarget = new Property(5, String.class, "sortTarget", false, "SORT_TARGET");
-        public final static Property IsSystemApp = new Property(6, boolean.class, "isSystemApp", false, "IS_SYSTEM_APP");
+        public final static Property AppName = new Property(0, String.class, "appName", false, "APP_NAME");
+        public final static Property PackageName = new Property(1, String.class, "packageName", true, "PACKAGE_NAME");
+        public final static Property VersionName = new Property(2, String.class, "versionName", false, "VERSION_NAME");
+        public final static Property VersionCode = new Property(3, int.class, "versionCode", false, "VERSION_CODE");
+        public final static Property SortTarget = new Property(4, String.class, "sortTarget", false, "SORT_TARGET");
+        public final static Property IsSystemApp = new Property(5, boolean.class, "isSystemApp", false, "IS_SYSTEM_APP");
     }
 
 
@@ -44,13 +43,12 @@ public class ApplicationInfoDao extends AbstractDao<ApplicationInfo, Long> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"APPLICATION_INFO\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ," + // 0: id
-                "\"APP_NAME\" TEXT," + // 1: appName
-                "\"PACKAGE_NAME\" TEXT," + // 2: packageName
-                "\"VERSION_NAME\" TEXT," + // 3: versionName
-                "\"VERSION_CODE\" INTEGER NOT NULL ," + // 4: versionCode
-                "\"SORT_TARGET\" TEXT," + // 5: sortTarget
-                "\"IS_SYSTEM_APP\" INTEGER NOT NULL );"); // 6: isSystemApp
+                "\"APP_NAME\" TEXT," + // 0: appName
+                "\"PACKAGE_NAME\" TEXT PRIMARY KEY NOT NULL ," + // 1: packageName
+                "\"VERSION_NAME\" TEXT," + // 2: versionName
+                "\"VERSION_CODE\" INTEGER NOT NULL ," + // 3: versionCode
+                "\"SORT_TARGET\" TEXT," + // 4: sortTarget
+                "\"IS_SYSTEM_APP\" INTEGER NOT NULL );"); // 5: isSystemApp
     }
 
     /** Drops the underlying database table. */
@@ -62,99 +60,94 @@ public class ApplicationInfoDao extends AbstractDao<ApplicationInfo, Long> {
     @Override
     protected final void bindValues(DatabaseStatement stmt, ApplicationInfo entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getId());
  
         String appName = entity.getAppName();
         if (appName != null) {
-            stmt.bindString(2, appName);
+            stmt.bindString(1, appName);
         }
  
         String packageName = entity.getPackageName();
         if (packageName != null) {
-            stmt.bindString(3, packageName);
+            stmt.bindString(2, packageName);
         }
  
         String versionName = entity.getVersionName();
         if (versionName != null) {
-            stmt.bindString(4, versionName);
+            stmt.bindString(3, versionName);
         }
-        stmt.bindLong(5, entity.getVersionCode());
+        stmt.bindLong(4, entity.getVersionCode());
  
         String sortTarget = entity.getSortTarget();
         if (sortTarget != null) {
-            stmt.bindString(6, sortTarget);
+            stmt.bindString(5, sortTarget);
         }
-        stmt.bindLong(7, entity.getIsSystemApp() ? 1L: 0L);
+        stmt.bindLong(6, entity.getIsSystemApp() ? 1L: 0L);
     }
 
     @Override
     protected final void bindValues(SQLiteStatement stmt, ApplicationInfo entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getId());
  
         String appName = entity.getAppName();
         if (appName != null) {
-            stmt.bindString(2, appName);
+            stmt.bindString(1, appName);
         }
  
         String packageName = entity.getPackageName();
         if (packageName != null) {
-            stmt.bindString(3, packageName);
+            stmt.bindString(2, packageName);
         }
  
         String versionName = entity.getVersionName();
         if (versionName != null) {
-            stmt.bindString(4, versionName);
+            stmt.bindString(3, versionName);
         }
-        stmt.bindLong(5, entity.getVersionCode());
+        stmt.bindLong(4, entity.getVersionCode());
  
         String sortTarget = entity.getSortTarget();
         if (sortTarget != null) {
-            stmt.bindString(6, sortTarget);
+            stmt.bindString(5, sortTarget);
         }
-        stmt.bindLong(7, entity.getIsSystemApp() ? 1L: 0L);
+        stmt.bindLong(6, entity.getIsSystemApp() ? 1L: 0L);
     }
 
     @Override
-    public Long readKey(Cursor cursor, int offset) {
-        return cursor.getLong(offset + 0);
+    public String readKey(Cursor cursor, int offset) {
+        return cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1);
     }    
 
     @Override
     public ApplicationInfo readEntity(Cursor cursor, int offset) {
         ApplicationInfo entity = new ApplicationInfo( //
-            cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // appName
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // packageName
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // versionName
-            cursor.getInt(offset + 4), // versionCode
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // sortTarget
-            cursor.getShort(offset + 6) != 0 // isSystemApp
+            cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // appName
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // packageName
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // versionName
+            cursor.getInt(offset + 3), // versionCode
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // sortTarget
+            cursor.getShort(offset + 5) != 0 // isSystemApp
         );
         return entity;
     }
      
     @Override
     public void readEntity(Cursor cursor, ApplicationInfo entity, int offset) {
-        entity.setId(cursor.getLong(offset + 0));
-        entity.setAppName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setPackageName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setVersionName(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setVersionCode(cursor.getInt(offset + 4));
-        entity.setSortTarget(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
-        entity.setIsSystemApp(cursor.getShort(offset + 6) != 0);
+        entity.setAppName(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
+        entity.setPackageName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setVersionName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setVersionCode(cursor.getInt(offset + 3));
+        entity.setSortTarget(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setIsSystemApp(cursor.getShort(offset + 5) != 0);
      }
     
     @Override
-    protected final Long updateKeyAfterInsert(ApplicationInfo entity, long rowId) {
-        entity.setId(rowId);
-        return rowId;
+    protected final String updateKeyAfterInsert(ApplicationInfo entity, long rowId) {
+        return entity.getPackageName();
     }
     
     @Override
-    public Long getKey(ApplicationInfo entity) {
+    public String getKey(ApplicationInfo entity) {
         if(entity != null) {
-            return entity.getId();
+            return entity.getPackageName();
         } else {
             return null;
         }
@@ -162,7 +155,7 @@ public class ApplicationInfoDao extends AbstractDao<ApplicationInfo, Long> {
 
     @Override
     public boolean hasKey(ApplicationInfo entity) {
-        throw new UnsupportedOperationException("Unsupported for entities with a non-null key");
+        return entity.getPackageName() != null;
     }
 
     @Override
