@@ -58,9 +58,9 @@ public class ApplicationStatisticPresenterImpl implements IApplicationStatisticC
                         observableEmitter.onComplete();
                         mApplicationInfoDao.insertOrReplaceInTx(appOriginList);
                     } else {
-                        Collections.sort(appOriginList);
                         fillList(showSystem);
                         observableEmitter.onNext(1);
+                        appOriginList.clear();
                         appOriginList.addAll(ApplicationInfoUtil.getAllProgramInfo(context));
                         Collections.sort(appOriginList);
                         fillList(showSystem);
@@ -118,5 +118,9 @@ public class ApplicationStatisticPresenterImpl implements IApplicationStatisticC
     @Override
     public void onDestroy() {
         disposable.dispose();
+        applicationStatisticView = null;
+        context = null;
+        appOriginList.clear();
+        listData.clear();
     }
 }
