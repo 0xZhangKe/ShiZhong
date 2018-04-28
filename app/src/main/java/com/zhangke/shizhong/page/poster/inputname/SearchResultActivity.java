@@ -19,6 +19,7 @@ import android.view.animation.LayoutAnimationController;
 import android.widget.EditText;
 
 import com.zhangke.shizhong.R;
+import com.zhangke.shizhong.common.APPConfig;
 import com.zhangke.shizhong.page.base.BaseActivity;
 import com.zhangke.shizhong.page.poster.showposter.ShowMoviePosterActivity;
 import com.zhangke.shizhong.page.poster.showposter.ShowMusicAlbumActivity;
@@ -61,6 +62,7 @@ public class SearchResultActivity extends BaseActivity implements IInputNameCont
 
     @Override
     protected int getLayoutResId() {
+        initTheme();
         return R.layout.activity_search_result;
     }
 
@@ -78,6 +80,14 @@ public class SearchResultActivity extends BaseActivity implements IInputNameCont
         initRecycler();
 
         inputNamePresenter.searchUserFromName(name);
+    }
+
+    private void initTheme() {
+        if (APPConfig.getTheme() == 0) {
+            setTheme(R.style.NightTheme);
+        } else {
+            setTheme(R.style.DayTheme);
+        }
     }
 
     private void initRecycler() {

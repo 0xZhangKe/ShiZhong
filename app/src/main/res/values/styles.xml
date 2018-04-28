@@ -1,18 +1,32 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
+    <!--白天主题-->
+    <style name="DayTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="clockBackground">@android:color/white</item>
+        <item name="clockTextColor">@color/text_black</item>
+        <item name="gradientStartColor">@color/whiteStartColor</item>
+        <item name="gradientEndColor">@color/whiteEndColor</item>
+    </style>
+
+    <!--夜间主题-->
+    <style name="NightTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/color424242</item>
+        <item name="colorPrimaryDark">@color/color616161</item>
+        <item name="colorAccent">@color/colorE91E63</item>
+        <item name="clockBackground">@color/color616161</item>
+        <item name="clockTextColor">@color/text_white</item>
+        <item name="gradientStartColor">@color/blackStartColor</item>
+        <item name="gradientEndColor">@color/blackEndColor</item>
     </style>
 
     <!-- ToolBar 默认 them -->
     <style name="toolbar_them" parent="@style/ThemeOverlay.AppCompat.ActionBar">
-        <item name="colorControlNormal">@android:color/black</item>
-        <item name="android:textColorPrimary">@android:color/black</item>
-        <item name="actionMenuTextColor">@android:color/black</item>
+        <item name="colorControlNormal">?attr/clockTextColor</item>
+        <item name="android:textColorPrimary">?attr/clockTextColor</item>
+        <item name="actionMenuTextColor">?attr/clockTextColor</item>
     </style>
 
     <!--圆形对话框样式-->
@@ -39,7 +53,7 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
-
+    <!--云音乐海报详情对话框动画-->
     <style name="MusicPosterDialogAnim">
         <item name="android:windowEnterAnimation">@anim/dialog_show_scale</item>
     </style>

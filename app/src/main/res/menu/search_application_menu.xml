@@ -11,4 +11,9 @@
         android:inputType="textCapWords"
         android:imeOptions="actionSearch"
         tools:ignore="AppCompatResource" />
+
+    <item android:id="@+id/test"
+        android:title="test"
+        android:icon="@mipmap/arrow"
+        app:showAsAction="withText"/>
 </menu>

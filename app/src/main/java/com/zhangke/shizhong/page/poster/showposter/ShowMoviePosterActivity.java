@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 
 import com.zhangke.shizhong.R;
+import com.zhangke.shizhong.common.APPConfig;
 import com.zhangke.shizhong.page.base.BaseActivity;
 import com.zhangke.shizhong.page.poster.inputname.UserBean;
 import com.zhangke.shizhong.util.ISaveFileEngine;
@@ -38,6 +39,7 @@ public class ShowMoviePosterActivity extends BaseActivity implements IShowMovieP
 
     @Override
     protected int getLayoutResId() {
+        initTheme();
         return R.layout.activity_show_music_poster;
     }
 
@@ -57,6 +59,14 @@ public class ShowMoviePosterActivity extends BaseActivity implements IShowMovieP
         UserBean userBean = (UserBean) getIntent().getSerializableExtra(INTENT_ARG_01);
         showMoviePosterModel = new ShowMoviePosterModel(this, this, userBean.getNickName());
         showMoviePosterModel.getMoviePoster();
+    }
+
+    private void initTheme() {
+        if (APPConfig.getTheme() == 0) {
+            setTheme(R.style.NightTheme);
+        } else {
+            setTheme(R.style.DayTheme);
+        }
     }
 
     @Override

@@ -21,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.zhangke.shizhong.R;
+import com.zhangke.shizhong.common.APPConfig;
 import com.zhangke.shizhong.db.ApplicationInfo;
 import com.zhangke.shizhong.db.ApplicationInfoDao;
 import com.zhangke.shizhong.db.DBManager;
@@ -60,6 +61,7 @@ public class SearchApplicationActivity extends BaseActivity {
 
     @Override
     protected int getLayoutResId() {
+        initTheme();
         return R.layout.activity_search_application;
     }
 
@@ -67,7 +69,7 @@ public class SearchApplicationActivity extends BaseActivity {
     protected void initView(@Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this);
 
-        initToolbar(toolbar, "搜索", true);
+        initToolbar(toolbar, "", true);
         mApplicationInfoDao = DBManager.getInstance().getApplicationInfoDao();
 
         ThreadPool.getInstance().getThreadPool().execute(() -> {
@@ -92,6 +94,14 @@ public class SearchApplicationActivity extends BaseActivity {
             showApplicationInfo(listData.get(position));
             search();
         });
+    }
+
+    private void initTheme() {
+        if (APPConfig.getTheme() == 0) {
+            setTheme(R.style.NightTheme);
+        } else {
+            setTheme(R.style.DayTheme);
+        }
     }
 
     public void showApplicationInfo(final ApplicationInfo appInfo) {

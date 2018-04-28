@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.zhangke.shizhong.R;
+import com.zhangke.shizhong.common.APPConfig;
 import com.zhangke.shizhong.page.base.BaseActivity;
 import com.zhangke.shizhong.page.base.BaseRecyclerAdapter;
 import com.zhangke.shizhong.util.ISaveFileEngine;
@@ -51,6 +52,7 @@ public class ShowMusicPosterActivity extends BaseActivity implements IShowMusicP
 
     @Override
     protected int getLayoutResId() {
+        initTheme();
         return R.layout.activity_show_music_poster;
     }
 
@@ -72,6 +74,14 @@ public class ShowMusicPosterActivity extends BaseActivity implements IShowMusicP
         adapter.setOnItemClickListener((View view, int position) -> {
             showPosterDialog(posterList.get(position));
         });
+    }
+
+    private void initTheme() {
+        if (APPConfig.getTheme() == 0) {
+            setTheme(R.style.NightTheme);
+        } else {
+            setTheme(R.style.DayTheme);
+        }
     }
 
     private void showPosterDialog(final MusicPosterBean.PlaylistBean.TracksBean bean) {

@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.zhangke.shizhong.R;
+import com.zhangke.shizhong.common.APPConfig;
 import com.zhangke.shizhong.page.base.BaseActivity;
 import com.zhangke.shizhong.page.base.BaseRecyclerAdapter;
 import com.zhangke.shizhong.page.poster.inputname.UserBean;
@@ -38,6 +39,7 @@ public class ShowMusicAlbumActivity extends BaseActivity implements IShowMusicAl
 
     @Override
     protected int getLayoutResId() {
+        initTheme();
         return R.layout.activity_show_music_album;
     }
 
@@ -55,6 +57,14 @@ public class ShowMusicAlbumActivity extends BaseActivity implements IShowMusicAl
 
         showMusicAlbumModel = new ShowMusicAlbumModel(this, mUserBean.getNickName());
         showMusicAlbumModel.getAlbum();
+    }
+
+    private void initTheme() {
+        if (APPConfig.getTheme() == 0) {
+            setTheme(R.style.NightTheme);
+        } else {
+            setTheme(R.style.DayTheme);
+        }
     }
 
     private void initRecycler() {

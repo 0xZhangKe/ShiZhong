@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.zhangke.shizhong.R;
+import com.zhangke.shizhong.common.APPConfig;
 import com.zhangke.shizhong.common.CustomFragmentPagerAdapter;
 import com.zhangke.shizhong.page.base.BaseActivity;
 import com.zhangke.shizhong.page.plan.EditPlanFragment;
@@ -31,6 +32,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected int getLayoutResId() {
+        initTheme();
         return R.layout.activity_main;
     }
 
@@ -41,6 +43,14 @@ public class MainActivity extends BaseActivity {
         initToolbar(toolbar, getResources().getString(R.string.app_name), false);
 
         initFragment();
+    }
+
+    private void initTheme() {
+        if (APPConfig.getTheme() == 0) {
+            setTheme(R.style.NightTheme);
+        } else {
+            setTheme(R.style.DayTheme);
+        }
     }
 
     private void initFragment() {

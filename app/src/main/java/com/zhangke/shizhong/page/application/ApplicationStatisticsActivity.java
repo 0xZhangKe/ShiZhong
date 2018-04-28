@@ -28,6 +28,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.zhangke.shizhong.R;
+import com.zhangke.shizhong.common.APPConfig;
 import com.zhangke.shizhong.db.ApplicationInfo;
 import com.zhangke.shizhong.page.base.BaseActivity;
 import com.zhangke.shizhong.page.base.BaseRecyclerAdapter;
@@ -77,6 +78,7 @@ public class ApplicationStatisticsActivity extends BaseActivity implements IAppl
 
     @Override
     protected int getLayoutResId() {
+        initTheme();
         return R.layout.activity_application_statistics;
     }
 
@@ -100,6 +102,14 @@ public class ApplicationStatisticsActivity extends BaseActivity implements IAppl
 
         presenter = new ApplicationStatisticPresenterImpl(this, this);
         presenter.getApplication(true);
+    }
+
+    private void initTheme() {
+        if (APPConfig.getTheme() == 0) {
+            setTheme(R.style.NightTheme);
+        } else {
+            setTheme(R.style.DayTheme);
+        }
     }
 
     public void showApplicationInfo(final ApplicationInfo appInfo) {
@@ -167,7 +177,7 @@ public class ApplicationStatisticsActivity extends BaseActivity implements IAppl
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.search:
                 Intent intent = new Intent(ApplicationStatisticsActivity.this, SearchApplicationActivity.class);
                 startActivity(intent);

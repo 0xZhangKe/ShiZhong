@@ -2,6 +2,7 @@
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/clockBackground"
     android:fillViewport="true">
 
     <LinearLayout
@@ -16,6 +17,7 @@
             android:background="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:paddingLeft="20dp"
+            android:textColor="?attr/clockTextColor"
             android:text="豆瓣电影海报" />
 
         <TextView
@@ -24,6 +26,7 @@
             android:layout_height="40dp"
             android:background="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
+            android:textColor="?attr/clockTextColor"
             android:paddingLeft="20dp"
             android:text="网易云音乐封面" />
 
@@ -33,8 +36,18 @@
             android:layout_height="40dp"
             android:background="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
+            android:textColor="?attr/clockTextColor"
             android:paddingLeft="20dp"
             android:text="应用录" />
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/switch_compat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="?attr/clockTextColor"
+            android:paddingLeft="20dp"
+            android:text="日间   "/>
     </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>
