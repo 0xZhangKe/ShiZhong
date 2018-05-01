@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FFEA00</color>
-    <color name="colorPrimaryDark">#FFD600</color>
-    <color name="colorAccent">#CB4042</color>
+    <color name="dayColorPrimary">#897D55</color>
+    <color name="dayColorPrimaryDark">#897D55</color>
+    <color name="dayColorAccent">#CB4042</color>
 
-    <color name="color424242">#424242</color>
-    <color name="color616161">#616161</color>
-    <color name="colorE91E63">#E91E63</color>
+    <color name="nightColorPrimary">#222222</color>
+    <color name="nightColorPrimaryDark">#222222</color>
+    <color name="nightColorAccent">#E91E63</color>
 
-    <color name="whiteStartColor">#FFE0E0E0</color>
-    <color name="whiteEndColor">#00FFFFFF</color>
-    <color name="blackStartColor"></color>
-    <color name="blackEndColor"></color>
+    <color name="dayStyleBackground">#B4A582</color>
+    <color name="nightStyleBackground">#303030</color>
+
+    <color name="dayStartColor">#897D55</color>
+    <color name="dayEndColor">#B4A582</color>
+    <color name="nightStartColor">#222222</color>
+    <color name="nightEndColor">#303030</color>
+
+    <color name="daySimpleIconFillColor">#ff777777</color>
+    <color name="nightSimpleIconFillColor">#F5F5F5</color>
 
     <!-- 所有的分割线颜色 -->
     <color name="gray_diver">#207F7F7F</color>

@@ -6,14 +6,10 @@
     <item android:id="@+id/search_action"
         android:title="search"
         app:showAsAction="always"
-        android:icon="@mipmap/search_black"
+        android:icon="@drawable/svg_search"
         app:actionViewClass="android.support.v7.widget.SearchView"
         android:inputType="textCapWords"
         android:imeOptions="actionSearch"
         tools:ignore="AppCompatResource" />
 
-    <item android:id="@+id/test"
-        android:title="test"
-        android:icon="@mipmap/arrow"
-        app:showAsAction="withText"/>
 </menu>

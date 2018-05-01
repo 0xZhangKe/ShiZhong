@@ -4,7 +4,7 @@
 
     <item android:id="@+id/search"
         android:title="搜索"
-        android:icon="@mipmap/search_black"
+        android:icon="@drawable/svg_search"
         app:showAsAction="always"/>
 
 </menu>

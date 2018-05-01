@@ -10,9 +10,9 @@
         android:layout_width="match_parent"
         app:theme="@style/toolbar_them"
         android:layout_height="wrap_content"
-        android:background="?attr/clockBackground"
-        app:titleTextColor="?attr/clockTextColor"
-        app:subtitleTextColor="?attr/clockTextColor"
+        android:background="?attr/toolbarColor"
+        app:titleTextColor="?attr/textColor"
+        app:subtitleTextColor="?attr/textColor"
         android:transitionName="toolbar" />
 
     <View

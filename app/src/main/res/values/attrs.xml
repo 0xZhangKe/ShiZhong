@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="clockBackground" format="color" />
-    <attr name="clockTextColor" format="color" />
-    <attr name="gradientStartColor" format="color"/>
-    <attr name="gradientEndColor" format="color"/>
+    <attr name="toolbarColor" format="color" />
+    <attr name="backgroundColor" format="color" />
+    <attr name="textColor" format="color" />
+    <attr name="gradientStartColor" format="color" />
+    <attr name="gradientEndColor" format="color" />
+    <attr name="simpleIconFillColor" format="color"/>
 </resources>

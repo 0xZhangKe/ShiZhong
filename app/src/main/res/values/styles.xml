@@ -2,31 +2,35 @@
 
     <!--白天主题-->
     <style name="DayTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="clockBackground">@android:color/white</item>
-        <item name="clockTextColor">@color/text_black</item>
-        <item name="gradientStartColor">@color/whiteStartColor</item>
-        <item name="gradientEndColor">@color/whiteEndColor</item>
+        <item name="colorPrimary">@color/dayColorPrimary</item>
+        <item name="colorPrimaryDark">@color/dayColorPrimaryDark</item>
+        <item name="colorAccent">@color/dayColorAccent</item>
+        <item name="toolbarColor">@color/dayColorPrimary</item>
+        <item name="backgroundColor">@color/dayStyleBackground</item>
+        <item name="textColor">@color/text_black</item>
+        <item name="gradientStartColor">@color/dayStartColor</item>
+        <item name="gradientEndColor">@color/dayEndColor</item>
+        <item name="simpleIconFillColor">@color/daySimpleIconFillColor</item>
     </style>
 
     <!--夜间主题-->
     <style name="NightTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/color424242</item>
-        <item name="colorPrimaryDark">@color/color616161</item>
-        <item name="colorAccent">@color/colorE91E63</item>
-        <item name="clockBackground">@color/color616161</item>
-        <item name="clockTextColor">@color/text_white</item>
-        <item name="gradientStartColor">@color/blackStartColor</item>
-        <item name="gradientEndColor">@color/blackEndColor</item>
+        <item name="colorPrimary">@color/nightColorPrimary</item>
+        <item name="colorPrimaryDark">@color/nightColorPrimaryDark</item>
+        <item name="colorAccent">@color/nightColorAccent</item>
+        <item name="toolbarColor">@color/nightColorPrimaryDark</item>
+        <item name="backgroundColor">@color/nightStyleBackground</item>
+        <item name="textColor">@color/text_white</item>
+        <item name="gradientStartColor">@color/nightStartColor</item>
+        <item name="gradientEndColor">@color/nightEndColor</item>
+        <item name="simpleIconFillColor">@color/nightSimpleIconFillColor</item>
     </style>
 
     <!-- ToolBar 默认 them -->
     <style name="toolbar_them" parent="@style/ThemeOverlay.AppCompat.ActionBar">
-        <item name="colorControlNormal">?attr/clockTextColor</item>
-        <item name="android:textColorPrimary">?attr/clockTextColor</item>
-        <item name="actionMenuTextColor">?attr/clockTextColor</item>
+        <item name="colorControlNormal">?attr/textColor</item>
+        <item name="android:textColorPrimary">?attr/textColor</item>
+        <item name="actionMenuTextColor">?attr/textColor</item>
     </style>
 
     <!--圆形对话框样式-->
