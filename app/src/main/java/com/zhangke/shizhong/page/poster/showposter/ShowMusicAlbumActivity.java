@@ -39,7 +39,6 @@ public class ShowMusicAlbumActivity extends BaseActivity implements IShowMusicAl
 
     @Override
     protected int getLayoutResId() {
-        initTheme();
         return R.layout.activity_show_music_album;
     }
 
@@ -57,14 +56,6 @@ public class ShowMusicAlbumActivity extends BaseActivity implements IShowMusicAl
 
         showMusicAlbumModel = new ShowMusicAlbumModel(this, mUserBean.getNickName());
         showMusicAlbumModel.getAlbum();
-    }
-
-    private void initTheme() {
-        if (APPConfig.getTheme() == 0) {
-            setTheme(R.style.NightTheme);
-        } else {
-            setTheme(R.style.DayTheme);
-        }
     }
 
     private void initRecycler() {

@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.zhangke.shizhong.R;
+import com.zhangke.shizhong.common.APPConfig;
 import com.zhangke.shizhong.util.PermissionUtil;
 import com.zhangke.shizhong.util.UiUtils;
 import com.zhangke.shizhong.widget.RoundProgressDialog;
@@ -41,10 +42,19 @@ public abstract class BaseActivity extends AppCompatActivity implements IBasePag
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initTheme();
         setContentView(getLayoutResId());
         roundProgressDialog = new RoundProgressDialog(this);
         mHandler = new Handler();
         initView(savedInstanceState);
+    }
+
+    private void initTheme() {
+        if (APPConfig.getTheme() == 0) {
+            setTheme(R.style.NightTheme);
+        } else {
+            setTheme(R.style.DayTheme);
+        }
     }
 
     protected abstract int getLayoutResId();

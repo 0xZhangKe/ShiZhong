@@ -61,7 +61,6 @@ public class SearchApplicationActivity extends BaseActivity {
 
     @Override
     protected int getLayoutResId() {
-        initTheme();
         return R.layout.activity_search_application;
     }
 
@@ -94,14 +93,6 @@ public class SearchApplicationActivity extends BaseActivity {
             showApplicationInfo(listData.get(position));
             search();
         });
-    }
-
-    private void initTheme() {
-        if (APPConfig.getTheme() == 0) {
-            setTheme(R.style.NightTheme);
-        } else {
-            setTheme(R.style.DayTheme);
-        }
     }
 
     public void showApplicationInfo(final ApplicationInfo appInfo) {

@@ -5,4 +5,5 @@
     <string name="search_name_text">搜寻</string>
     <string name="internet_error">连接失败</string>
     <string name="data_error">数据错误</string>
+    <string name="change_theme_need_refresh_flag">change_theme_need_refresh</string>
 </resources>

@@ -62,7 +62,6 @@ public class SearchResultActivity extends BaseActivity implements IInputNameCont
 
     @Override
     protected int getLayoutResId() {
-        initTheme();
         return R.layout.activity_search_result;
     }
 
@@ -80,14 +79,6 @@ public class SearchResultActivity extends BaseActivity implements IInputNameCont
         initRecycler();
 
         inputNamePresenter.searchUserFromName(name);
-    }
-
-    private void initTheme() {
-        if (APPConfig.getTheme() == 0) {
-            setTheme(R.style.NightTheme);
-        } else {
-            setTheme(R.style.DayTheme);
-        }
     }
 
     private void initRecycler() {

@@ -42,7 +42,6 @@ public class InputNameActivity extends BaseActivity{
 
     @Override
     protected int getLayoutResId() {
-        initTheme();
         return R.layout.activity_input_name;
     }
 
@@ -56,14 +55,6 @@ public class InputNameActivity extends BaseActivity{
         }
 
         initToolbar(toolbar, type == 0 ? "豆瓣电影海报" : "云音乐封面", true);
-    }
-
-    private void initTheme() {
-        if (APPConfig.getTheme() == 0) {
-            setTheme(R.style.NightTheme);
-        } else {
-            setTheme(R.style.DayTheme);
-        }
     }
 
     @OnClick(R.id.btn_search)

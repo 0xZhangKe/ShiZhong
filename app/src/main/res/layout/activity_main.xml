@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/ll_root"
     android:orientation="vertical">
 
     <include layout="@layout/toolbar" />
@@ -13,11 +14,13 @@
         android:layout_weight="1" />
 
     <View
+        android:id="@+id/view_tab_divider"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="@drawable/tab_top_line" />
 
     <LinearLayout
+        android:id="@+id/ll_tab_group"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="?attr/toolbarColor"
@@ -31,7 +34,8 @@
             android:background="?android:attr/selectableItemBackground"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:src="@mipmap/ic_launcher" />
+            android:tag="@string/change_theme_need_refresh_flag"
+            android:src="@drawable/svg_search" />
 
         <ImageView
             android:id="@+id/img_edit_plan"
@@ -41,6 +45,7 @@
             android:background="?android:attr/selectableItemBackground"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
+            android:tag="@string/change_theme_need_refresh_flag"
             android:scaleType="centerInside"
             android:src="@mipmap/ic_launcher" />
 
@@ -51,6 +56,7 @@
             android:layout_weight="1"
             android:background="?android:attr/selectableItemBackground"
             android:paddingBottom="10dp"
+            android:tag="@string/change_theme_need_refresh_flag"
             android:paddingTop="10dp"
             android:src="@mipmap/ic_launcher" />
     </LinearLayout>

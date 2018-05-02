@@ -78,7 +78,6 @@ public class ApplicationStatisticsActivity extends BaseActivity implements IAppl
 
     @Override
     protected int getLayoutResId() {
-        initTheme();
         return R.layout.activity_application_statistics;
     }
 
@@ -102,14 +101,6 @@ public class ApplicationStatisticsActivity extends BaseActivity implements IAppl
 
         presenter = new ApplicationStatisticPresenterImpl(this, this);
         presenter.getApplication(true);
-    }
-
-    private void initTheme() {
-        if (APPConfig.getTheme() == 0) {
-            setTheme(R.style.NightTheme);
-        } else {
-            setTheme(R.style.DayTheme);
-        }
     }
 
     public void showApplicationInfo(final ApplicationInfo appInfo) {

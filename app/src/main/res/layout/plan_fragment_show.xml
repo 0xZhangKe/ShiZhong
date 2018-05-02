@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:tag="@string/change_theme_need_refresh_flag"
     android:background="?attr/backgroundColor">
 
     <TextView
@@ -9,6 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textColor="?attr/textColor"
+        android:tag="@string/change_theme_need_refresh_flag"
         android:text="ShowPlan"/>
 
 </FrameLayout>

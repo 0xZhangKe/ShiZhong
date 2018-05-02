@@ -8,14 +8,16 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        app:theme="@style/toolbar_them"
         android:layout_height="wrap_content"
         android:background="?attr/toolbarColor"
         app:titleTextColor="?attr/textColor"
         app:subtitleTextColor="?attr/textColor"
-        android:transitionName="toolbar" />
+        app:theme="@style/toolbar_them"
+        android:transitionName="toolbar"
+        android:tag="@string/change_theme_need_refresh_flag"/>
 
     <View
+        android:id="@+id/view_toolbar_divider"
         android:layout_width="match_parent"
         android:layout_height="3dp"
         android:background="@drawable/toolbar_bottom_line" />

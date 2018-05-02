@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="dayColorPrimary">#897D55</color>
-    <color name="dayColorPrimaryDark">#897D55</color>
+    <color name="dayColorPrimary">#FFFFFF</color>
+    <color name="dayColorPrimaryDark">#FFFFFF</color>
     <color name="dayColorAccent">#CB4042</color>
 
     <color name="nightColorPrimary">#222222</color>
     <color name="nightColorPrimaryDark">#222222</color>
     <color name="nightColorAccent">#E91E63</color>
 
-    <color name="dayStyleBackground">#B4A582</color>
+    <color name="dayStyleBackground">#EBEBEB</color>
     <color name="nightStyleBackground">#303030</color>
 
-    <color name="dayStartColor">#897D55</color>
-    <color name="dayEndColor">#B4A582</color>
+    <color name="dayStartColor">#FFFFFF</color>
+    <color name="dayEndColor">#EBEBEB</color>
     <color name="nightStartColor">#222222</color>
     <color name="nightEndColor">#303030</color>
 

@@ -38,7 +38,7 @@ public abstract class BaseFragment extends Fragment implements IBasePage {
 
     private RoundProgressDialog roundProgressDialog;
     protected Activity mActivity;
-    protected View rootView;
+    protected ViewGroup rootView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,7 +64,7 @@ public abstract class BaseFragment extends Fragment implements IBasePage {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mActivity = getActivity();
         roundProgressDialog = new RoundProgressDialog(mActivity);
-        rootView = inflater.inflate(getLayoutResId(), container, false);
+        rootView = (ViewGroup) inflater.inflate(getLayoutResId(), container, false);
         initView();
         return rootView;
     }

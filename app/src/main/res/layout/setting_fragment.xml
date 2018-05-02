@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/nested_root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/backgroundColor"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:tag="@string/change_theme_need_refresh_flag">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,8 +19,9 @@
             android:background="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:paddingLeft="20dp"
-            android:textColor="?attr/textColor"
-            android:text="豆瓣电影海报" />
+            android:tag="@string/change_theme_need_refresh_flag"
+            android:text="豆瓣电影海报"
+            android:textColor="?attr/textColor" />
 
         <TextView
             android:id="@+id/tv_music_poster"
@@ -26,9 +29,10 @@
             android:layout_height="40dp"
             android:background="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
-            android:textColor="?attr/textColor"
             android:paddingLeft="20dp"
-            android:text="网易云音乐封面" />
+            android:tag="@string/change_theme_need_refresh_flag"
+            android:text="网易云音乐封面"
+            android:textColor="?attr/textColor" />
 
         <TextView
             android:id="@+id/tv_app_manager"
@@ -36,18 +40,36 @@
             android:layout_height="40dp"
             android:background="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
-            android:textColor="?attr/textColor"
             android:paddingLeft="20dp"
-            android:text="应用录" />
+            android:tag="@string/change_theme_need_refresh_flag"
+            android:text="应用录"
+            android:textColor="?attr/textColor" />
 
-        <android.support.v7.widget.SwitchCompat
-            android:id="@+id/switch_compat"
-            android:layout_width="wrap_content"
+        <FrameLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:textColor="?attr/textColor"
-            android:paddingLeft="20dp"
-            android:text="日间   "/>
+            android:layout_marginTop="300dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                android:tag="@string/change_theme_need_refresh_flag"
+                android:text="主题风格"
+                android:textColor="?attr/textColor" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/switch_compat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:paddingLeft="20dp"
+                android:tag="@string/change_theme_need_refresh_flag"
+                android:text="日间   "
+                android:textColor="?attr/textColor" />
+        </FrameLayout>
     </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>

@@ -52,7 +52,6 @@ public class ShowMusicPosterActivity extends BaseActivity implements IShowMusicP
 
     @Override
     protected int getLayoutResId() {
-        initTheme();
         return R.layout.activity_show_music_poster;
     }
 
@@ -74,14 +73,6 @@ public class ShowMusicPosterActivity extends BaseActivity implements IShowMusicP
         adapter.setOnItemClickListener((View view, int position) -> {
             showPosterDialog(posterList.get(position));
         });
-    }
-
-    private void initTheme() {
-        if (APPConfig.getTheme() == 0) {
-            setTheme(R.style.NightTheme);
-        } else {
-            setTheme(R.style.DayTheme);
-        }
     }
 
     private void showPosterDialog(final MusicPosterBean.PlaylistBean.TracksBean bean) {
