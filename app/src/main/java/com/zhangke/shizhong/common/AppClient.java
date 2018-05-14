@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 /**
  * 网络请求客户端
@@ -27,6 +28,7 @@ public class AppClient {
                     doubanRetrofit = new Retrofit.Builder()
                             .client(getHttpClient())
                             .baseUrl("https://www.douban.com/")
+                            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                             .build();
                 }
             }
@@ -41,6 +43,7 @@ public class AppClient {
                     moviePosterRetrofit = new Retrofit.Builder()
                             .client(getHttpClient())
                             .baseUrl("https://movie.douban.com/")
+                            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                             .build();
                 }
             }
@@ -55,6 +58,7 @@ public class AppClient {
                     musicRetrofit = new Retrofit.Builder()
                             .client(getHttpClient())
                             .baseUrl("https://api.imjad.cn/")
+                            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                             .build();
                 }
             }

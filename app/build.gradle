@@ -22,6 +22,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
 }
 
 dependencies {
@@ -46,7 +49,8 @@ dependencies {
     implementation 'com.github.chrisbanes:PhotoView:2.0.0'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.6.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
     implementation 'com.github.0xZhangKe:ZLog:3.0'
     implementation 'org.greenrobot:greendao:3.2.2'
 }
