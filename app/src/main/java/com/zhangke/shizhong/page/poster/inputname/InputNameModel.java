@@ -14,8 +14,10 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
+import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,40 +49,43 @@ public class InputNameModel implements IInputNameContract.Model {
                                NetWorkResponseListener.OnSuccessResponse<List<UserBean>> successResponseListener,
                                NetWorkResponseListener.OnError onErrorListener) {
         ApiStores apiStores = AppClient.doubanRetrofit().create(ApiStores.class);
-        apiStores.getMovieUsers(name, start).subscribeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<DoubanSearchResultUserBean>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-            }
-
-            @Override
-            public void onNext(DoubanSearchResultUserBean resultBean) {
-                try {
-                    if (resultBean != null) {
-                        List<String> userList = resultBean.getItems();
-                        if (userList != null && !userList.isEmpty()) {
-                            for (String s : userList) {
-                                listData.add(new UserBean(s));
-                            }
-                            start += 20;
-                        }
-                        successResponseListener.onSuccess(listData);
-                    } else {
-                        onErrorListener.onError(SZApplication.getInstance().getString(R.string.data_error));
+        apiStores.getMovieUsers(name, start)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<DoubanSearchResultUserBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
                     }
-                } catch (Exception e) {
-                    onErrorListener.onError(SZApplication.getInstance().getString(R.string.data_error));
-                }
-            }
 
-            @Override
-            public void onError(Throwable e) {
-                onErrorListener.onError(SZApplication.getInstance().getString(R.string.internet_error));
-            }
+                    @Override
+                    public void onNext(DoubanSearchResultUserBean resultBean) {
+                        try {
+                            if (resultBean != null) {
+                                List<String> userList = resultBean.getItems();
+                                if (userList != null && !userList.isEmpty()) {
+                                    for (String s : userList) {
+                                        listData.add(new UserBean(s));
+                                    }
+                                    start += 20;
+                                }
+                                successResponseListener.onSuccess(listData);
+                            } else {
+                                onErrorListener.onError(SZApplication.getInstance().getString(R.string.data_error));
+                            }
+                        } catch (Exception e) {
+                            onErrorListener.onError(SZApplication.getInstance().getString(R.string.data_error));
+                        }
+                    }
 
-            @Override
-            public void onComplete() {
-            }
-        });
+                    @Override
+                    public void onError(Throwable e) {
+                        onErrorListener.onError(SZApplication.getInstance().getString(R.string.internet_error));
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
     }
 
     @Override
@@ -89,7 +94,8 @@ public class InputNameModel implements IInputNameContract.Model {
                                  NetWorkResponseListener.OnError onErrorListener) {
         ApiStores apiStores = AppClient.musicRetrofit().create(ApiStores.class);
         apiStores.getMusicUsers(name)
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<MusicSearchResultUserBean>() {
                     @Override
                     public void onSubscribe(Disposable d) {
