@@ -2,6 +2,8 @@ package com.zhangke.shizhong.common;
 
 import com.zhangke.shizhong.page.poster.inputname.DoubanSearchResultUserBean;
 import com.zhangke.shizhong.page.poster.inputname.MusicSearchResultUserBean;
+import com.zhangke.shizhong.page.poster.showposter.MusicAlbumBean;
+import com.zhangke.shizhong.page.poster.showposter.MusicPosterBean;
 
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
@@ -34,7 +36,7 @@ public interface ApiStores {
      * @param start  页码
      */
     @GET("people/{userId}/collect?sort=time&rating=all&filter=all&mode=grid")
-    Call<ResponseBody> getMoviePosters(@Path("userId") String userId, @Query("start") int start);
+    Observable<String> getMoviePosters(@Path("userId") String userId, @Query("start") int start);
 
     /**
      * 搜索云音乐用户
@@ -50,7 +52,7 @@ public interface ApiStores {
      * @param s 用户名
      */
     @GET("cloudmusic/?type=search&search_type=1000")
-    Call<ResponseBody> getAlbumWithUser(@Query("s") String s);
+    Observable<MusicAlbumBean> getAlbumWithUser(@Query("s") String s);
 
     /**
      * 获取歌单中的歌曲列表
@@ -58,5 +60,5 @@ public interface ApiStores {
      * @param id 歌单id
      */
     @GET("cloudmusic/?type=playlist")
-    Call<ResponseBody> getMusicsWithAlbum(@Query("id") String id);
+    Observable<MusicPosterBean> getMusicsWithAlbum(@Query("id") String id);
 }
