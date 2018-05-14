@@ -15,11 +15,11 @@ import org.greenrobot.eventbus.ThreadMode;
  * Created by ZhangKe on 2018/4/15.
  */
 
-public class EditPlanFragment extends BaseFragment {
+public class MadeFragment extends BaseFragment {
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.plan_fragment_edit;
+        return R.layout.fragment_made;
     }
 
     @Override

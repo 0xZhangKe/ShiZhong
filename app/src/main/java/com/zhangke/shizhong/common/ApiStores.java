@@ -17,7 +17,7 @@ import retrofit2.http.Query;
  * Server 接口仓库
  * Created by ZhangKe on 2018/4/18.
  */
-
+//TODO 使用 RXAndroid 实现
 public interface ApiStores {
 
     /**

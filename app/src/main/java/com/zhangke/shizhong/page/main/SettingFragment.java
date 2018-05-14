@@ -1,12 +1,9 @@
 package com.zhangke.shizhong.page.main;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.SwitchCompat;
-import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.zhangke.shizhong.R;
 import com.zhangke.shizhong.common.APPConfig;
@@ -14,7 +11,6 @@ import com.zhangke.shizhong.event.ThemeChangedEvent;
 import com.zhangke.shizhong.page.application.ApplicationStatisticsActivity;
 import com.zhangke.shizhong.page.base.BaseFragment;
 import com.zhangke.shizhong.page.poster.inputname.InputNameActivity;
-import com.zhangke.shizhong.util.ThemeUtils;
 import com.zhangke.shizhong.widget.RippleAnimationView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -40,7 +36,7 @@ public class SettingFragment extends BaseFragment {
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.setting_fragment;
+        return R.layout.fragment_setting;
     }
 
     @Override

@@ -15,18 +15,33 @@ public class Plan {
 
     @Id(autoincrement = true)
     private long id;
-    private String planName;
-    private String planDescription;
+    private String name;
+    private String description;
     private String startDate;
     private String finishDate;
-    @Generated(hash = 392513581)
-    public Plan(long id, String planName, String planDescription, String startDate,
-            String finishDate) {
+    /**
+     * 当前已完成值
+     */
+    private double current;
+    /**
+     * 目标值
+     */
+    private double target;
+    /**
+     * 目标单位
+     */
+    private String unit;
+    @Generated(hash = 1531688657)
+    public Plan(long id, String name, String description, String startDate,
+            String finishDate, double current, double target, String unit) {
         this.id = id;
-        this.planName = planName;
-        this.planDescription = planDescription;
+        this.name = name;
+        this.description = description;
         this.startDate = startDate;
         this.finishDate = finishDate;
+        this.current = current;
+        this.target = target;
+        this.unit = unit;
     }
     @Generated(hash = 592612124)
     public Plan() {
@@ -37,17 +52,17 @@ public class Plan {
     public void setId(long id) {
         this.id = id;
     }
-    public String getPlanName() {
-        return this.planName;
+    public String getName() {
+        return this.name;
     }
-    public void setPlanName(String planName) {
-        this.planName = planName;
+    public void setName(String name) {
+        this.name = name;
     }
-    public String getPlanDescription() {
-        return this.planDescription;
+    public String getDescription() {
+        return this.description;
     }
-    public void setPlanDescription(String planDescription) {
-        this.planDescription = planDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
     public String getStartDate() {
         return this.startDate;
@@ -61,6 +76,23 @@ public class Plan {
     public void setFinishDate(String finishDate) {
         this.finishDate = finishDate;
     }
+    public double getCurrent() {
+        return this.current;
+    }
+    public void setCurrent(double current) {
+        this.current = current;
+    }
+    public double getTarget() {
+        return this.target;
+    }
+    public void setTarget(double target) {
+        this.target = target;
+    }
+    public String getUnit() {
+        return this.unit;
+    }
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
 
-    
 }

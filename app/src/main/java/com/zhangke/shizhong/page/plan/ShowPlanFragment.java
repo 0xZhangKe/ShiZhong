@@ -19,7 +19,7 @@ public class ShowPlanFragment extends BaseFragment {
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.plan_fragment_show;
+        return R.layout.fragment_show;
     }
 
     @Override
@@ -31,7 +31,6 @@ public class ShowPlanFragment extends BaseFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(ThemeChangedEvent event) {
-        ThemeUtils.refreshUI(mActivity, rootView);
     }
 
     @Override

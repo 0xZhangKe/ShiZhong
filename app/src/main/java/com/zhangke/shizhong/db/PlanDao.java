@@ -23,10 +23,13 @@ public class PlanDao extends AbstractDao<Plan, Long> {
      */
     public static class Properties {
         public final static Property Id = new Property(0, long.class, "id", true, "_id");
-        public final static Property PlanName = new Property(1, String.class, "planName", false, "PLAN_NAME");
-        public final static Property PlanDescription = new Property(2, String.class, "planDescription", false, "PLAN_DESCRIPTION");
+        public final static Property Name = new Property(1, String.class, "name", false, "NAME");
+        public final static Property Description = new Property(2, String.class, "description", false, "DESCRIPTION");
         public final static Property StartDate = new Property(3, String.class, "startDate", false, "START_DATE");
         public final static Property FinishDate = new Property(4, String.class, "finishDate", false, "FINISH_DATE");
+        public final static Property Current = new Property(5, double.class, "current", false, "CURRENT");
+        public final static Property Target = new Property(6, double.class, "target", false, "TARGET");
+        public final static Property Unit = new Property(7, String.class, "unit", false, "UNIT");
     }
 
 
@@ -43,10 +46,13 @@ public class PlanDao extends AbstractDao<Plan, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"PLAN\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ," + // 0: id
-                "\"PLAN_NAME\" TEXT," + // 1: planName
-                "\"PLAN_DESCRIPTION\" TEXT," + // 2: planDescription
+                "\"NAME\" TEXT," + // 1: name
+                "\"DESCRIPTION\" TEXT," + // 2: description
                 "\"START_DATE\" TEXT," + // 3: startDate
-                "\"FINISH_DATE\" TEXT);"); // 4: finishDate
+                "\"FINISH_DATE\" TEXT," + // 4: finishDate
+                "\"CURRENT\" REAL NOT NULL ," + // 5: current
+                "\"TARGET\" REAL NOT NULL ," + // 6: target
+                "\"UNIT\" TEXT);"); // 7: unit
     }
 
     /** Drops the underlying database table. */
@@ -60,14 +66,14 @@ public class PlanDao extends AbstractDao<Plan, Long> {
         stmt.clearBindings();
         stmt.bindLong(1, entity.getId());
  
-        String planName = entity.getPlanName();
-        if (planName != null) {
-            stmt.bindString(2, planName);
+        String name = entity.getName();
+        if (name != null) {
+            stmt.bindString(2, name);
         }
  
-        String planDescription = entity.getPlanDescription();
-        if (planDescription != null) {
-            stmt.bindString(3, planDescription);
+        String description = entity.getDescription();
+        if (description != null) {
+            stmt.bindString(3, description);
         }
  
         String startDate = entity.getStartDate();
@@ -78,6 +84,13 @@ public class PlanDao extends AbstractDao<Plan, Long> {
         String finishDate = entity.getFinishDate();
         if (finishDate != null) {
             stmt.bindString(5, finishDate);
+        }
+        stmt.bindDouble(6, entity.getCurrent());
+        stmt.bindDouble(7, entity.getTarget());
+ 
+        String unit = entity.getUnit();
+        if (unit != null) {
+            stmt.bindString(8, unit);
         }
     }
 
@@ -86,14 +99,14 @@ public class PlanDao extends AbstractDao<Plan, Long> {
         stmt.clearBindings();
         stmt.bindLong(1, entity.getId());
  
-        String planName = entity.getPlanName();
-        if (planName != null) {
-            stmt.bindString(2, planName);
+        String name = entity.getName();
+        if (name != null) {
+            stmt.bindString(2, name);
         }
  
-        String planDescription = entity.getPlanDescription();
-        if (planDescription != null) {
-            stmt.bindString(3, planDescription);
+        String description = entity.getDescription();
+        if (description != null) {
+            stmt.bindString(3, description);
         }
  
         String startDate = entity.getStartDate();
@@ -104,6 +117,13 @@ public class PlanDao extends AbstractDao<Plan, Long> {
         String finishDate = entity.getFinishDate();
         if (finishDate != null) {
             stmt.bindString(5, finishDate);
+        }
+        stmt.bindDouble(6, entity.getCurrent());
+        stmt.bindDouble(7, entity.getTarget());
+ 
+        String unit = entity.getUnit();
+        if (unit != null) {
+            stmt.bindString(8, unit);
         }
     }
 
@@ -116,10 +136,13 @@ public class PlanDao extends AbstractDao<Plan, Long> {
     public Plan readEntity(Cursor cursor, int offset) {
         Plan entity = new Plan( //
             cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // planName
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // planDescription
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // name
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // description
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // startDate
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4) // finishDate
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // finishDate
+            cursor.getDouble(offset + 5), // current
+            cursor.getDouble(offset + 6), // target
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7) // unit
         );
         return entity;
     }
@@ -127,10 +150,13 @@ public class PlanDao extends AbstractDao<Plan, Long> {
     @Override
     public void readEntity(Cursor cursor, Plan entity, int offset) {
         entity.setId(cursor.getLong(offset + 0));
-        entity.setPlanName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setPlanDescription(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setDescription(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setStartDate(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setFinishDate(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setCurrent(cursor.getDouble(offset + 5));
+        entity.setTarget(cursor.getDouble(offset + 6));
+        entity.setUnit(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
      }
     
     @Override
