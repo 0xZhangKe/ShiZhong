@@ -10,7 +10,7 @@ import com.zhangke.shizhong.common.APPConfig;
 import com.zhangke.shizhong.event.ThemeChangedEvent;
 import com.zhangke.shizhong.page.application.ApplicationStatisticsActivity;
 import com.zhangke.shizhong.page.base.BaseFragment;
-import com.zhangke.shizhong.page.poster.inputname.InputNameActivity;
+import com.zhangke.shizhong.page.poster.InputNameActivity;
 import com.zhangke.shizhong.widget.RippleAnimationView;
 
 import org.greenrobot.eventbus.EventBus;

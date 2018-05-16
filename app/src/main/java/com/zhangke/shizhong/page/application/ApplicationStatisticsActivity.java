@@ -3,12 +3,9 @@ package com.zhangke.shizhong.page.application;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,10 +25,10 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.zhangke.shizhong.R;
-import com.zhangke.shizhong.common.APPConfig;
+import com.zhangke.shizhong.contract.application.IApplicationStatisticContract;
 import com.zhangke.shizhong.db.ApplicationInfo;
 import com.zhangke.shizhong.page.base.BaseActivity;
-import com.zhangke.shizhong.page.base.BaseRecyclerAdapter;
+import com.zhangke.shizhong.presenter.application.ApplicationStatisticPresenterImpl;
 import com.zhangke.shizhong.util.ApplicationInfoUtil;
 
 import java.util.ArrayList;

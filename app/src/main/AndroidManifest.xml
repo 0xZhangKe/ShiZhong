@@ -20,11 +20,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".page.poster.inputname.InputNameActivity" />
-        <activity android:name=".page.poster.inputname.SearchResultActivity" />
-        <activity android:name=".page.poster.showposter.ShowMusicPosterActivity" />
-        <activity android:name=".page.poster.showposter.ShowMoviePosterActivity" />
-        <activity android:name=".page.poster.showposter.ShowMusicAlbumActivity" />
+        <activity android:name=".page.poster.InputNameActivity" />
+        <activity android:name=".page.poster.SearchResultActivity" />
+        <activity android:name=".page.poster.ShowMusicPosterActivity" />
+        <activity android:name=".page.poster.ShowMoviePosterActivity" />
+        <activity android:name=".page.poster.ShowMusicAlbumActivity" />
         <activity android:name=".page.application.ApplicationStatisticsActivity" />
         <activity android:name=".page.application.SearchApplicationActivity"/>
     </application>

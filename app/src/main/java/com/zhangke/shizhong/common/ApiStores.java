@@ -1,14 +1,11 @@
 package com.zhangke.shizhong.common;
 
-import com.zhangke.shizhong.page.poster.inputname.DoubanSearchResultUserBean;
-import com.zhangke.shizhong.page.poster.inputname.MusicSearchResultUserBean;
-import com.zhangke.shizhong.page.poster.showposter.MusicAlbumBean;
-import com.zhangke.shizhong.page.poster.showposter.MusicPosterBean;
+import com.zhangke.shizhong.model.poster.DoubanSearchResultUserBean;
+import com.zhangke.shizhong.model.poster.MusicSearchResultUserBean;
+import com.zhangke.shizhong.model.poster.MusicAlbumBean;
+import com.zhangke.shizhong.model.poster.MusicPosterBean;
 
 import io.reactivex.Observable;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
