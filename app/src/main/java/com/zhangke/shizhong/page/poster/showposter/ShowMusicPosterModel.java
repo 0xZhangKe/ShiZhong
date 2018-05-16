@@ -22,6 +22,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observer;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,39 +58,49 @@ public class ShowMusicPosterModel implements IShowMusicPosterContract.Model {
     public void getMusicPoster() {
         showMusicPosterView.showRoundProgressDialog();
         ApiStores apiStores = AppClient.musicRetrofit().create(ApiStores.class);
-        Call<ResponseBody> call = apiStores.getMusicsWithAlbum(mAlbumBean.getId());
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                showMusicPosterView.closeRoundProgressDialog();
-                try {
-                    if (response.body() != null) {
-                        MusicPosterBean musicAlbumBean = JSON.parseObject(response.body().string(), new TypeReference<MusicPosterBean>() {
-                        });
-                        if (musicAlbumBean.getCode() == 200) {
-                            if (musicAlbumBean.getPlaylist() != null
-                                    && musicAlbumBean.getPlaylist() != null
-                                    && musicAlbumBean.getPlaylist().getTracks() != null) {
-                                listData.addAll(musicAlbumBean.getPlaylist().getTracks());
-                            }
-                            showMusicPosterView.notifyDataChanged(listData);
-                        } else {
-                            showMusicPosterView.showNoActionSnackbar(SZApplication.getInstance().getString(R.string.internet_error));
-                        }
-                    } else {
-                        showMusicPosterView.showNoActionSnackbar(SZApplication.getInstance().getString(R.string.data_error));
-                    }
-                } catch (IOException e) {
-                    showMusicPosterView.showNoActionSnackbar(SZApplication.getInstance().getString(R.string.data_error));
-                }
-            }
+        apiStores.getMusicsWithAlbum(mAlbumBean.getId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<MusicPosterBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                showMusicPosterView.closeRoundProgressDialog();
-                showMusicPosterView.showNoActionSnackbar(SZApplication.getInstance().getString(R.string.internet_error));
-            }
-        });
+                    }
+
+                    @Override
+                    public void onNext(MusicPosterBean musicAlbumBean) {
+                        showMusicPosterView.closeRoundProgressDialog();
+                        try {
+                            if (musicAlbumBean != null) {
+                                if (musicAlbumBean.getCode() == 200) {
+                                    if (musicAlbumBean.getPlaylist() != null
+                                            && musicAlbumBean.getPlaylist() != null
+                                            && musicAlbumBean.getPlaylist().getTracks() != null) {
+                                        listData.addAll(musicAlbumBean.getPlaylist().getTracks());
+                                    }
+                                    showMusicPosterView.notifyDataChanged(listData);
+                                } else {
+                                    showMusicPosterView.showNoActionSnackbar(SZApplication.getInstance().getString(R.string.internet_error));
+                                }
+                            } else {
+                                showMusicPosterView.showNoActionSnackbar(SZApplication.getInstance().getString(R.string.data_error));
+                            }
+                        } catch (Exception e) {
+                            showMusicPosterView.showNoActionSnackbar(SZApplication.getInstance().getString(R.string.data_error));
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        showMusicPosterView.closeRoundProgressDialog();
+                        showMusicPosterView.showNoActionSnackbar(SZApplication.getInstance().getString(R.string.internet_error));
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     @Override

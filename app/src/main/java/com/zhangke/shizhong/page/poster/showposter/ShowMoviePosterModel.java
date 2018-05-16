@@ -15,6 +15,11 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import io.reactivex.Observer;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -50,33 +55,44 @@ public class ShowMoviePosterModel implements IShowMoviePosterContract.Model {
         performMoviePosterRequest();
     }
 
-    private void performMoviePosterRequest(){
+    private void performMoviePosterRequest() {
         ApiStores apiStores = AppClient.moviePosterRetrofit().create(ApiStores.class);
-        Call<ResponseBody> call = apiStores.getMoviePosters(userId, start);
-        start += 15;
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    if (response.body() != null) {
-                        String responseBody = response.body().string();
-                        analysisPosterFromHtml(responseBody);
-                    } else {
-                        showMovieView.closeRoundProgressDialog();
-                        showMovieView.showNoActionSnackbar(SZApplication.getInstance().getString(R.string.data_error));
-                    }
-                } catch (IOException e) {
-                    showMovieView.closeRoundProgressDialog();
-                    showMovieView.showNoActionSnackbar(SZApplication.getInstance().getString(R.string.data_error));
-                }
-            }
+        apiStores.getMoviePosters(userId, start)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<String>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                showMovieView.closeRoundProgressDialog();
-                showMovieView.showNoActionSnackbar(SZApplication.getInstance().getString(R.string.internet_error));
-            }
-        });
+                    }
+
+                    @Override
+                    public void onNext(String response) {
+                        try {
+                            if (!TextUtils.isEmpty(response)) {
+                                analysisPosterFromHtml(response);
+                                start += 15;
+                            } else {
+                                showMovieView.closeRoundProgressDialog();
+                                showMovieView.showNoActionSnackbar(SZApplication.getInstance().getString(R.string.data_error));
+                            }
+                        } catch (Exception e) {
+                            showMovieView.closeRoundProgressDialog();
+                            showMovieView.showNoActionSnackbar(SZApplication.getInstance().getString(R.string.data_error));
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        showMovieView.closeRoundProgressDialog();
+                        showMovieView.showNoActionSnackbar(SZApplication.getInstance().getString(R.string.internet_error));
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     private void analysisPosterFromHtml(String htmlText) {

@@ -1,11 +1,15 @@
 package com.zhangke.shizhong.common;
 
+import com.zhangke.shizhong.page.poster.inputname.DoubanSearchResultUserBean;
+import com.zhangke.shizhong.page.poster.inputname.MusicSearchResultUserBean;
+import com.zhangke.shizhong.page.poster.showposter.MusicAlbumBean;
+import com.zhangke.shizhong.page.poster.showposter.MusicPosterBean;
+
+import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
-import retrofit2.http.Headers;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -23,7 +27,7 @@ public interface ApiStores {
      * @param start 页码
      */
     @GET("j/search?cat=1005")
-    Call<ResponseBody> getMovieUsers(@Query("q") String q, @Query("start") int start);
+    Observable<DoubanSearchResultUserBean> getMovieUsers(@Query("q") String q, @Query("start") int start);
 
     /**
      * 根据用户ID搜索标记的电影
@@ -32,7 +36,7 @@ public interface ApiStores {
      * @param start  页码
      */
     @GET("people/{userId}/collect?sort=time&rating=all&filter=all&mode=grid")
-    Call<ResponseBody> getMoviePosters(@Path("userId") String userId, @Query("start") int start);
+    Observable<String> getMoviePosters(@Path("userId") String userId, @Query("start") int start);
 
     /**
      * 搜索云音乐用户
@@ -40,7 +44,7 @@ public interface ApiStores {
      * @param s 用户名
      */
     @GET("cloudmusic/?type=search&search_type=1002")
-    Call<ResponseBody> getMusicUsers(@Query("s") String s);
+    Observable<MusicSearchResultUserBean> getMusicUsers(@Query("s") String s);
 
     /**
      * 获取云音乐用户创建的歌单
@@ -48,7 +52,7 @@ public interface ApiStores {
      * @param s 用户名
      */
     @GET("cloudmusic/?type=search&search_type=1000")
-    Call<ResponseBody> getAlbumWithUser(@Query("s") String s);
+    Observable<MusicAlbumBean> getAlbumWithUser(@Query("s") String s);
 
     /**
      * 获取歌单中的歌曲列表
@@ -56,5 +60,5 @@ public interface ApiStores {
      * @param id 歌单id
      */
     @GET("cloudmusic/?type=playlist")
-    Call<ResponseBody> getMusicsWithAlbum(@Query("id") String id);
+    Observable<MusicPosterBean> getMusicsWithAlbum(@Query("id") String id);
 }
