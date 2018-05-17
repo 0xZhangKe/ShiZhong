@@ -1,6 +1,7 @@
 package com.zhangke.shizhong.page.base;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -180,5 +181,11 @@ public abstract class BaseFragment extends Fragment implements IBasePage {
     public void showNoActionSnackbar(String msg) {
         snackbar = Snackbar.make(rootView.findViewById(R.id.coordinator), msg, Snackbar.LENGTH_SHORT);
         snackbar.show();
+    }
+
+    @Nullable
+    @Override
+    public Context getContext() {
+        return mActivity;
     }
 }

@@ -3,6 +3,9 @@ package com.zhangke.shizhong.db;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.ToMany;
+
+import java.util.List;
 
 /**
  *
@@ -14,7 +17,7 @@ import org.greenrobot.greendao.annotation.Generated;
 public class Plan {
 
     @Id(autoincrement = true)
-    private long id;
+    private Long id;
     private String name;
     private String description;
     private String startDate;
@@ -31,8 +34,12 @@ public class Plan {
      * 目标单位
      */
     private String unit;
+
+    @ToMany(referencedJoinProperty = "parentPlanId")
+    private List<ShortPlan> shortPlanList;
+
     @Generated(hash = 1531688657)
-    public Plan(long id, String name, String description, String startDate,
+    public Plan(Long id, String name, String description, String startDate,
             String finishDate, double current, double target, String unit) {
         this.id = id;
         this.name = name;
@@ -46,10 +53,10 @@ public class Plan {
     @Generated(hash = 592612124)
     public Plan() {
     }
-    public long getId() {
+    public Long getId() {
         return this.id;
     }
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
     public String getName() {

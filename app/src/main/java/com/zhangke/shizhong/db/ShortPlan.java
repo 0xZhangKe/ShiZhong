@@ -14,8 +14,8 @@ import org.greenrobot.greendao.annotation.Generated;
 public class ShortPlan {
 
     @Id(autoincrement = true)
-    private long id;
-    private long parentPlanId;
+    private Long id;
+    private Long parentPlanId;
     private int cycleType;
     /**
      * 当前已完成值
@@ -27,7 +27,7 @@ public class ShortPlan {
     private double target;
     private String unit;
     @Generated(hash = 1631705811)
-    public ShortPlan(long id, long parentPlanId, int cycleType, double current,
+    public ShortPlan(Long id, Long parentPlanId, int cycleType, double current,
             double target, String unit) {
         this.id = id;
         this.parentPlanId = parentPlanId;
@@ -39,16 +39,16 @@ public class ShortPlan {
     @Generated(hash = 1952916159)
     public ShortPlan() {
     }
-    public long getId() {
+    public Long getId() {
         return this.id;
     }
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
-    public long getParentPlanId() {
+    public Long getParentPlanId() {
         return this.parentPlanId;
     }
-    public void setParentPlanId(long parentPlanId) {
+    public void setParentPlanId(Long parentPlanId) {
         this.parentPlanId = parentPlanId;
     }
     public int getCycleType() {

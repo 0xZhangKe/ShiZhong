@@ -1,5 +1,6 @@
 package com.zhangke.shizhong.page.base;
 
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -128,6 +129,11 @@ public abstract class BaseActivity extends AppCompatActivity implements IBasePag
     public void showNoActionSnackbar(String msg) {
         snackbar = Snackbar.make(findViewById(R.id.coordinator), msg, Snackbar.LENGTH_SHORT);
         snackbar.show();
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
     }
 
     private Map<Short, Runnable> requestPermissionMap = new HashMap<>();

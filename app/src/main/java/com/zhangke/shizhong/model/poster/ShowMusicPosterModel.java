@@ -39,7 +39,7 @@ public class ShowMusicPosterModel implements IShowMusicPosterContract.Model {
 
     private List<MusicPosterBean.PlaylistBean.TracksBean> listData = new ArrayList<>();
 
-    ShowMusicPosterModel(Context context,
+    public ShowMusicPosterModel(Context context,
                          IShowMusicPosterContract.View showMusicPosterView,
                          MusicAlbumBean.ResultBean.PlaylistsBean mAlbumBean) {
         this.context = context;

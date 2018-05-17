@@ -79,7 +79,7 @@ public class SearchResultActivity extends BaseActivity implements IInputNameCont
             inputNamePresenter.loadMore();
         });
 
-        userAdapter.setOnItemClickListener((View view, int position) -> {
+        userAdapter.setOnItemClickListener(position -> {
             checkAndRequestPermission(() -> {
                 Intent intent = new Intent(this, type == 0 ? ShowMoviePosterActivity.class : ShowMusicAlbumActivity.class);
                 intent.putExtra(INTENT_ARG_01, userList.get(position));

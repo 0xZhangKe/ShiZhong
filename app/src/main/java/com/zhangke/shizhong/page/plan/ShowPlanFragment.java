@@ -1,13 +1,18 @@
 package com.zhangke.shizhong.page.plan;
 
 import com.zhangke.shizhong.R;
+import com.zhangke.shizhong.contract.plan.IShowPlanContract;
+import com.zhangke.shizhong.db.Plan;
 import com.zhangke.shizhong.event.ThemeChangedEvent;
 import com.zhangke.shizhong.page.base.BaseFragment;
-import com.zhangke.shizhong.util.ThemeUtils;
+import com.zhangke.shizhong.presenter.plan.ShowPlanPresenterImpl;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 显示计划界面
@@ -15,7 +20,10 @@ import org.greenrobot.eventbus.ThreadMode;
  * Created by ZhangKe on 2018/4/15.
  */
 
-public class ShowPlanFragment extends BaseFragment {
+public class ShowPlanFragment extends BaseFragment implements IShowPlanContract.View{
+
+    private IShowPlanContract.Presenter showPlanPresenter;
+    private List<Plan> planList = new ArrayList<>();
 
     @Override
     protected int getLayoutResId() {
@@ -27,6 +35,21 @@ public class ShowPlanFragment extends BaseFragment {
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
+
+        showPlanPresenter = new ShowPlanPresenterImpl(this);
+    }
+
+    @Override
+    protected void onFragmentFirstVisible() {
+        super.onFragmentFirstVisible();
+        showPlanPresenter.getPlanData();
+    }
+
+    @Override
+    public void notifyPlanDataChanged(List<Plan> list) {
+        planList.clear();
+        planList.addAll(list);
+        //todo notify adapter
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

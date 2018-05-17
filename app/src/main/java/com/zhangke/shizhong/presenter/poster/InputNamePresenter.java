@@ -28,7 +28,7 @@ public class InputNamePresenter implements IInputNameContract.Presenter {
 
     private String searchName;
 
-    InputNamePresenter(Context context, IInputNameContract.View inputNameView, int type) {
+    public InputNamePresenter(Context context, IInputNameContract.View inputNameView, int type) {
         this.context = context;
         this.inputNameView = inputNameView;
         this.type = type;

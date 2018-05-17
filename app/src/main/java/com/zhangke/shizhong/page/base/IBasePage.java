@@ -1,5 +1,6 @@
 package com.zhangke.shizhong.page.base;
 
+import android.content.Context;
 import android.view.View;
 
 /**
@@ -30,4 +31,6 @@ public interface IBasePage {
      * 如果需要调用此方法，布局文件中必须包含 R.id.coordinator 控件
      */
     void showNoActionSnackbar(String msg);
+
+    Context getContext();
 }

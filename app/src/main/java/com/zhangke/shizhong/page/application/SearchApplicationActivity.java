@@ -89,7 +89,7 @@ public class SearchApplicationActivity extends BaseActivity {
         adapter = new ApplicationListAdapter(this, listData);
         recyclerView.setAdapter(adapter);
 
-        adapter.setOnItemClickListener((view, position) -> {
+        adapter.setOnItemClickListener(position -> {
             showApplicationInfo(listData.get(position));
             search();
         });

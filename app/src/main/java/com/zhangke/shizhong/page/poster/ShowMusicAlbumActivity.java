@@ -65,7 +65,7 @@ public class ShowMusicAlbumActivity extends BaseActivity implements IShowMusicAl
         recyclerView.setLayoutManager(new MultiItemLayoutManger(2));
         recyclerView.setAdapter(adapter);
 
-        adapter.setOnItemClickListener((View view, int position) -> {
+        adapter.setOnItemClickListener(position -> {
             MusicAlbumBean.ResultBean.PlaylistsBean item = listData.get(position);
             if (item.getItemType() == MultiItemLayoutManger.MENU_ITEM_TYPE) {
                 Intent intent = new Intent(ShowMusicAlbumActivity.this, ShowMusicPosterActivity.class);

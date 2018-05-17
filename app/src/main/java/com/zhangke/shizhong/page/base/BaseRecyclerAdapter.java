@@ -38,12 +38,9 @@ public abstract class BaseRecyclerAdapter<T extends BaseRecyclerAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ViewHolder(final View itemView) {
             super(itemView);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (BaseRecyclerAdapter.this.onItemClickListener != null) {
-                        onItemClickListener.onItemClick(itemView, getAdapterPosition());
-                    }
+            itemView.setOnClickListener(v -> {
+                if (BaseRecyclerAdapter.this.onItemClickListener != null) {
+                    onItemClickListener.onItemClick(getAdapterPosition());
                 }
             });
         }
@@ -51,9 +48,8 @@ public abstract class BaseRecyclerAdapter<T extends BaseRecyclerAdapter.ViewHold
 
     public interface OnRecyclerItemClickListener {
         /**
-         * @param view     被点击的 view
          * @param position 点击 position
          */
-        void onItemClick(View view, int position);
+        void onItemClick(int position);
     }
 }

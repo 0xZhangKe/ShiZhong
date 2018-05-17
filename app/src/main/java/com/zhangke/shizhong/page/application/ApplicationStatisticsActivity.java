@@ -92,7 +92,7 @@ public class ApplicationStatisticsActivity extends BaseActivity implements IAppl
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
 
-        adapter.setOnItemClickListener((View view, int position) -> {
+        adapter.setOnItemClickListener(position -> {
             showApplicationInfo(listData.get(position));
         });
 

@@ -68,7 +68,7 @@ public class ShowMusicPosterActivity extends BaseActivity implements IShowMusicP
         showMoviePosterModel = new ShowMusicPosterModel(this, this, mAlbumBean);
         showMoviePosterModel.getMusicPoster();
 
-        adapter.setOnItemClickListener((View view, int position) -> {
+        adapter.setOnItemClickListener(position -> {
             showPosterDialog(posterList.get(position));
         });
     }
