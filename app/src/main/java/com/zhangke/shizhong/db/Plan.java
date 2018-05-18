@@ -6,6 +6,7 @@ import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.ToMany;
 
 import java.util.List;
+import org.greenrobot.greendao.DaoException;
 
 /**
  *
@@ -37,8 +38,14 @@ public class Plan {
 
     @ToMany(referencedJoinProperty = "parentPlanId")
     private List<ShortPlan> shortPlanList;
+    /** Used to resolve relations */
+    @Generated(hash = 2040040024)
+    private transient DaoSession daoSession;
+    /** Used for active entity operations. */
+    @Generated(hash = 317818512)
+    private transient PlanDao myDao;
 
-    @Generated(hash = 1531688657)
+    @Generated(hash = 154042719)
     public Plan(Long id, String name, String description, String startDate,
             String finishDate, double current, double target, String unit) {
         this.id = id;
@@ -50,56 +57,145 @@ public class Plan {
         this.target = target;
         this.unit = unit;
     }
+
     @Generated(hash = 592612124)
     public Plan() {
     }
+
     public Long getId() {
         return this.id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
+
     public String getName() {
         return this.name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public String getDescription() {
         return this.description;
     }
+
     public void setDescription(String description) {
         this.description = description;
     }
+
     public String getStartDate() {
         return this.startDate;
     }
+
     public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
+
     public String getFinishDate() {
         return this.finishDate;
     }
+
     public void setFinishDate(String finishDate) {
         this.finishDate = finishDate;
     }
+
     public double getCurrent() {
         return this.current;
     }
+
     public void setCurrent(double current) {
         this.current = current;
     }
+
     public double getTarget() {
         return this.target;
     }
+
     public void setTarget(double target) {
         this.target = target;
     }
+
     public String getUnit() {
         return this.unit;
     }
+
     public void setUnit(String unit) {
         this.unit = unit;
+    }
+
+    /**
+     * To-many relationship, resolved on first access (and after reset).
+     * Changes to to-many relations are not persisted, make changes to the target entity.
+     */
+    @Generated(hash = 1224703918)
+    public List<ShortPlan> getShortPlanList() {
+        if (shortPlanList == null) {
+            final DaoSession daoSession = this.daoSession;
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            ShortPlanDao targetDao = daoSession.getShortPlanDao();
+            List<ShortPlan> shortPlanListNew = targetDao
+                    ._queryPlan_ShortPlanList(id);
+            synchronized (this) {
+                if (shortPlanList == null) {
+                    shortPlanList = shortPlanListNew;
+                }
+            }
+        }
+        return shortPlanList;
+    }
+
+    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    @Generated(hash = 334708677)
+    public synchronized void resetShortPlanList() {
+        shortPlanList = null;
+    }
+
+    /**
+     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#delete(Object)}.
+     * Entity must attached to an entity context.
+     */
+    @Generated(hash = 128553479)
+    public void delete() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
+        }
+        myDao.delete(this);
+    }
+
+    /**
+     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#refresh(Object)}.
+     * Entity must attached to an entity context.
+     */
+    @Generated(hash = 1942392019)
+    public void refresh() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
+        }
+        myDao.refresh(this);
+    }
+
+    /**
+     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#update(Object)}.
+     * Entity must attached to an entity context.
+     */
+    @Generated(hash = 713229351)
+    public void update() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
+        }
+        myDao.update(this);
+    }
+
+    /** called by internal mechanisms, do not call yourself. */
+    @Generated(hash = 2098727688)
+    public void __setDaoSession(DaoSession daoSession) {
+        this.daoSession = daoSession;
+        myDao = daoSession != null ? daoSession.getPlanDao() : null;
     }
 
 }

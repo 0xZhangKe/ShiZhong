@@ -22,7 +22,7 @@ public class PlanDao extends AbstractDao<Plan, Long> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Id = new Property(0, long.class, "id", true, "_id");
+        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Name = new Property(1, String.class, "name", false, "NAME");
         public final static Property Description = new Property(2, String.class, "description", false, "DESCRIPTION");
         public final static Property StartDate = new Property(3, String.class, "startDate", false, "START_DATE");
@@ -32,6 +32,8 @@ public class PlanDao extends AbstractDao<Plan, Long> {
         public final static Property Unit = new Property(7, String.class, "unit", false, "UNIT");
     }
 
+    private DaoSession daoSession;
+
 
     public PlanDao(DaoConfig config) {
         super(config);
@@ -39,13 +41,14 @@ public class PlanDao extends AbstractDao<Plan, Long> {
     
     public PlanDao(DaoConfig config, DaoSession daoSession) {
         super(config, daoSession);
+        this.daoSession = daoSession;
     }
 
     /** Creates the underlying database table. */
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"PLAN\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ," + // 0: id
+                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"NAME\" TEXT," + // 1: name
                 "\"DESCRIPTION\" TEXT," + // 2: description
                 "\"START_DATE\" TEXT," + // 3: startDate
@@ -64,7 +67,11 @@ public class PlanDao extends AbstractDao<Plan, Long> {
     @Override
     protected final void bindValues(DatabaseStatement stmt, Plan entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getId());
+ 
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
  
         String name = entity.getName();
         if (name != null) {
@@ -97,7 +104,11 @@ public class PlanDao extends AbstractDao<Plan, Long> {
     @Override
     protected final void bindValues(SQLiteStatement stmt, Plan entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getId());
+ 
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
  
         String name = entity.getName();
         if (name != null) {
@@ -128,14 +139,20 @@ public class PlanDao extends AbstractDao<Plan, Long> {
     }
 
     @Override
+    protected final void attachEntity(Plan entity) {
+        super.attachEntity(entity);
+        entity.__setDaoSession(daoSession);
+    }
+
+    @Override
     public Long readKey(Cursor cursor, int offset) {
-        return cursor.getLong(offset + 0);
+        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
     }    
 
     @Override
     public Plan readEntity(Cursor cursor, int offset) {
         Plan entity = new Plan( //
-            cursor.getLong(offset + 0), // id
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // name
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // description
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // startDate
@@ -149,7 +166,7 @@ public class PlanDao extends AbstractDao<Plan, Long> {
      
     @Override
     public void readEntity(Cursor cursor, Plan entity, int offset) {
-        entity.setId(cursor.getLong(offset + 0));
+        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setDescription(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setStartDate(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
@@ -176,7 +193,7 @@ public class PlanDao extends AbstractDao<Plan, Long> {
 
     @Override
     public boolean hasKey(Plan entity) {
-        throw new UnsupportedOperationException("Unsupported for entities with a non-null key");
+        return entity.getId() != null;
     }
 
     @Override

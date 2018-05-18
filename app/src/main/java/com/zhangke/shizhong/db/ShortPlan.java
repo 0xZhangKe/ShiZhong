@@ -26,7 +26,7 @@ public class ShortPlan {
      */
     private double target;
     private String unit;
-    @Generated(hash = 1631705811)
+    @Generated(hash = 798831425)
     public ShortPlan(Long id, Long parentPlanId, int cycleType, double current,
             double target, String unit) {
         this.id = id;
@@ -76,5 +76,5 @@ public class ShortPlan {
         this.unit = unit;
     }
 
-
+    
 }
