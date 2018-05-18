@@ -25,7 +25,7 @@ public class GlideLoadBitmap implements ILoadBitmap {
     private Context mContext;
     private ISaveFileEngine saveFileEngine;
 
-    GlideLoadBitmap(Context context, ISaveFileEngine saveFileEngine) {
+    public GlideLoadBitmap(Context context, ISaveFileEngine saveFileEngine) {
         this.mContext = context;
         this.saveFileEngine = saveFileEngine;
     }

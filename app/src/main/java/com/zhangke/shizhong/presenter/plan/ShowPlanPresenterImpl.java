@@ -6,6 +6,8 @@ import com.zhangke.shizhong.db.DBManager;
 import com.zhangke.shizhong.db.Plan;
 import com.zhangke.shizhong.db.PlanDao;
 
+import org.greenrobot.greendao.query.Query;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +44,7 @@ public class ShowPlanPresenterImpl implements IShowPlanContract.Presenter {
     private void initObservable() {
         planObservable =
                 Observable.create((ObservableEmitter<List<Plan>> e) -> {
-                    e.onNext(mPlanDao.loadAll());
+                    e.onNext(mPlanDao.queryBuilder().build().list());
                     e.onComplete();
                 }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
