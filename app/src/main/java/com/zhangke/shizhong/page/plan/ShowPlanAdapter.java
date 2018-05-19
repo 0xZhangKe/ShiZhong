@@ -16,7 +16,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-
 /**
  * 计划列表的适配器
  * Created by ZhangKe on 2018/5/17.

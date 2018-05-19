@@ -37,7 +37,7 @@ public class Plan {
     private String unit;
 
     @ToMany(referencedJoinProperty = "parentPlanId")
-    private List<ShortPlan> shortPlanList;
+    private List<ClockRecord> clockRecords;
     /** Used to resolve relations */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
@@ -130,29 +130,29 @@ public class Plan {
      * To-many relationship, resolved on first access (and after reset).
      * Changes to to-many relations are not persisted, make changes to the target entity.
      */
-    @Generated(hash = 1224703918)
-    public List<ShortPlan> getShortPlanList() {
-        if (shortPlanList == null) {
+    @Generated(hash = 1492071762)
+    public List<ClockRecord> getClockRecords() {
+        if (clockRecords == null) {
             final DaoSession daoSession = this.daoSession;
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
             }
-            ShortPlanDao targetDao = daoSession.getShortPlanDao();
-            List<ShortPlan> shortPlanListNew = targetDao
-                    ._queryPlan_ShortPlanList(id);
+            ClockRecordDao targetDao = daoSession.getClockRecordDao();
+            List<ClockRecord> clockRecordsNew = targetDao
+                    ._queryPlan_ClockRecords(id);
             synchronized (this) {
-                if (shortPlanList == null) {
-                    shortPlanList = shortPlanListNew;
+                if (clockRecords == null) {
+                    clockRecords = clockRecordsNew;
                 }
             }
         }
-        return shortPlanList;
+        return clockRecords;
     }
 
     /** Resets a to-many relationship, making the next get call to query for a fresh result. */
-    @Generated(hash = 334708677)
-    public synchronized void resetShortPlanList() {
-        shortPlanList = null;
+    @Generated(hash = 501215887)
+    public synchronized void resetClockRecords() {
+        clockRecords = null;
     }
 
     /**
@@ -197,5 +197,5 @@ public class Plan {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getPlanDao() : null;
     }
-
+    
 }
