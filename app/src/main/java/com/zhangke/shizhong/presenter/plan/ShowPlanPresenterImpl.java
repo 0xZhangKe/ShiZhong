@@ -5,18 +5,25 @@ import com.zhangke.shizhong.contract.plan.IShowPlanContract;
 import com.zhangke.shizhong.db.DBManager;
 import com.zhangke.shizhong.db.Plan;
 import com.zhangke.shizhong.db.PlanDao;
+import com.zhangke.shizhong.model.plan.ShowPlanEntity;
 
 import org.greenrobot.greendao.query.Query;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.BiConsumer;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * 显示计划界面的业务逻辑及数据层
@@ -28,9 +35,9 @@ public class ShowPlanPresenterImpl implements IShowPlanContract.Presenter {
     private IShowPlanContract.View mShowPlanView;
 
     private PlanDao mPlanDao;
-    private List<Plan> mPlanList = new ArrayList<>();
+    private List<ShowPlanEntity> mPlanList = new ArrayList<>();
 
-    private Observable<List<Plan>> planObservable;
+    private Observable<List<ShowPlanEntity>> planObservable;
     private Disposable planDisposable;
 
     public ShowPlanPresenterImpl(IShowPlanContract.View mShowPlanView) {
@@ -43,8 +50,15 @@ public class ShowPlanPresenterImpl implements IShowPlanContract.Presenter {
 
     private void initObservable() {
         planObservable =
-                Observable.create((ObservableEmitter<List<Plan>> e) -> {
-                    e.onNext(mPlanDao.queryBuilder().build().list());
+                Observable.create((ObservableEmitter<List<ShowPlanEntity>> e) -> {
+                    List<Plan> plans = mPlanDao.queryBuilder().build().list();
+                    List<ShowPlanEntity> showPlanList =
+                            Observable.fromIterable(plans)
+                                    .map(plan -> new ShowPlanEntity(0, plan))
+                                    .toList()
+                                    .blockingGet();
+                    showPlanList.add(new ShowPlanEntity(1, null));
+                    e.onNext(showPlanList);
                     e.onComplete();
                 }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
@@ -54,14 +68,14 @@ public class ShowPlanPresenterImpl implements IShowPlanContract.Presenter {
         mShowPlanView.showRoundProgressDialog();
         mPlanList.clear();
 
-        planObservable.subscribe(new Observer<List<Plan>>() {
+        planObservable.subscribe(new Observer<List<ShowPlanEntity>>() {
             @Override
             public void onSubscribe(Disposable d) {
                 planDisposable = d;
             }
 
             @Override
-            public void onNext(List<Plan> value) {
+            public void onNext(List<ShowPlanEntity> value) {
                 mPlanList.addAll(value);
                 mShowPlanView.notifyPlanDataChanged(mPlanList);
                 mShowPlanView.closeRoundProgressDialog();

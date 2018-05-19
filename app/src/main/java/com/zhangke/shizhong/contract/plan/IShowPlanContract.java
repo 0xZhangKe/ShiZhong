@@ -1,6 +1,6 @@
 package com.zhangke.shizhong.contract.plan;
 
-import com.zhangke.shizhong.db.Plan;
+import com.zhangke.shizhong.model.plan.ShowPlanEntity;
 import com.zhangke.shizhong.page.base.IBasePage;
 
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 public interface IShowPlanContract {
 
     interface View extends IBasePage{
-        void notifyPlanDataChanged(List<Plan> planList);
+        void notifyPlanDataChanged(List<ShowPlanEntity> planList);
     }
 
     interface Presenter{
