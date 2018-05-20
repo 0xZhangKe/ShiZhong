@@ -6,10 +6,10 @@ import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.ToMany;
 
 import java.util.List;
+
 import org.greenrobot.greendao.DaoException;
 
 /**
- *
  * 计划实体
  * Created by ZhangKe on 2018/4/26.
  */
@@ -36,18 +36,40 @@ public class Plan {
      */
     private String unit;
 
+    /**
+     * 周期计划是否已开启
+     */
+    private boolean periodIsOpen = false;
+
+    /**
+     * 周期计划类型：</br>
+     * 0-日；</br>
+     * 1-周；</br>
+     * 2-月。
+     */
+    private int periodPlanType;
+    /**
+     * 每个周期计划的目标值
+     */
+    private double periodPlanTarget;
+
     @ToMany(referencedJoinProperty = "parentPlanId")
     private List<ClockRecord> clockRecords;
-    /** Used to resolve relations */
+    /**
+     * Used to resolve relations
+     */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
-    /** Used for active entity operations. */
+    /**
+     * Used for active entity operations.
+     */
     @Generated(hash = 317818512)
     private transient PlanDao myDao;
 
-    @Generated(hash = 154042719)
-    public Plan(Long id, String name, String description, String startDate,
-            String finishDate, double current, double target, String unit) {
+    @Generated(hash = 547138280)
+    public Plan(Long id, String name, String description, String startDate, String finishDate,
+            double current, double target, String unit, boolean periodIsOpen,
+            int periodPlanType, double periodPlanTarget) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -56,6 +78,9 @@ public class Plan {
         this.current = current;
         this.target = target;
         this.unit = unit;
+        this.periodIsOpen = periodIsOpen;
+        this.periodPlanType = periodPlanType;
+        this.periodPlanTarget = periodPlanTarget;
     }
 
     @Generated(hash = 592612124)
@@ -149,7 +174,9 @@ public class Plan {
         return clockRecords;
     }
 
-    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
     @Generated(hash = 501215887)
     public synchronized void resetClockRecords() {
         clockRecords = null;
@@ -191,11 +218,37 @@ public class Plan {
         myDao.update(this);
     }
 
-    /** called by internal mechanisms, do not call yourself. */
+    /**
+     * called by internal mechanisms, do not call yourself.
+     */
     @Generated(hash = 2098727688)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getPlanDao() : null;
     }
-    
+
+    public boolean getPeriodIsOpen() {
+        return this.periodIsOpen;
+    }
+
+    public void setPeriodIsOpen(boolean periodIsOpen) {
+        this.periodIsOpen = periodIsOpen;
+    }
+
+    public int getPeriodPlanType() {
+        return this.periodPlanType;
+    }
+
+    public void setPeriodPlanType(int periodPlanType) {
+        this.periodPlanType = periodPlanType;
+    }
+
+    public double getPeriodPlanTarget() {
+        return this.periodPlanTarget;
+    }
+
+    public void setPeriodPlanTarget(double periodPlanTarget) {
+        this.periodPlanTarget = periodPlanTarget;
+    }
+
 }

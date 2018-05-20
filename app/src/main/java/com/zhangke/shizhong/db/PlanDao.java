@@ -30,6 +30,9 @@ public class PlanDao extends AbstractDao<Plan, Long> {
         public final static Property Current = new Property(5, double.class, "current", false, "CURRENT");
         public final static Property Target = new Property(6, double.class, "target", false, "TARGET");
         public final static Property Unit = new Property(7, String.class, "unit", false, "UNIT");
+        public final static Property PeriodIsOpen = new Property(8, boolean.class, "periodIsOpen", false, "PERIOD_IS_OPEN");
+        public final static Property PeriodPlanType = new Property(9, int.class, "periodPlanType", false, "PERIOD_PLAN_TYPE");
+        public final static Property PeriodPlanTarget = new Property(10, double.class, "periodPlanTarget", false, "PERIOD_PLAN_TARGET");
     }
 
     private DaoSession daoSession;
@@ -55,7 +58,10 @@ public class PlanDao extends AbstractDao<Plan, Long> {
                 "\"FINISH_DATE\" TEXT," + // 4: finishDate
                 "\"CURRENT\" REAL NOT NULL ," + // 5: current
                 "\"TARGET\" REAL NOT NULL ," + // 6: target
-                "\"UNIT\" TEXT);"); // 7: unit
+                "\"UNIT\" TEXT," + // 7: unit
+                "\"PERIOD_IS_OPEN\" INTEGER NOT NULL ," + // 8: periodIsOpen
+                "\"PERIOD_PLAN_TYPE\" INTEGER NOT NULL ," + // 9: periodPlanType
+                "\"PERIOD_PLAN_TARGET\" REAL NOT NULL );"); // 10: periodPlanTarget
     }
 
     /** Drops the underlying database table. */
@@ -99,6 +105,9 @@ public class PlanDao extends AbstractDao<Plan, Long> {
         if (unit != null) {
             stmt.bindString(8, unit);
         }
+        stmt.bindLong(9, entity.getPeriodIsOpen() ? 1L: 0L);
+        stmt.bindLong(10, entity.getPeriodPlanType());
+        stmt.bindDouble(11, entity.getPeriodPlanTarget());
     }
 
     @Override
@@ -136,6 +145,9 @@ public class PlanDao extends AbstractDao<Plan, Long> {
         if (unit != null) {
             stmt.bindString(8, unit);
         }
+        stmt.bindLong(9, entity.getPeriodIsOpen() ? 1L: 0L);
+        stmt.bindLong(10, entity.getPeriodPlanType());
+        stmt.bindDouble(11, entity.getPeriodPlanTarget());
     }
 
     @Override
@@ -159,7 +171,10 @@ public class PlanDao extends AbstractDao<Plan, Long> {
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // finishDate
             cursor.getDouble(offset + 5), // current
             cursor.getDouble(offset + 6), // target
-            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7) // unit
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // unit
+            cursor.getShort(offset + 8) != 0, // periodIsOpen
+            cursor.getInt(offset + 9), // periodPlanType
+            cursor.getDouble(offset + 10) // periodPlanTarget
         );
         return entity;
     }
@@ -174,6 +189,9 @@ public class PlanDao extends AbstractDao<Plan, Long> {
         entity.setCurrent(cursor.getDouble(offset + 5));
         entity.setTarget(cursor.getDouble(offset + 6));
         entity.setUnit(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setPeriodIsOpen(cursor.getShort(offset + 8) != 0);
+        entity.setPeriodPlanType(cursor.getInt(offset + 9));
+        entity.setPeriodPlanTarget(cursor.getDouble(offset + 10));
      }
     
     @Override
