@@ -60,6 +60,55 @@
                 android:layout_marginTop="20dp"
                 android:text="当前值"/>
 
+            <LinearLayout
+                android:id="@+id/ll_open_period_plan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:scaleType="centerCrop"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/svg_add"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/text_black"
+                    android:layout_marginTop="7dp"
+                    android:text="开启周期计划"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_show_period_plan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_period_plan_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="周期计划类型"/>
+                <TextView
+                    android:id="@+id/tv_period_plan_target"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="周期计划目标"/>
+                <TextView
+                    android:id="@+id/tv_period_plan_cur_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="当前周期完成值"/>
+            </LinearLayout>
+
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
