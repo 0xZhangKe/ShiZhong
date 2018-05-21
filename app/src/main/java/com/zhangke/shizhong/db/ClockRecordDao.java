@@ -29,6 +29,7 @@ public class ClockRecordDao extends AbstractDao<ClockRecord, Long> {
         public final static Property ParentPlanId = new Property(1, Long.class, "parentPlanId", false, "PARENT_PLAN_ID");
         public final static Property Name = new Property(2, String.class, "name", false, "NAME");
         public final static Property Value = new Property(3, double.class, "value", false, "VALUE");
+        public final static Property Date = new Property(4, String.class, "date", false, "DATE");
     }
 
     private Query<ClockRecord> plan_ClockRecordsQuery;
@@ -48,7 +49,8 @@ public class ClockRecordDao extends AbstractDao<ClockRecord, Long> {
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"PARENT_PLAN_ID\" INTEGER," + // 1: parentPlanId
                 "\"NAME\" TEXT," + // 2: name
-                "\"VALUE\" REAL NOT NULL );"); // 3: value
+                "\"VALUE\" REAL NOT NULL ," + // 3: value
+                "\"DATE\" TEXT);"); // 4: date
     }
 
     /** Drops the underlying database table. */
@@ -76,6 +78,11 @@ public class ClockRecordDao extends AbstractDao<ClockRecord, Long> {
             stmt.bindString(3, name);
         }
         stmt.bindDouble(4, entity.getValue());
+ 
+        String date = entity.getDate();
+        if (date != null) {
+            stmt.bindString(5, date);
+        }
     }
 
     @Override
@@ -97,6 +104,11 @@ public class ClockRecordDao extends AbstractDao<ClockRecord, Long> {
             stmt.bindString(3, name);
         }
         stmt.bindDouble(4, entity.getValue());
+ 
+        String date = entity.getDate();
+        if (date != null) {
+            stmt.bindString(5, date);
+        }
     }
 
     @Override
@@ -110,7 +122,8 @@ public class ClockRecordDao extends AbstractDao<ClockRecord, Long> {
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // parentPlanId
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // name
-            cursor.getDouble(offset + 3) // value
+            cursor.getDouble(offset + 3), // value
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4) // date
         );
         return entity;
     }
@@ -121,6 +134,7 @@ public class ClockRecordDao extends AbstractDao<ClockRecord, Long> {
         entity.setParentPlanId(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
         entity.setName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setValue(cursor.getDouble(offset + 3));
+        entity.setDate(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
      }
     
     @Override
