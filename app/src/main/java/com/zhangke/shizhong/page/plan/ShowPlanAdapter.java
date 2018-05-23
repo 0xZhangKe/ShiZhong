@@ -6,8 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -16,6 +14,7 @@ import android.widget.TextView;
 
 import com.zhangke.shizhong.R;
 import com.zhangke.shizhong.db.ClockRecord;
+import com.zhangke.shizhong.db.ClockRecordDao;
 import com.zhangke.shizhong.db.DBManager;
 import com.zhangke.shizhong.db.Plan;
 import com.zhangke.shizhong.db.PlanDao;
@@ -42,6 +41,7 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
 
     private DecimalFormat decimalFormat = new DecimalFormat("0.00");
     private PlanDao planDao;
+    private ClockRecordDao clockRecordDao;
 
     public ShowPlanAdapter(Context context, List<ShowPlanEntity> listData) {
         super(context, listData);
@@ -66,6 +66,7 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
             showPlanViewHolder.tvFinishDate.setText(plan.getFinishDate());
             showPlanViewHolder.tvTarget.setText(String.format("%s %s", plan.getTarget(), plan.getUnit()));
             showPlanViewHolder.tvCurrent.setText(String.format("%s %s", plan.getCurrent(), plan.getUnit()));
+            showPlanViewHolder.tvClock.setOnClickListener(v -> showClockDialog(plan));
             if (plan.getPeriodIsOpen()) {
                 showPlanViewHolder.llOpenPeriodPlan.setVisibility(View.GONE);
                 showPlanViewHolder.llShowPeriodPlan.setVisibility(View.VISIBLE);
@@ -80,6 +81,52 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
         }
     }
 
+    private void showClockDialog(Plan plan) {
+        final View rootView = inflater.inflate(R.layout.dialog_clock, null);
+        final EditText etClockName = rootView.findViewById(R.id.et_clock_name);
+        final EditText etClockValue = rootView.findViewById(R.id.et_clock_value);
+        final TextView tvUnit = rootView.findViewById(R.id.tv_unit);
+        tvUnit.setText(plan.getUnit());
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("打卡");
+        builder.setView(rootView);
+        builder.setNegativeButton("取消", null);
+        builder.setPositiveButton("确定", (DialogInterface dialog, int which) -> {
+            String clockName = etClockName.getText().toString();
+            String clockValue = etClockValue.getText().toString();
+            if (TextUtils.isEmpty(clockName)) {
+                UiUtils.showToast(context, "请输入打卡名");
+                return;
+            }
+            if (TextUtils.isEmpty(clockValue)) {
+                UiUtils.showToast(context, "请输入本次完成值");
+                return;
+            }
+            clock(plan, clockName, Double.valueOf(clockValue));
+        });
+        builder.create().show();
+    }
+
+    /**
+     * 打卡
+     */
+    private void clock(Plan plan, String clockName, double value) {
+        if (clockRecordDao == null) {
+            clockRecordDao = DBManager.getInstance().getClockRecordDao();
+        }
+        ClockRecord clockRecord = new ClockRecord();
+        clockRecord.setDate(DateUtils.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
+        clockRecord.setName(clockName);
+        clockRecord.setParentPlanId(plan.getId());
+        clockRecord.setValue(value);
+        clockRecordDao.insertOrReplace(clockRecord);
+        EventBus.getDefault().post(new PlanChangedEvent());
+    }
+
+    /**
+     * 设置当前周期已完成值
+     */
     private void setupPeriodCurValue(TextView tv, Plan plan) {
         double currentValue = 0.0;
         List<ClockRecord> records = plan.getClockRecords();
@@ -93,6 +140,9 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
         tv.setText(decimalFormat.format(currentValue));
     }
 
+    /**
+     * 显示添加短期计划对话框
+     */
     private void showAddPeriodPlanDialog(Plan plan) {
         final View rootView = inflater.inflate(R.layout.dialog_add_period_plan, null);
         final TextView tvPeriodType = rootView.findViewById(R.id.tv_period_type);
@@ -175,6 +225,8 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
         TextView tvTarget;
         @BindView(R.id.tv_current)
         TextView tvCurrent;
+        @BindView(R.id.tv_clock)
+        TextView tvClock;
         @BindView(R.id.ll_open_period_plan)
         LinearLayout llOpenPeriodPlan;
         @BindView(R.id.ll_show_period_plan)

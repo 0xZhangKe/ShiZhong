@@ -43,4 +43,8 @@ public class DBManager {
     public PlanDao getPlanDao() {
         return daoSession.getPlanDao();
     }
+
+    public ClockRecordDao getClockRecordDao(){
+        return daoSession.getClockRecordDao();
+    }
 }

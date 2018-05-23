@@ -28,11 +28,20 @@ public class PlanHelper {
     public static boolean isCurPeriod(int periodType, ClockRecord record) {
         boolean current = false;
         switch (periodType) {
-            case 0:
-                if (DateUtils.compareDate("yyyy-MM-dd HH:mm:ss", curDate, record.getDate()) == 0) {
-                    current = true;
+            case 0:{
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
+                Calendar c1 = Calendar.getInstance();
+                Calendar c2 = Calendar.getInstance();
+                try {
+                    c1.setTime(sdf.parse(curDate));
+                    c2.setTime(sdf.parse(record.getDate()));
+                    current = c2.get(Calendar.YEAR) == c1.get(Calendar.YEAR) || c2.get(Calendar.DAY_OF_YEAR) == c1.get(Calendar.DAY_OF_YEAR);
+                } catch (ParseException e) {
+                    ZLog.e(TAG, "isCurPeriod()", e);
+                    current = false;
                 }
                 break;
+            }
             case 1: {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
                 Calendar c1 = Calendar.getInstance();
