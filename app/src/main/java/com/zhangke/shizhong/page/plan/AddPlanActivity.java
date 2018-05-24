@@ -60,6 +60,8 @@ public class AddPlanActivity extends BaseActivity {
     protected void initView(@Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this);
 
+        initToolbar(toolbar, "添加计划", true);
+
         mPlanDao = DBManager.getInstance().getPlanDao();
     }
 

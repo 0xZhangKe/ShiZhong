@@ -28,4 +28,11 @@
 
     <color name="text_white">#F5F5F5</color>
 
+
+    <color name="plan_card_bg_color1">#ff9e22</color>
+    <color name="plan_card_bg_color2">#ff8d00</color>
+    <color name="plan_card_bg_color3">#fa8100</color>
+    <color name="plan_card_bg_color4">#f47100</color>
+    <color name="plan_card_bg_color5">#ee6002</color>
+    <color name="plan_card_bg_color6">#e54304</color>
 </resources>

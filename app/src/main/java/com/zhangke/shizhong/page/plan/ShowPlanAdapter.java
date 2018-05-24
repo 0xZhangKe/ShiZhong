@@ -61,7 +61,6 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
             ShowPlanViewHolder showPlanViewHolder = (ShowPlanViewHolder) holder;
             final Plan plan = listData.get(position).getPlan();
             showPlanViewHolder.tvPlanName.setText(plan.getName());
-            showPlanViewHolder.tvPlanDescription.setText(plan.getDescription());
             showPlanViewHolder.tvStartDate.setText(plan.getStartDate());
             showPlanViewHolder.tvFinishDate.setText(plan.getFinishDate());
             showPlanViewHolder.tvTarget.setText(String.format("%s %s", plan.getTarget(), plan.getUnit()));
@@ -215,8 +214,6 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
 
         @BindView(R.id.tv_plan_name)
         TextView tvPlanName;
-        @BindView(R.id.tv_plan_description)
-        TextView tvPlanDescription;
         @BindView(R.id.tv_start_date)
         TextView tvStartDate;
         @BindView(R.id.tv_finish_date)
