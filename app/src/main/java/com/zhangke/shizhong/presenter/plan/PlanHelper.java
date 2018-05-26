@@ -1,6 +1,7 @@
 package com.zhangke.shizhong.presenter.plan;
 
 import com.zhangke.shizhong.db.ClockRecord;
+import com.zhangke.shizhong.db.Plan;
 import com.zhangke.shizhong.util.DateUtils;
 import com.zhangke.zlog.ZLog;
 
@@ -28,7 +29,7 @@ public class PlanHelper {
     public static boolean isCurPeriod(int periodType, ClockRecord record) {
         boolean current = false;
         switch (periodType) {
-            case 0:{
+            case 0: {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
                 Calendar c1 = Calendar.getInstance();
                 Calendar c2 = Calendar.getInstance();
@@ -72,5 +73,15 @@ public class PlanHelper {
             }
         }
         return current;
+    }
+
+    /**
+     * 获取计划进度
+     * @return 0-100
+     */
+    public static int getProgress(Plan plan) {
+        Double progress;
+        progress = plan.getCurrent() / plan.getTarget() * 100;
+        return progress.intValue();
     }
 }
