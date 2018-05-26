@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -24,6 +25,7 @@ import com.zhangke.shizhong.page.base.BaseRecyclerAdapter;
 import com.zhangke.shizhong.presenter.plan.PlanHelper;
 import com.zhangke.shizhong.util.DateUtils;
 import com.zhangke.shizhong.util.UiUtils;
+import com.zhangke.shizhong.widget.NumberProgressBar;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -59,23 +61,29 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
     public void onBindViewHolder(@NonNull BaseRecyclerAdapter.ViewHolder holder, int position) {
         if (holder instanceof ShowPlanViewHolder) {
             ShowPlanViewHolder showPlanViewHolder = (ShowPlanViewHolder) holder;
-            final Plan plan = listData.get(position).getPlan();
-            showPlanViewHolder.tvPlanName.setText(plan.getName());
-            showPlanViewHolder.tvStartDate.setText(plan.getStartDate());
-            showPlanViewHolder.tvFinishDate.setText(plan.getFinishDate());
-            showPlanViewHolder.tvTarget.setText(String.format("%s %s", plan.getTarget(), plan.getUnit()));
-            showPlanViewHolder.tvCurrent.setText(String.format("%s %s", plan.getCurrent(), plan.getUnit()));
-            showPlanViewHolder.tvClock.setOnClickListener(v -> showClockDialog(plan));
-            if (plan.getPeriodIsOpen()) {
-                showPlanViewHolder.llOpenPeriodPlan.setVisibility(View.GONE);
-                showPlanViewHolder.llShowPeriodPlan.setVisibility(View.VISIBLE);
-                showPlanViewHolder.tvPeriodPlanType.setText(plan.getPeriodPlanType() == 0 ? "按天" : plan.getPeriodPlanType() == 1 ? "按周" : "按月");
-                showPlanViewHolder.tvPeriodPlanTarget.setText(String.format("%s %s", plan.getPeriodPlanTarget(), plan.getUnit()));
-                setupPeriodCurValue(showPlanViewHolder.tvPeriodPlanCurValue, plan);
+            final ShowPlanEntity plan = listData.get(position);
+            showPlanViewHolder.tvPlanName.setText(plan.getPlanName());
+            showPlanViewHolder.tvTargetValue.setText(plan.getTargetValue());
+            showPlanViewHolder.tvTitleUnit.setText(plan.getUnit());
+            showPlanViewHolder.tvPlanInfo.setText(plan.getPlanInfo());
+//            showPlanViewHolder.tvCountDown.setText;
+            showPlanViewHolder.progressPlan.setProgress(plan.getProgress());
+            showPlanViewHolder.tvSurplus.setText(plan.getSurplus());
+            showPlanViewHolder.tvClock.setOnClickListener(v -> showClockDialog(plan.getPlan()));
+            if (plan.isPeriodIsOpen()) {
+                showPlanViewHolder.tvAddShortPlanTip.setVisibility(View.GONE);
+                showPlanViewHolder.llShortPlanView.setVisibility(View.VISIBLE);
+                showPlanViewHolder.imgAddShortPlan.setVisibility(View.GONE);
+                showPlanViewHolder.tvShortPlanTitle.setText(plan.getShortPlanTitle());
+                showPlanViewHolder.tvShortPlanTarget.setText(plan.getShortPlanTarget());
+                showPlanViewHolder.tvShortPlanSurplus.setText(plan.getShortPlanSurplus());
+
             } else {
-                showPlanViewHolder.llOpenPeriodPlan.setVisibility(View.VISIBLE);
-                showPlanViewHolder.llShowPeriodPlan.setVisibility(View.GONE);
-                showPlanViewHolder.llOpenPeriodPlan.setOnClickListener(v -> showAddPeriodPlanDialog(plan));
+                showPlanViewHolder.tvAddShortPlanTip.setVisibility(View.VISIBLE);
+                showPlanViewHolder.llShortPlanView.setVisibility(View.GONE);
+                showPlanViewHolder.imgAddShortPlan.setVisibility(View.VISIBLE);
+
+                showPlanViewHolder.imgAddShortPlan.setOnClickListener(v -> showAddPeriodPlanDialog(plan.getPlan()));
             }
         }
     }
@@ -121,22 +129,6 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
         clockRecord.setValue(value);
         clockRecordDao.insertOrReplace(clockRecord);
         EventBus.getDefault().post(new PlanChangedEvent());
-    }
-
-    /**
-     * 设置当前周期已完成值
-     */
-    private void setupPeriodCurValue(TextView tv, Plan plan) {
-        double currentValue = 0.0;
-        List<ClockRecord> records = plan.getClockRecords();
-        if (records != null && !records.isEmpty()) {
-            for (ClockRecord record : records) {
-                if (PlanHelper.isCurPeriod(plan.getPeriodPlanType(), record)) {
-                    currentValue += record.getValue();
-                }
-            }
-        }
-        tv.setText(decimalFormat.format(currentValue));
     }
 
     /**
@@ -214,26 +206,36 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
 
         @BindView(R.id.tv_plan_name)
         TextView tvPlanName;
-        @BindView(R.id.tv_start_date)
-        TextView tvStartDate;
-        @BindView(R.id.tv_finish_date)
-        TextView tvFinishDate;
-        @BindView(R.id.tv_target)
-        TextView tvTarget;
-        @BindView(R.id.tv_current)
-        TextView tvCurrent;
+        @BindView(R.id.tv_target_value)
+        TextView tvTargetValue;
+        @BindView(R.id.tv_title_unit)
+        TextView tvTitleUnit;
+        @BindView(R.id.tv_plan_info)
+        TextView tvPlanInfo;
+        @BindView(R.id.tv_count_down)
+        TextView tvCountDown;
+        @BindView(R.id.progress_plan)
+        NumberProgressBar progressPlan;
+        @BindView(R.id.tv_surplus)
+        TextView tvSurplus;
+        @BindView(R.id.ll_short_plan_view)
+        LinearLayout llShortPlanView;
+        @BindView(R.id.tv_short_plan_title)
+        TextView tvShortPlanTitle;
+        @BindView(R.id.tv_short_plan_target)
+        TextView tvShortPlanTarget;
+        @BindView(R.id.tv_short_plan_surplus)
+        TextView tvShortPlanSurplus;
+        @BindView(R.id.tv_add_short_plan_tip)
+        TextView tvAddShortPlanTip;
         @BindView(R.id.tv_clock)
         TextView tvClock;
-        @BindView(R.id.ll_open_period_plan)
-        LinearLayout llOpenPeriodPlan;
-        @BindView(R.id.ll_show_period_plan)
-        LinearLayout llShowPeriodPlan;
-        @BindView(R.id.tv_period_plan_type)
-        TextView tvPeriodPlanType;
-        @BindView(R.id.tv_period_plan_target)
-        TextView tvPeriodPlanTarget;
-        @BindView(R.id.tv_period_plan_cur_value)
-        TextView tvPeriodPlanCurValue;
+        @BindView(R.id.tv_detail)
+        TextView tvDetail;
+        @BindView(R.id.img_add_short_plan)
+        ImageView imgAddShortPlan;
+        @BindView(R.id.img_edit)
+        ImageView imgEdit;
 
         ShowPlanViewHolder(View itemView) {
             super(itemView);
