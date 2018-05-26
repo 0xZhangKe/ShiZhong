@@ -24,15 +24,14 @@ public class PlanDao extends AbstractDao<Plan, Long> {
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Name = new Property(1, String.class, "name", false, "NAME");
-        public final static Property Description = new Property(2, String.class, "description", false, "DESCRIPTION");
-        public final static Property StartDate = new Property(3, String.class, "startDate", false, "START_DATE");
-        public final static Property FinishDate = new Property(4, String.class, "finishDate", false, "FINISH_DATE");
-        public final static Property Current = new Property(5, double.class, "current", false, "CURRENT");
-        public final static Property Target = new Property(6, double.class, "target", false, "TARGET");
-        public final static Property Unit = new Property(7, String.class, "unit", false, "UNIT");
-        public final static Property PeriodIsOpen = new Property(8, boolean.class, "periodIsOpen", false, "PERIOD_IS_OPEN");
-        public final static Property PeriodPlanType = new Property(9, int.class, "periodPlanType", false, "PERIOD_PLAN_TYPE");
-        public final static Property PeriodPlanTarget = new Property(10, double.class, "periodPlanTarget", false, "PERIOD_PLAN_TARGET");
+        public final static Property StartDate = new Property(2, String.class, "startDate", false, "START_DATE");
+        public final static Property FinishDate = new Property(3, String.class, "finishDate", false, "FINISH_DATE");
+        public final static Property Current = new Property(4, double.class, "current", false, "CURRENT");
+        public final static Property Target = new Property(5, double.class, "target", false, "TARGET");
+        public final static Property Unit = new Property(6, String.class, "unit", false, "UNIT");
+        public final static Property PeriodIsOpen = new Property(7, boolean.class, "periodIsOpen", false, "PERIOD_IS_OPEN");
+        public final static Property PeriodPlanType = new Property(8, int.class, "periodPlanType", false, "PERIOD_PLAN_TYPE");
+        public final static Property PeriodPlanTarget = new Property(9, double.class, "periodPlanTarget", false, "PERIOD_PLAN_TARGET");
     }
 
     private DaoSession daoSession;
@@ -53,15 +52,14 @@ public class PlanDao extends AbstractDao<Plan, Long> {
         db.execSQL("CREATE TABLE " + constraint + "\"PLAN\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"NAME\" TEXT," + // 1: name
-                "\"DESCRIPTION\" TEXT," + // 2: description
-                "\"START_DATE\" TEXT," + // 3: startDate
-                "\"FINISH_DATE\" TEXT," + // 4: finishDate
-                "\"CURRENT\" REAL NOT NULL ," + // 5: current
-                "\"TARGET\" REAL NOT NULL ," + // 6: target
-                "\"UNIT\" TEXT," + // 7: unit
-                "\"PERIOD_IS_OPEN\" INTEGER NOT NULL ," + // 8: periodIsOpen
-                "\"PERIOD_PLAN_TYPE\" INTEGER NOT NULL ," + // 9: periodPlanType
-                "\"PERIOD_PLAN_TARGET\" REAL NOT NULL );"); // 10: periodPlanTarget
+                "\"START_DATE\" TEXT," + // 2: startDate
+                "\"FINISH_DATE\" TEXT," + // 3: finishDate
+                "\"CURRENT\" REAL NOT NULL ," + // 4: current
+                "\"TARGET\" REAL NOT NULL ," + // 5: target
+                "\"UNIT\" TEXT," + // 6: unit
+                "\"PERIOD_IS_OPEN\" INTEGER NOT NULL ," + // 7: periodIsOpen
+                "\"PERIOD_PLAN_TYPE\" INTEGER NOT NULL ," + // 8: periodPlanType
+                "\"PERIOD_PLAN_TARGET\" REAL NOT NULL );"); // 9: periodPlanTarget
     }
 
     /** Drops the underlying database table. */
@@ -84,30 +82,25 @@ public class PlanDao extends AbstractDao<Plan, Long> {
             stmt.bindString(2, name);
         }
  
-        String description = entity.getDescription();
-        if (description != null) {
-            stmt.bindString(3, description);
-        }
- 
         String startDate = entity.getStartDate();
         if (startDate != null) {
-            stmt.bindString(4, startDate);
+            stmt.bindString(3, startDate);
         }
  
         String finishDate = entity.getFinishDate();
         if (finishDate != null) {
-            stmt.bindString(5, finishDate);
+            stmt.bindString(4, finishDate);
         }
-        stmt.bindDouble(6, entity.getCurrent());
-        stmt.bindDouble(7, entity.getTarget());
+        stmt.bindDouble(5, entity.getCurrent());
+        stmt.bindDouble(6, entity.getTarget());
  
         String unit = entity.getUnit();
         if (unit != null) {
-            stmt.bindString(8, unit);
+            stmt.bindString(7, unit);
         }
-        stmt.bindLong(9, entity.getPeriodIsOpen() ? 1L: 0L);
-        stmt.bindLong(10, entity.getPeriodPlanType());
-        stmt.bindDouble(11, entity.getPeriodPlanTarget());
+        stmt.bindLong(8, entity.getPeriodIsOpen() ? 1L: 0L);
+        stmt.bindLong(9, entity.getPeriodPlanType());
+        stmt.bindDouble(10, entity.getPeriodPlanTarget());
     }
 
     @Override
@@ -124,30 +117,25 @@ public class PlanDao extends AbstractDao<Plan, Long> {
             stmt.bindString(2, name);
         }
  
-        String description = entity.getDescription();
-        if (description != null) {
-            stmt.bindString(3, description);
-        }
- 
         String startDate = entity.getStartDate();
         if (startDate != null) {
-            stmt.bindString(4, startDate);
+            stmt.bindString(3, startDate);
         }
  
         String finishDate = entity.getFinishDate();
         if (finishDate != null) {
-            stmt.bindString(5, finishDate);
+            stmt.bindString(4, finishDate);
         }
-        stmt.bindDouble(6, entity.getCurrent());
-        stmt.bindDouble(7, entity.getTarget());
+        stmt.bindDouble(5, entity.getCurrent());
+        stmt.bindDouble(6, entity.getTarget());
  
         String unit = entity.getUnit();
         if (unit != null) {
-            stmt.bindString(8, unit);
+            stmt.bindString(7, unit);
         }
-        stmt.bindLong(9, entity.getPeriodIsOpen() ? 1L: 0L);
-        stmt.bindLong(10, entity.getPeriodPlanType());
-        stmt.bindDouble(11, entity.getPeriodPlanTarget());
+        stmt.bindLong(8, entity.getPeriodIsOpen() ? 1L: 0L);
+        stmt.bindLong(9, entity.getPeriodPlanType());
+        stmt.bindDouble(10, entity.getPeriodPlanTarget());
     }
 
     @Override
@@ -166,15 +154,14 @@ public class PlanDao extends AbstractDao<Plan, Long> {
         Plan entity = new Plan( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // name
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // description
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // startDate
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // finishDate
-            cursor.getDouble(offset + 5), // current
-            cursor.getDouble(offset + 6), // target
-            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // unit
-            cursor.getShort(offset + 8) != 0, // periodIsOpen
-            cursor.getInt(offset + 9), // periodPlanType
-            cursor.getDouble(offset + 10) // periodPlanTarget
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // startDate
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // finishDate
+            cursor.getDouble(offset + 4), // current
+            cursor.getDouble(offset + 5), // target
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // unit
+            cursor.getShort(offset + 7) != 0, // periodIsOpen
+            cursor.getInt(offset + 8), // periodPlanType
+            cursor.getDouble(offset + 9) // periodPlanTarget
         );
         return entity;
     }
@@ -183,15 +170,14 @@ public class PlanDao extends AbstractDao<Plan, Long> {
     public void readEntity(Cursor cursor, Plan entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setDescription(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setStartDate(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setFinishDate(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setCurrent(cursor.getDouble(offset + 5));
-        entity.setTarget(cursor.getDouble(offset + 6));
-        entity.setUnit(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
-        entity.setPeriodIsOpen(cursor.getShort(offset + 8) != 0);
-        entity.setPeriodPlanType(cursor.getInt(offset + 9));
-        entity.setPeriodPlanTarget(cursor.getDouble(offset + 10));
+        entity.setStartDate(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setFinishDate(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setCurrent(cursor.getDouble(offset + 4));
+        entity.setTarget(cursor.getDouble(offset + 5));
+        entity.setUnit(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setPeriodIsOpen(cursor.getShort(offset + 7) != 0);
+        entity.setPeriodPlanType(cursor.getInt(offset + 8));
+        entity.setPeriodPlanTarget(cursor.getDouble(offset + 9));
      }
     
     @Override

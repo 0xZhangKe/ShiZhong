@@ -20,7 +20,6 @@ public class Plan {
     @Id(autoincrement = true)
     private Long id;
     private String name;
-    private String description;
     private String startDate;
     private String finishDate;
     /**
@@ -55,24 +54,19 @@ public class Plan {
 
     @ToMany(referencedJoinProperty = "parentPlanId")
     private List<ClockRecord> clockRecords;
-    /**
-     * Used to resolve relations
-     */
+    /** Used to resolve relations */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
-    /**
-     * Used for active entity operations.
-     */
+    /** Used for active entity operations. */
     @Generated(hash = 317818512)
     private transient PlanDao myDao;
 
-    @Generated(hash = 547138280)
-    public Plan(Long id, String name, String description, String startDate, String finishDate,
+    @Generated(hash = 217735824)
+    public Plan(Long id, String name, String startDate, String finishDate,
             double current, double target, String unit, boolean periodIsOpen,
             int periodPlanType, double periodPlanTarget) {
         this.id = id;
         this.name = name;
-        this.description = description;
         this.startDate = startDate;
         this.finishDate = finishDate;
         this.current = current;
@@ -101,14 +95,6 @@ public class Plan {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDescription() {
-        return this.description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getStartDate() {
@@ -151,6 +137,30 @@ public class Plan {
         this.unit = unit;
     }
 
+    public boolean getPeriodIsOpen() {
+        return this.periodIsOpen;
+    }
+
+    public void setPeriodIsOpen(boolean periodIsOpen) {
+        this.periodIsOpen = periodIsOpen;
+    }
+
+    public int getPeriodPlanType() {
+        return this.periodPlanType;
+    }
+
+    public void setPeriodPlanType(int periodPlanType) {
+        this.periodPlanType = periodPlanType;
+    }
+
+    public double getPeriodPlanTarget() {
+        return this.periodPlanTarget;
+    }
+
+    public void setPeriodPlanTarget(double periodPlanTarget) {
+        this.periodPlanTarget = periodPlanTarget;
+    }
+
     /**
      * To-many relationship, resolved on first access (and after reset).
      * Changes to to-many relations are not persisted, make changes to the target entity.
@@ -174,9 +184,7 @@ public class Plan {
         return clockRecords;
     }
 
-    /**
-     * Resets a to-many relationship, making the next get call to query for a fresh result.
-     */
+    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
     @Generated(hash = 501215887)
     public synchronized void resetClockRecords() {
         clockRecords = null;
@@ -218,37 +226,10 @@ public class Plan {
         myDao.update(this);
     }
 
-    /**
-     * called by internal mechanisms, do not call yourself.
-     */
+    /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 2098727688)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getPlanDao() : null;
     }
-
-    public boolean getPeriodIsOpen() {
-        return this.periodIsOpen;
-    }
-
-    public void setPeriodIsOpen(boolean periodIsOpen) {
-        this.periodIsOpen = periodIsOpen;
-    }
-
-    public int getPeriodPlanType() {
-        return this.periodPlanType;
-    }
-
-    public void setPeriodPlanType(int periodPlanType) {
-        this.periodPlanType = periodPlanType;
-    }
-
-    public double getPeriodPlanTarget() {
-        return this.periodPlanTarget;
-    }
-
-    public void setPeriodPlanTarget(double periodPlanTarget) {
-        this.periodPlanTarget = periodPlanTarget;
-    }
-
 }
