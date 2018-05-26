@@ -31,24 +31,9 @@
                     android:layout_height="match_parent"
                     android:ellipsize="end"
                     android:maxLength="10"
-                    android:singleLine="true" />
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="20dp"
-                android:hint="计划描述">
-
-                <EditText
-                    android:id="@+id/et_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:ellipsize="end"
-                    android:maxLength="10"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textSize="14sp"
+                    android:text="攒钱计划"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -65,7 +50,9 @@
                     android:layout_height="match_parent"
                     android:ellipsize="end"
                     android:maxLength="10"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textSize="14sp"
+                    android:text="2018-02-01"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -82,7 +69,9 @@
                     android:layout_height="match_parent"
                     android:ellipsize="end"
                     android:maxLength="10"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textSize="14sp"
+                    android:text="2018-12-30" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -100,7 +89,9 @@
                     android:inputType="numberDecimal"
                     android:ellipsize="end"
                     android:maxLength="10"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textSize="14sp"
+                    android:text="10000" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -118,7 +109,9 @@
                     android:inputType="numberDecimal"
                     android:ellipsize="end"
                     android:maxLength="10"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textSize="14sp"
+                    android:text="1000" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -135,7 +128,9 @@
                     android:layout_height="match_parent"
                     android:ellipsize="end"
                     android:maxLength="10"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textSize="14sp"
+                    android:text="元" />
             </android.support.design.widget.TextInputLayout>
 
             <Button

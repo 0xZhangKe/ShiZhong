@@ -36,8 +36,6 @@ public class AddPlanActivity extends BaseActivity {
     View viewToolbarDivider;
     @BindView(R.id.et_name)
     EditText etName;
-    @BindView(R.id.et_description)
-    EditText etDescription;
     @BindView(R.id.et_start_date)
     EditText etStartDate;
     @BindView(R.id.et_finish_date)
@@ -68,7 +66,6 @@ public class AddPlanActivity extends BaseActivity {
     @OnClick(R.id.btn_add)
     public void addPlanBtnClick() {
         String name = etName.getText().toString();
-        String description = etDescription.getText().toString();
         String startDate = etStartDate.getText().toString();
         String finishDate = etFinishDate.getText().toString();
         String targetValue = etTargetValue.getText().toString();
@@ -76,10 +73,6 @@ public class AddPlanActivity extends BaseActivity {
         String unit = etUnit.getText().toString();
         if (TextUtils.isEmpty(name)) {
             showNoActionSnackbar("请输入计划名");
-            return;
-        }
-        if (TextUtils.isEmpty(description)) {
-            showNoActionSnackbar("请输入计划描述");
             return;
         }
         if (TextUtils.isEmpty(startDate)) {
@@ -104,7 +97,6 @@ public class AddPlanActivity extends BaseActivity {
         }
         final Plan plan = new Plan();
         plan.setName(name);
-        plan.setDescription(description);
         plan.setStartDate(startDate);
         plan.setFinishDate(finishDate);
         plan.setTarget(Double.valueOf(targetValue));
