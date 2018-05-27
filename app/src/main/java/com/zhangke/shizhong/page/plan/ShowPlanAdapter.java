@@ -25,6 +25,7 @@ import com.zhangke.shizhong.page.base.BaseRecyclerAdapter;
 import com.zhangke.shizhong.presenter.plan.PlanHelper;
 import com.zhangke.shizhong.util.DateUtils;
 import com.zhangke.shizhong.util.UiUtils;
+import com.zhangke.shizhong.widget.CountDownTextView;
 import com.zhangke.shizhong.widget.NumberProgressBar;
 
 import org.greenrobot.eventbus.EventBus;
@@ -66,7 +67,7 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
             showPlanViewHolder.tvTargetValue.setText(plan.getTargetValue());
             showPlanViewHolder.tvTitleUnit.setText(plan.getUnit());
             showPlanViewHolder.tvPlanInfo.setText(plan.getPlanInfo());
-//            showPlanViewHolder.tvCountDown.setText;
+            showPlanViewHolder.tvCountDown.setTargetDate(plan.getFinishDate(), "yyyy-MM-dd");
             showPlanViewHolder.progressPlan.setProgress(plan.getProgress());
             showPlanViewHolder.tvSurplus.setText(plan.getSurplus());
             showPlanViewHolder.tvClock.setOnClickListener(v -> showClockDialog(plan.getPlan()));
@@ -213,7 +214,7 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
         @BindView(R.id.tv_plan_info)
         TextView tvPlanInfo;
         @BindView(R.id.tv_count_down)
-        TextView tvCountDown;
+        CountDownTextView tvCountDown;
         @BindView(R.id.progress_plan)
         NumberProgressBar progressPlan;
         @BindView(R.id.tv_surplus)

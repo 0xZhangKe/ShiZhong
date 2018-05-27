@@ -94,13 +94,12 @@
                 android:text="距离计划完成日还剩"
                 android:textSize="12sp" />
 
-            <TextView
+            <com.zhangke.shizhong.widget.CountDownTextView
                 android:id="@+id/tv_count_down"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="5dp"
-                android:text="999天23小时59分钟59秒"
                 android:textColor="#B00020"
                 android:textSize="18sp" />
 
