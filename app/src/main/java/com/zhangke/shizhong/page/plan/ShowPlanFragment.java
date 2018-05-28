@@ -72,11 +72,6 @@ public class ShowPlanFragment extends BaseFragment implements IShowPlanContract.
                 startActivity(intent);
             }
         });
-    }
-
-    @Override
-    protected void onFragmentFirstVisible() {
-        super.onFragmentFirstVisible();
         showPlanPresenter.getPlanData();
     }
 
