@@ -91,7 +91,7 @@
                     android:maxLength="10"
                     android:singleLine="true"
                     android:textSize="14sp"
-                    android:text="10000" />
+                    android:text="70000" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
