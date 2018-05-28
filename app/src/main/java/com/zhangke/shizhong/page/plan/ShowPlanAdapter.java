@@ -71,6 +71,8 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
             showPlanViewHolder.progressPlan.setProgress(plan.getProgress());
             showPlanViewHolder.tvSurplus.setText(plan.getSurplus());
             showPlanViewHolder.tvClock.setOnClickListener(v -> showClockDialog(plan.getPlan()));
+            showPlanViewHolder.tvDetail.setOnClickListener(null);
+            showPlanViewHolder.imgEdit.setOnClickListener(null);
             if (plan.isPeriodIsOpen()) {
                 showPlanViewHolder.tvAddShortPlanTip.setVisibility(View.GONE);
                 showPlanViewHolder.llShortPlanView.setVisibility(View.VISIBLE);
@@ -120,9 +122,15 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
      * 打卡
      */
     private void clock(Plan plan, String clockName, double value) {
+        if(planDao == null){
+            planDao = DBManager.getInstance().getPlanDao();
+        }
         if (clockRecordDao == null) {
             clockRecordDao = DBManager.getInstance().getClockRecordDao();
         }
+        plan.setCurrent(plan.getCurrent() + value);
+        planDao.insertOrReplace(plan);
+
         ClockRecord clockRecord = new ClockRecord();
         clockRecord.setDate(DateUtils.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
         clockRecord.setName(clockName);
