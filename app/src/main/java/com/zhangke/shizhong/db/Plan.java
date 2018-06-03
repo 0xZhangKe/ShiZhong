@@ -36,6 +36,15 @@ public class Plan {
     private String unit;
 
     /**
+     * 计划类型：
+     * -1：未设置
+     * 0-攒钱计划
+     * 1-减肥计划
+     * 10-其他
+     */
+    private int planType = -1;
+
+    /**
      * 周期计划是否已开启
      */
     private boolean periodIsOpen = false;
@@ -61,10 +70,10 @@ public class Plan {
     @Generated(hash = 317818512)
     private transient PlanDao myDao;
 
-    @Generated(hash = 217735824)
-    public Plan(Long id, String name, String startDate, String finishDate,
-            double current, double target, String unit, boolean periodIsOpen,
-            int periodPlanType, double periodPlanTarget) {
+    @Generated(hash = 493220173)
+    public Plan(Long id, String name, String startDate, String finishDate, double current,
+            double target, String unit, int planType, boolean periodIsOpen, int periodPlanType,
+            double periodPlanTarget) {
         this.id = id;
         this.name = name;
         this.startDate = startDate;
@@ -72,6 +81,7 @@ public class Plan {
         this.current = current;
         this.target = target;
         this.unit = unit;
+        this.planType = planType;
         this.periodIsOpen = periodIsOpen;
         this.periodPlanType = periodPlanType;
         this.periodPlanTarget = periodPlanTarget;
@@ -231,5 +241,13 @@ public class Plan {
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getPlanDao() : null;
+    }
+
+    public int getPlanType() {
+        return this.planType;
+    }
+
+    public void setPlanType(int planType) {
+        this.planType = planType;
     }
 }
