@@ -1,5 +1,7 @@
 package com.zhangke.shizhong.presenter.plan;
 
+import android.text.TextUtils;
+
 import com.zhangke.shizhong.db.ClockRecord;
 import com.zhangke.shizhong.db.Plan;
 import com.zhangke.shizhong.util.DateUtils;
@@ -77,11 +79,35 @@ public class PlanHelper {
 
     /**
      * 获取计划进度
+     *
      * @return 0-100
      */
     public static int getProgress(Plan plan) {
         Double progress;
         progress = plan.getCurrent() / plan.getTarget() * 100;
         return progress.intValue();
+    }
+
+    /**
+     * 获取计划类型
+     *
+     * @param plan 计划数据
+     * @return 0-攒钱计划；1-减肥计划；10-其他计划
+     */
+    public static int getPlanType(Plan plan) {
+        int planType = 10;
+        if (plan.getPlanType() != -1) {
+            planType = plan.getPlanType();
+        } else {
+            String planName = plan.getName();
+            if (!TextUtils.isEmpty(planName)) {
+                if ((plan.getName().contains("钱") || plan.getUnit().contains("元")) && plan.getTarget() > plan.getCurrent()) {
+                    planType = 0;
+                }else if((plan.getName().contains("减肥") || plan.getName().contains("变瘦") || plan.getUnit().contains("斤")) && plan.getCurrent() > plan.getTarget()){
+                    planType = 1;
+                }
+            }
+        }
+        return planType;
     }
 }
