@@ -14,15 +14,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zhangke.shizhong.R;
-import com.zhangke.shizhong.db.ClockRecord;
-import com.zhangke.shizhong.db.ClockRecordDao;
+import com.zhangke.shizhong.db.RationRecord;
 import com.zhangke.shizhong.db.DBManager;
-import com.zhangke.shizhong.db.Plan;
-import com.zhangke.shizhong.db.PlanDao;
+import com.zhangke.shizhong.db.RationPlan;
 import com.zhangke.shizhong.event.PlanChangedEvent;
 import com.zhangke.shizhong.model.plan.ShowPlanEntity;
 import com.zhangke.shizhong.page.base.BaseRecyclerAdapter;
-import com.zhangke.shizhong.presenter.plan.PlanHelper;
 import com.zhangke.shizhong.util.DateUtils;
 import com.zhangke.shizhong.util.UiUtils;
 import com.zhangke.shizhong.widget.CountDownTextView;
@@ -91,7 +88,7 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
         }
     }
 
-    private void showClockDialog(Plan plan) {
+    private void showClockDialog(RationPlan plan) {
         final View rootView = inflater.inflate(R.layout.dialog_clock, null);
         final EditText etClockName = rootView.findViewById(R.id.et_clock_name);
         final EditText etClockValue = rootView.findViewById(R.id.et_clock_value);
@@ -121,7 +118,7 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
     /**
      * 打卡
      */
-    private void clock(Plan plan, String clockName, double value) {
+    private void clock(RationPlan plan, String clockName, double value) {
         if(planDao == null){
             planDao = DBManager.getInstance().getPlanDao();
         }
@@ -131,7 +128,7 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
         plan.setCurrent(plan.getCurrent() + value);
         planDao.insertOrReplace(plan);
 
-        ClockRecord clockRecord = new ClockRecord();
+        RationRecord clockRecord = new RationRecord();
         clockRecord.setDate(DateUtils.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
         clockRecord.setName(clockName);
         clockRecord.setParentPlanId(plan.getId());
@@ -143,7 +140,7 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
     /**
      * 显示添加短期计划对话框
      */
-    private void showAddPeriodPlanDialog(Plan plan) {
+    private void showAddPeriodPlanDialog(RationPlan plan) {
         final View rootView = inflater.inflate(R.layout.dialog_add_period_plan, null);
         final TextView tvPeriodType = rootView.findViewById(R.id.tv_period_type);
         final EditText etPeriodTarget = rootView.findViewById(R.id.et_period_target);
@@ -195,7 +192,7 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
         popupMenu.show();
     }
 
-    private void addPeriodToPlan(Plan plan, int periodType, double target) {
+    private void addPeriodToPlan(RationPlan plan, int periodType, double target) {
         if (planDao == null) {
             planDao = DBManager.getInstance().getPlanDao();
         }

@@ -14,35 +14,24 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/btn_money_plan"
+            android:id="@+id/btn_ration_plan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:background="@drawable/common_btn_bg"
-            android:text="攒钱计划"
+            android:text="定量计划"
             android:textColor="#FFF" />
 
         <Button
-            android:id="@+id/btn_healthy_plan"
+            android:id="@+id/btn_clock_plan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:background="@drawable/common_btn_bg"
-            android:text="减肥计划"
-            android:textColor="#FFF" />
-
-        <Button
-            android:id="@+id/btn_daily_plan"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/common_btn_bg"
-            android:text="日常计划"
+            android:text="打卡计划"
             android:textColor="#FFF" />
     </LinearLayout>
 

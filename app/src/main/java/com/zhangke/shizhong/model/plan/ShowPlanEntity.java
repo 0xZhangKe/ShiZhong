@@ -1,6 +1,6 @@
 package com.zhangke.shizhong.model.plan;
 
-import com.zhangke.shizhong.db.Plan;
+import com.zhangke.shizhong.db.RationPlan;
 
 /**
  * 计划列表的数据实体
@@ -13,7 +13,7 @@ public class ShowPlanEntity {
      * 1-显示添加计划View
      */
     private int type;
-    private Plan plan;
+    private RationPlan plan;
     private String planName;
     private String targetValue;
     private String unit;
@@ -41,11 +41,11 @@ public class ShowPlanEntity {
         this.type = type;
     }
 
-    public Plan getPlan() {
+    public RationPlan getPlan() {
         return plan;
     }
 
-    public void setPlan(Plan plan) {
+    public void setPlan(RationPlan plan) {
         this.plan = plan;
     }
 

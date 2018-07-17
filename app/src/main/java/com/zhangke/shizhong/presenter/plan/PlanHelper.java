@@ -2,8 +2,8 @@ package com.zhangke.shizhong.presenter.plan;
 
 import android.text.TextUtils;
 
-import com.zhangke.shizhong.db.ClockRecord;
-import com.zhangke.shizhong.db.Plan;
+import com.zhangke.shizhong.db.RationRecord;
+import com.zhangke.shizhong.db.RationPlan;
 import com.zhangke.shizhong.util.DateUtils;
 import com.zhangke.zlog.ZLog;
 
@@ -28,7 +28,7 @@ public class PlanHelper {
      *
      * @param periodType 0-天，1-周，2-月
      */
-    public static boolean isCurPeriod(int periodType, ClockRecord record) {
+    public static boolean isCurPeriod(int periodType, RationRecord record) {
         boolean current = false;
         switch (periodType) {
             case 0: {
@@ -82,7 +82,7 @@ public class PlanHelper {
      *
      * @return 0-100
      */
-    public static int getProgress(Plan plan) {
+    public static int getProgress(RationPlan plan) {
         Double progress;
         progress = plan.getCurrent() / plan.getTarget() * 100;
         return progress.intValue();
@@ -94,7 +94,7 @@ public class PlanHelper {
      * @param plan 计划数据
      * @return 0-攒钱计划；1-减肥计划；10-其他计划
      */
-    public static int getPlanType(Plan plan) {
+    public static int getPlanType(RationPlan plan) {
         int planType = 10;
         if (plan.getPlanType() != -1) {
             planType = plan.getPlanType();

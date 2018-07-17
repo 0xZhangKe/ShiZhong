@@ -2,29 +2,20 @@ package com.zhangke.shizhong.presenter.plan;
 
 import com.zhangke.shizhong.R;
 import com.zhangke.shizhong.contract.plan.IShowPlanContract;
-import com.zhangke.shizhong.db.ClockRecord;
+import com.zhangke.shizhong.db.RationRecord;
 import com.zhangke.shizhong.db.DBManager;
-import com.zhangke.shizhong.db.Plan;
-import com.zhangke.shizhong.db.PlanDao;
+import com.zhangke.shizhong.db.RationPlan;
 import com.zhangke.shizhong.model.plan.ShowPlanEntity;
-
-import org.greenrobot.greendao.query.Query;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.BiConsumer;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-
-import static java.util.stream.Collectors.toList;
 
 /**
  * 显示计划界面的业务逻辑及数据层
@@ -52,7 +43,7 @@ public class ShowPlanPresenterImpl implements IShowPlanContract.Presenter {
     private void initObservable() {
         planObservable =
                 Observable.create((ObservableEmitter<List<ShowPlanEntity>> e) -> {
-                    List<Plan> plans = mPlanDao.queryBuilder().build().list();
+                    List<RationPlan> plans = mPlanDao.queryBuilder().build().list();
                     List<ShowPlanEntity> showPlanList =
                             Observable.fromIterable(plans)
                                     .map(plan -> {
@@ -78,9 +69,9 @@ public class ShowPlanPresenterImpl implements IShowPlanContract.Presenter {
                                             showPlanEntity.setShortPlanTarget(String.format("目标：%s%s", plan.getPeriodPlanTarget(), plan.getUnit()));
 
                                             double currentValue = 0.0;
-                                            List<ClockRecord> records = plan.getClockRecords();
+                                            List<RationRecord> records = plan.getClockRecords();
                                             if (records != null && !records.isEmpty()) {
-                                                for (ClockRecord record : records) {
+                                                for (RationRecord record : records) {
                                                     if (PlanHelper.isCurPeriod(plan.getPeriodPlanType(), record)) {
                                                         currentValue += record.getValue();
                                                     }
