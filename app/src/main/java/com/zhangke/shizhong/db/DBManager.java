@@ -40,8 +40,16 @@ public class DBManager {
         return daoSession.getApplicationInfoDao();
     }
 
-    public PlanDao getPlanDao() {
-        return daoSession.getPlanDao();
+    public RationPlanDao getRationPlanDao() {
+        return daoSession.getRationPlanDao();
+    }
+
+    public RationRecordDao getRationRecordDao(){
+        return daoSession.getRationRecordDao();
+    }
+
+    public ClockPlanDao getClockPlanDao(){
+        return daoSession.getClockPlanDao();
     }
 
     public ClockRecordDao getClockRecordDao(){

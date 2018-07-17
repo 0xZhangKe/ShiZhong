@@ -15,7 +15,7 @@ import org.greenrobot.greendao.DaoException;
  */
 
 @Entity
-public class Plan {
+public class RationPlan {
 
     @Id(autoincrement = true)
     private Long id;
@@ -62,18 +62,18 @@ public class Plan {
     private double periodPlanTarget;
 
     @ToMany(referencedJoinProperty = "parentPlanId")
-    private List<ClockRecord> clockRecords;
+    private List<RationRecord> clockRecords;
     /** Used to resolve relations */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
     /** Used for active entity operations. */
-    @Generated(hash = 317818512)
-    private transient PlanDao myDao;
+    @Generated(hash = 135137572)
+    private transient RationPlanDao myDao;
 
-    @Generated(hash = 493220173)
-    public Plan(Long id, String name, String startDate, String finishDate, double current,
-            double target, String unit, int planType, boolean periodIsOpen, int periodPlanType,
-            double periodPlanTarget) {
+    @Generated(hash = 789519901)
+    public RationPlan(Long id, String name, String startDate, String finishDate,
+            double current, double target, String unit, int planType,
+            boolean periodIsOpen, int periodPlanType, double periodPlanTarget) {
         this.id = id;
         this.name = name;
         this.startDate = startDate;
@@ -87,8 +87,8 @@ public class Plan {
         this.periodPlanTarget = periodPlanTarget;
     }
 
-    @Generated(hash = 592612124)
-    public Plan() {
+    @Generated(hash = 1681540746)
+    public RationPlan() {
     }
 
     public Long getId() {
@@ -147,6 +147,14 @@ public class Plan {
         this.unit = unit;
     }
 
+    public int getPlanType() {
+        return this.planType;
+    }
+
+    public void setPlanType(int planType) {
+        this.planType = planType;
+    }
+
     public boolean getPeriodIsOpen() {
         return this.periodIsOpen;
     }
@@ -175,16 +183,16 @@ public class Plan {
      * To-many relationship, resolved on first access (and after reset).
      * Changes to to-many relations are not persisted, make changes to the target entity.
      */
-    @Generated(hash = 1492071762)
-    public List<ClockRecord> getClockRecords() {
+    @Generated(hash = 1512945595)
+    public List<RationRecord> getClockRecords() {
         if (clockRecords == null) {
             final DaoSession daoSession = this.daoSession;
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
             }
-            ClockRecordDao targetDao = daoSession.getClockRecordDao();
-            List<ClockRecord> clockRecordsNew = targetDao
-                    ._queryPlan_ClockRecords(id);
+            RationRecordDao targetDao = daoSession.getRationRecordDao();
+            List<RationRecord> clockRecordsNew = targetDao
+                    ._queryRationPlan_ClockRecords(id);
             synchronized (this) {
                 if (clockRecords == null) {
                     clockRecords = clockRecordsNew;
@@ -237,17 +245,10 @@ public class Plan {
     }
 
     /** called by internal mechanisms, do not call yourself. */
-    @Generated(hash = 2098727688)
+    @Generated(hash = 572427226)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
-        myDao = daoSession != null ? daoSession.getPlanDao() : null;
+        myDao = daoSession != null ? daoSession.getRationPlanDao() : null;
     }
 
-    public int getPlanType() {
-        return this.planType;
-    }
-
-    public void setPlanType(int planType) {
-        this.planType = planType;
-    }
 }
