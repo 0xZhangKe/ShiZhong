@@ -34,8 +34,6 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class AddPlanFragment extends BaseFragment {
 
-    @BindView(R.id.view_toolbar_divider)
-    View viewToolbarDivider;
     @BindView(R.id.et_name)
     EditText etName;
     @BindView(R.id.et_start_date)
@@ -67,6 +65,7 @@ public class AddPlanFragment extends BaseFragment {
     @Override
     protected void initView() {
         unbinder = ButterKnife.bind(this, rootView);
+        EventBus.getDefault().register(this);
     }
 
     @OnClick(R.id.btn_add)
@@ -171,6 +170,7 @@ public class AddPlanFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        EventBus.getDefault().unregister(this);
         unbinder.unbind();
     }
 }

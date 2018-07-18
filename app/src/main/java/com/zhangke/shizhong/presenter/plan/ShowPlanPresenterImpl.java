@@ -2,6 +2,7 @@ package com.zhangke.shizhong.presenter.plan;
 
 import com.zhangke.shizhong.R;
 import com.zhangke.shizhong.contract.plan.IShowPlanContract;
+import com.zhangke.shizhong.db.RationPlanDao;
 import com.zhangke.shizhong.db.RationRecord;
 import com.zhangke.shizhong.db.DBManager;
 import com.zhangke.shizhong.db.RationPlan;
@@ -26,7 +27,7 @@ public class ShowPlanPresenterImpl implements IShowPlanContract.Presenter {
 
     private IShowPlanContract.View mShowPlanView;
 
-    private PlanDao mPlanDao;
+    private RationPlanDao mPlanDao;
     private List<ShowPlanEntity> mPlanList = new ArrayList<>();
 
     private Observable<List<ShowPlanEntity>> planObservable;
@@ -35,7 +36,7 @@ public class ShowPlanPresenterImpl implements IShowPlanContract.Presenter {
     public ShowPlanPresenterImpl(IShowPlanContract.View mShowPlanView) {
         this.mShowPlanView = mShowPlanView;
 
-        mPlanDao = DBManager.getInstance().getPlanDao();
+        mPlanDao = DBManager.getInstance().getRationPlanDao();
 
         initObservable();
     }

@@ -14,9 +14,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zhangke.shizhong.R;
+import com.zhangke.shizhong.db.RationPlanDao;
 import com.zhangke.shizhong.db.RationRecord;
 import com.zhangke.shizhong.db.DBManager;
 import com.zhangke.shizhong.db.RationPlan;
+import com.zhangke.shizhong.db.RationRecordDao;
 import com.zhangke.shizhong.event.PlanChangedEvent;
 import com.zhangke.shizhong.model.plan.ShowPlanEntity;
 import com.zhangke.shizhong.page.base.BaseRecyclerAdapter;
@@ -40,8 +42,8 @@ import butterknife.ButterKnife;
 public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.ViewHolder, ShowPlanEntity> {
 
     private DecimalFormat decimalFormat = new DecimalFormat("0.00");
-    private PlanDao planDao;
-    private ClockRecordDao clockRecordDao;
+    private RationPlanDao planDao;
+    private RationRecordDao clockRecordDao;
 
     public ShowPlanAdapter(Context context, List<ShowPlanEntity> listData) {
         super(context, listData);
@@ -120,10 +122,10 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
      */
     private void clock(RationPlan plan, String clockName, double value) {
         if(planDao == null){
-            planDao = DBManager.getInstance().getPlanDao();
+            planDao = DBManager.getInstance().getRationPlanDao();
         }
         if (clockRecordDao == null) {
-            clockRecordDao = DBManager.getInstance().getClockRecordDao();
+            clockRecordDao = DBManager.getInstance().getRationRecordDao();
         }
         plan.setCurrent(plan.getCurrent() + value);
         planDao.insertOrReplace(plan);
@@ -194,7 +196,7 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
 
     private void addPeriodToPlan(RationPlan plan, int periodType, double target) {
         if (planDao == null) {
-            planDao = DBManager.getInstance().getPlanDao();
+            planDao = DBManager.getInstance().getRationPlanDao();
         }
         plan.setPeriodIsOpen(true);
         plan.setPeriodPlanType(periodType);
