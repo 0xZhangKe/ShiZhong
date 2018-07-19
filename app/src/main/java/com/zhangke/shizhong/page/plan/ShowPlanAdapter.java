@@ -8,6 +8,8 @@ import android.support.v7.widget.PopupMenu;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,6 +31,7 @@ import com.zhangke.shizhong.page.base.BaseRecyclerAdapter;
 import com.zhangke.shizhong.util.DateUtils;
 import com.zhangke.shizhong.util.UiUtils;
 import com.zhangke.shizhong.widget.CountDownTextView;
+import com.zhangke.shizhong.widget.CustomAutoCompleteTextView;
 import com.zhangke.shizhong.widget.NumberProgressBar;
 
 import org.greenrobot.eventbus.EventBus;
@@ -74,7 +77,7 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
             showPlanViewHolder.tvCountDown.setTargetDate(plan.getRationPlan().getFinishDate(), "yyyy-MM-dd");
             showPlanViewHolder.progressPlan.setProgress(plan.getProgress());
             showPlanViewHolder.tvSurplus.setText(plan.getSurplus());
-            showPlanViewHolder.tvClock.setOnClickListener(v -> showRationClockDialog(plan.getRationPlan()));
+            showPlanViewHolder.tvClock.setOnClickListener(v -> showRationClockDialog(plan));
             showPlanViewHolder.tvDetail.setOnClickListener(null);
             showPlanViewHolder.imgEdit.setOnClickListener(null);
             if (plan.isPeriodIsOpen()) {
@@ -101,7 +104,7 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
             }
             List<ClockRecord> records = plan.getClockPlan().getClockRecords();
             clockPlanViewHolder.tvClockCount.setText(String.valueOf(records == null ? 0 : records.size()));
-            clockPlanViewHolder.tvClock.setOnClickListener(v -> showClockDialog(plan.getClockPlan()));
+            clockPlanViewHolder.tvClock.setOnClickListener(v -> showClockDialog(plan));
         }
     }
 
@@ -110,28 +113,32 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
         return listData.get(position).getType();
     }
 
-    private void showClockDialog(ClockPlan clockPlan){
+    private void showClockDialog(ShowPlanEntity clockPlan) {
         final View rootView = inflater.inflate(R.layout.dialog_clock, null);
-        final EditText etClockName = rootView.findViewById(R.id.et_clock_comment);
+        final CustomAutoCompleteTextView etClockName = rootView.findViewById(R.id.et_clock_comment);
+        if (clockPlan.getSuggestionInput() != null && !clockPlan.getSuggestionInput().isEmpty()) {
+            ArrayAdapter adapter = new ArrayAdapter<>(context, android.R.layout.simple_dropdown_item_1line, clockPlan.getSuggestionInput());
+            etClockName.setAdapter(adapter);
+        }
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("打卡");
         builder.setView(rootView);
         builder.setNegativeButton("取消", null);
         builder.setPositiveButton("确定", (DialogInterface dialog, int which) -> {
             String comment = etClockName.getText().toString();
-            requestClock(clockPlan, comment);
+            requestClock(clockPlan.getClockPlan(), comment);
         });
         builder.create().show();
     }
 
-    private void requestClock(ClockPlan clockPlan, String comment){
+    private void requestClock(ClockPlan clockPlan, String comment) {
         ClockRecord clockRecord = new ClockRecord();
         clockRecord.setParentPlanId(clockPlan.getId());
         clockRecord.setDate(DateUtils.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
-        if(!TextUtils.isEmpty(comment) && !TextUtils.equals(comment,"null")){
+        if (!TextUtils.isEmpty(comment) && !TextUtils.equals(comment, "null")) {
             clockRecord.setDescription(comment);
         }
-        if(clockRecordDao == null){
+        if (clockRecordDao == null) {
             clockRecordDao = DBManager.getInstance().getClockRecordDao();
         }
         clockRecordDao.insert(clockRecord);
@@ -139,12 +146,16 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
         EventBus.getDefault().post(new PlanChangedEvent());
     }
 
-    private void showRationClockDialog(RationPlan plan) {
+    private void showRationClockDialog(ShowPlanEntity plan) {
         final View rootView = inflater.inflate(R.layout.dialog_ration_clock, null);
-        final EditText etClockName = rootView.findViewById(R.id.et_clock_name);
+        final CustomAutoCompleteTextView etClockName = rootView.findViewById(R.id.et_clock_name);
         final EditText etClockValue = rootView.findViewById(R.id.et_clock_value);
         final TextView tvUnit = rootView.findViewById(R.id.tv_unit);
-        tvUnit.setText(plan.getUnit());
+        if (plan.getSuggestionInput() != null && !plan.getSuggestionInput().isEmpty()) {
+            ArrayAdapter adapter = new ArrayAdapter<>(context, android.R.layout.simple_dropdown_item_1line, plan.getSuggestionInput());
+            etClockName.setAdapter(adapter);
+        }
+        tvUnit.setText(plan.getRationPlan().getUnit());
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("打卡");
         builder.setView(rootView);
@@ -160,7 +171,7 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
                 UiUtils.showToast(context, "请输入本次完成值");
                 return;
             }
-            rationClock(plan, clockName, Double.valueOf(clockValue));
+            rationClock(plan.getRationPlan(), clockName, Double.valueOf(clockValue));
         });
         builder.create().show();
     }

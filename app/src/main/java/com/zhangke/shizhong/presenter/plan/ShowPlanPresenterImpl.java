@@ -124,6 +124,26 @@ public class ShowPlanPresenterImpl implements IShowPlanContract.Presenter {
                                     currentValue += record.getValue();
                                 }
                             }
+                            List<InputCount> suggestionInput = new ArrayList<>();
+                            for (RationRecord record : records) {
+                                if (!TextUtils.isEmpty(record.getName())) {
+                                    InputCount item = new InputCount(record.getName(), 0);
+                                    if (suggestionInput.contains(item)) {
+                                        int i = suggestionInput.indexOf(item);
+                                        suggestionInput.get(i).setCount(suggestionInput.get(i).getCount() + 1);
+                                    } else {
+                                        suggestionInput.add(new InputCount(record.getName(), 0));
+                                    }
+                                }
+                            }
+                            if (!suggestionInput.isEmpty()) {
+                                Collections.sort(suggestionInput, (InputCount o1, InputCount o2) -> o2.getCount() - o1.getCount());
+                                showPlanEntity.setSuggestionInput(
+                                        Observable.fromIterable(suggestionInput)
+                                                .map(InputCount::getInput)
+                                                .toList()
+                                                .blockingGet());
+                            }
                         }
                         showPlanEntity.setShortPlanSurplus(String.format("剩余：%s%s", plan.getPeriodPlanTarget() - currentValue, plan.getUnit()));
                     }
@@ -143,24 +163,26 @@ public class ShowPlanPresenterImpl implements IShowPlanContract.Presenter {
                     showPlanEntity.setPlanInfo(plan.getDescription());
                     List<InputCount> suggestionInput = new ArrayList<>();
                     List<ClockRecord> records = plan.getClockRecords();
-                    for (ClockRecord record : records) {
-                        if (!TextUtils.isEmpty(record.getDescription())) {
-                            InputCount item = new InputCount(record.getDescription(), 0);
-                            if (suggestionInput.contains(item)) {
-                                int i = suggestionInput.indexOf(item);
-                                suggestionInput.get(i).setCount(suggestionInput.get(i).getCount() + 1);
-                            } else {
-                                suggestionInput.add(new InputCount(record.getDescription(), 0));
+                    if (records != null && !records.isEmpty()) {
+                        for (ClockRecord record : records) {
+                            if (!TextUtils.isEmpty(record.getDescription())) {
+                                InputCount item = new InputCount(record.getDescription(), 0);
+                                if (suggestionInput.contains(item)) {
+                                    int i = suggestionInput.indexOf(item);
+                                    suggestionInput.get(i).setCount(suggestionInput.get(i).getCount() + 1);
+                                } else {
+                                    suggestionInput.add(new InputCount(record.getDescription(), 0));
+                                }
                             }
                         }
-                    }
-                    if (!suggestionInput.isEmpty()) {
-                        Collections.sort(suggestionInput, (InputCount o1, InputCount o2) -> o1.getCount() - o2.getCount());
-                        List<String> suggestion = new ArrayList<>();
-                        for (InputCount item : suggestionInput) {
-                            suggestion.add(item.getInput());
+                        if (!suggestionInput.isEmpty()) {
+                            Collections.sort(suggestionInput, (InputCount o1, InputCount o2) -> o1.getCount() - o2.getCount());
+                            List<String> suggestion = new ArrayList<>();
+                            for (InputCount item : suggestionInput) {
+                                suggestion.add(item.getInput());
+                            }
+                            showPlanEntity.setSuggestionInput(suggestion);
                         }
-                        showPlanEntity.setSuggestionInput(suggestion);
                     }
                     return showPlanEntity;
                 })
