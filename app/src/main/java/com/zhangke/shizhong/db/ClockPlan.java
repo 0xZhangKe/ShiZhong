@@ -20,6 +20,7 @@ public class ClockPlan {
     private Long id;
     private String name;//计划名
     private String startDate;//开始日期
+    private String description;//描述
 
     @ToMany(referencedJoinProperty = "parentPlanId")
     private List<ClockRecord> clockRecords;
@@ -30,11 +31,12 @@ public class ClockPlan {
     @Generated(hash = 101357806)
     private transient ClockPlanDao myDao;
 
-    @Generated(hash = 2007894542)
-    public ClockPlan(Long id, String name, String startDate) {
+    @Generated(hash = 1894478262)
+    public ClockPlan(Long id, String name, String startDate, String description) {
         this.id = id;
         this.name = name;
         this.startDate = startDate;
+        this.description = description;
     }
 
     @Generated(hash = 2112597496)
@@ -135,5 +137,13 @@ public class ClockPlan {
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getClockPlanDao() : null;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

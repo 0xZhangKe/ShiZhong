@@ -25,6 +25,7 @@ public class ClockPlanDao extends AbstractDao<ClockPlan, Long> {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Name = new Property(1, String.class, "name", false, "NAME");
         public final static Property StartDate = new Property(2, String.class, "startDate", false, "START_DATE");
+        public final static Property Description = new Property(3, String.class, "description", false, "DESCRIPTION");
     }
 
     private DaoSession daoSession;
@@ -45,7 +46,8 @@ public class ClockPlanDao extends AbstractDao<ClockPlan, Long> {
         db.execSQL("CREATE TABLE " + constraint + "\"CLOCK_PLAN\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"NAME\" TEXT," + // 1: name
-                "\"START_DATE\" TEXT);"); // 2: startDate
+                "\"START_DATE\" TEXT," + // 2: startDate
+                "\"DESCRIPTION\" TEXT);"); // 3: description
     }
 
     /** Drops the underlying database table. */
@@ -72,6 +74,11 @@ public class ClockPlanDao extends AbstractDao<ClockPlan, Long> {
         if (startDate != null) {
             stmt.bindString(3, startDate);
         }
+ 
+        String description = entity.getDescription();
+        if (description != null) {
+            stmt.bindString(4, description);
+        }
     }
 
     @Override
@@ -92,6 +99,11 @@ public class ClockPlanDao extends AbstractDao<ClockPlan, Long> {
         if (startDate != null) {
             stmt.bindString(3, startDate);
         }
+ 
+        String description = entity.getDescription();
+        if (description != null) {
+            stmt.bindString(4, description);
+        }
     }
 
     @Override
@@ -110,7 +122,8 @@ public class ClockPlanDao extends AbstractDao<ClockPlan, Long> {
         ClockPlan entity = new ClockPlan( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // name
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2) // startDate
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // startDate
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // description
         );
         return entity;
     }
@@ -120,6 +133,7 @@ public class ClockPlanDao extends AbstractDao<ClockPlan, Long> {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setStartDate(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setDescription(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
      }
     
     @Override
