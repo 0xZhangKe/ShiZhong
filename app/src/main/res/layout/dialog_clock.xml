@@ -13,12 +13,13 @@
         android:text="备注"
         android:textSize="10.0sp" />
 
-    <EditText
+    <com.zhangke.shizhong.widget.CustomAutoCompleteTextView
         android:id="@+id/et_clock_comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:gravity="center_vertical"
+        android:completionThreshold="0"
         android:textColor="@color/text_black"
         android:textSize="14sp" />
 

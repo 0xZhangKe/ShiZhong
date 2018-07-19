@@ -28,6 +28,9 @@
         <activity android:name=".page.application.ApplicationStatisticsActivity" />
         <activity android:name=".page.application.SearchApplicationActivity"/>
         <activity android:name=".page.plan.AddPlanActivity"/>
+        <activity android:name=".page.plan.EditPlanActivity"/>
+
+
     </application>
 
 </manifest>
