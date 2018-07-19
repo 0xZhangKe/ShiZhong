@@ -1,7 +1,12 @@
 package com.zhangke.shizhong.presenter.plan;
 
+import android.text.TextUtils;
+
 import com.zhangke.shizhong.R;
 import com.zhangke.shizhong.contract.plan.IShowPlanContract;
+import com.zhangke.shizhong.db.ClockPlan;
+import com.zhangke.shizhong.db.ClockPlanDao;
+import com.zhangke.shizhong.db.ClockRecord;
 import com.zhangke.shizhong.db.RationPlanDao;
 import com.zhangke.shizhong.db.RationRecord;
 import com.zhangke.shizhong.db.DBManager;
@@ -9,6 +14,8 @@ import com.zhangke.shizhong.db.RationPlan;
 import com.zhangke.shizhong.model.plan.ShowPlanEntity;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -27,7 +34,8 @@ public class ShowPlanPresenterImpl implements IShowPlanContract.Presenter {
 
     private IShowPlanContract.View mShowPlanView;
 
-    private RationPlanDao mPlanDao;
+    private RationPlanDao mRationPlanDao;
+    private ClockPlanDao mClockPlanDao;
     private List<ShowPlanEntity> mPlanList = new ArrayList<>();
 
     private Observable<List<ShowPlanEntity>> planObservable;
@@ -36,7 +44,8 @@ public class ShowPlanPresenterImpl implements IShowPlanContract.Presenter {
     public ShowPlanPresenterImpl(IShowPlanContract.View mShowPlanView) {
         this.mShowPlanView = mShowPlanView;
 
-        mPlanDao = DBManager.getInstance().getRationPlanDao();
+        mRationPlanDao = DBManager.getInstance().getRationPlanDao();
+        mClockPlanDao = DBManager.getInstance().getClockPlanDao();
 
         initObservable();
     }
@@ -44,48 +53,12 @@ public class ShowPlanPresenterImpl implements IShowPlanContract.Presenter {
     private void initObservable() {
         planObservable =
                 Observable.create((ObservableEmitter<List<ShowPlanEntity>> e) -> {
-                    List<RationPlan> plans = mPlanDao.queryBuilder().build().list();
-                    List<ShowPlanEntity> showPlanList =
-                            Observable.fromIterable(plans)
-                                    .map(plan -> {
-                                        ShowPlanEntity showPlanEntity = new ShowPlanEntity();
-                                        showPlanEntity.setType(0);
-                                        showPlanEntity.setPlan(plan);
-                                        showPlanEntity.setPlanName(plan.getName());
-                                        showPlanEntity.setTargetValue(String.valueOf(plan.getTarget()));
-                                        showPlanEntity.setUnit(plan.getUnit());
-                                        showPlanEntity.setPlanInfo(String.format("%s ~ %s        当前：%s%s",
-                                                plan.getStartDate(),
-                                                plan.getFinishDate(),
-                                                plan.getCurrent(),
-                                                plan.getUnit()));
-                                        showPlanEntity.setFinishDate(plan.getFinishDate());
-                                        showPlanEntity.setProgress(PlanHelper.getProgress(plan));
-                                        showPlanEntity.setSurplus(String.format("剩余：%s%s", plan.getTarget() - plan.getCurrent(), plan.getUnit()));
-                                        showPlanEntity.setPeriodIsOpen(plan.getPeriodIsOpen());
-                                        if(plan.getPeriodIsOpen()) {
-                                            showPlanEntity.setShortPlanTitle(plan.getPeriodPlanType() == 0
-                                                    ? "今日计划" : plan.getPeriodPlanType() == 1
-                                                    ? "本周计划" : "本月计划");
-                                            showPlanEntity.setShortPlanTarget(String.format("目标：%s%s", plan.getPeriodPlanTarget(), plan.getUnit()));
-
-                                            double currentValue = 0.0;
-                                            List<RationRecord> records = plan.getClockRecords();
-                                            if (records != null && !records.isEmpty()) {
-                                                for (RationRecord record : records) {
-                                                    if (PlanHelper.isCurPeriod(plan.getPeriodPlanType(), record)) {
-                                                        currentValue += record.getValue();
-                                                    }
-                                                }
-                                            }
-
-                                            showPlanEntity.setShortPlanSurplus(String.format("剩余：%s%s", plan.getPeriodPlanTarget() - currentValue, plan.getUnit()));
-                                        }
-                                        return showPlanEntity;
-                                    })
-                                    .toList()
-                                    .blockingGet();
-                    showPlanList.add(new ShowPlanEntity(1));
+                    List<RationPlan> rationPlans = mRationPlanDao.queryBuilder().build().list();
+                    List<ClockPlan> clockPlans = mClockPlanDao.queryBuilder().build().list();
+                    List<ShowPlanEntity> showPlanList = new ArrayList<>();
+                    showPlanList.addAll(convertRationPlan(rationPlans));
+                    showPlanList.addAll(convertClockPlan(clockPlans));
+                    showPlanList.add(new ShowPlanEntity(2));
                     e.onNext(showPlanList);
                     e.onComplete();
                 }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
@@ -123,10 +96,135 @@ public class ShowPlanPresenterImpl implements IShowPlanContract.Presenter {
         });
     }
 
+    private List<ShowPlanEntity> convertRationPlan(List<RationPlan> list) {
+        return Observable.fromIterable(list)
+                .map(plan -> {
+                    ShowPlanEntity showPlanEntity = new ShowPlanEntity();
+                    showPlanEntity.setType(0);
+                    showPlanEntity.setRationPlan(plan);
+                    showPlanEntity.setPlanName(plan.getName());
+                    showPlanEntity.setPlanInfo(String.format("%s ~ %s        当前：%s%s",
+                            plan.getStartDate(),
+                            plan.getFinishDate(),
+                            plan.getCurrent(),
+                            plan.getUnit()));
+                    showPlanEntity.setProgress(PlanHelper.getProgress(plan));
+                    showPlanEntity.setSurplus(String.format("剩余：%s%s", plan.getTarget() - plan.getCurrent(), plan.getUnit()));
+                    showPlanEntity.setPeriodIsOpen(plan.getPeriodIsOpen());
+                    if (plan.getPeriodIsOpen()) {
+                        showPlanEntity.setShortPlanTitle(plan.getPeriodPlanType() == 0
+                                ? "今日计划" : plan.getPeriodPlanType() == 1
+                                ? "本周计划" : "本月计划");
+                        showPlanEntity.setShortPlanTarget(String.format("目标：%s%s", plan.getPeriodPlanTarget(), plan.getUnit()));
+                        double currentValue = 0.0;
+                        List<RationRecord> records = plan.getClockRecords();
+                        if (records != null && !records.isEmpty()) {
+                            for (RationRecord record : records) {
+                                if (PlanHelper.isCurPeriod(plan.getPeriodPlanType(), record)) {
+                                    currentValue += record.getValue();
+                                }
+                            }
+                        }
+                        showPlanEntity.setShortPlanSurplus(String.format("剩余：%s%s", plan.getPeriodPlanTarget() - currentValue, plan.getUnit()));
+                    }
+                    return showPlanEntity;
+                })
+                .toList()
+                .blockingGet();
+    }
+
+    private List<ShowPlanEntity> convertClockPlan(List<ClockPlan> list) {
+        return Observable.fromIterable(list)
+                .map(plan -> {
+                    ShowPlanEntity showPlanEntity = new ShowPlanEntity();
+                    showPlanEntity.setType(1);
+                    showPlanEntity.setClockPlan(plan);
+                    showPlanEntity.setPlanName(plan.getName());
+                    showPlanEntity.setPlanInfo(plan.getDescription());
+                    List<InputCount> suggestionInput = new ArrayList<>();
+                    List<ClockRecord> records = plan.getClockRecords();
+                    for (ClockRecord record : records) {
+                        if (!TextUtils.isEmpty(record.getDescription())) {
+                            InputCount item = new InputCount(record.getDescription(), 0);
+                            if (suggestionInput.contains(item)) {
+                                int i = suggestionInput.indexOf(item);
+                                suggestionInput.get(i).setCount(suggestionInput.get(i).getCount() + 1);
+                            } else {
+                                suggestionInput.add(new InputCount(record.getDescription(), 0));
+                            }
+                        }
+                    }
+                    if (!suggestionInput.isEmpty()) {
+                        Collections.sort(suggestionInput, (InputCount o1, InputCount o2) -> o1.getCount() - o2.getCount());
+                        List<String> suggestion = new ArrayList<>();
+                        for (InputCount item : suggestionInput) {
+                            suggestion.add(item.getInput());
+                        }
+                        showPlanEntity.setSuggestionInput(suggestion);
+                    }
+                    return showPlanEntity;
+                })
+                .toList()
+                .blockingGet();
+    }
+
+    private static class InputCount {
+        private String input;
+        private int count;
+
+        public InputCount(String input, int count) {
+            this.input = input;
+            this.count = count;
+        }
+
+        public String getInput() {
+            return input;
+        }
+
+        public void setInput(String input) {
+            this.input = input;
+        }
+
+        public int getCount() {
+            return count;
+        }
+
+        public void setCount(int count) {
+            this.count = count;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == this) {
+                return true;
+            }
+            if (!(obj instanceof InputCount)) {
+                return false;
+            }
+            InputCount o = (InputCount) obj;
+            return TextUtils.equals(o.input, input);
+        }
+
+        private volatile int hashCode;
+
+        @Override
+        public int hashCode() {
+            int result = hashCode;
+            if (result == 0) {
+                if (!TextUtils.isEmpty(input)) {
+                    result += 31 * result + input.hashCode();
+                }
+                hashCode = result;
+            }
+            return result;
+        }
+    }
+
     @Override
     public void onDestroy() {
         mShowPlanView = null;
-        mPlanDao = null;
+        mClockPlanDao = null;
+        mRationPlanDao = null;
         mPlanList.clear();
         mPlanList = null;
         if (planDisposable != null && !planDisposable.isDisposed()) {

@@ -20,7 +20,7 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:hint="计划名">
 
                 <EditText
@@ -37,6 +37,10 @@
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/til_description"
                 android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"
+                android:visibility="gone"
+                android:hint="计划描述"
                 android:layout_height="50dp">
 
                 <EditText
@@ -58,7 +62,7 @@
                     android:layout_height="50dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:hint="开始日期">
 
                     <EditText
@@ -77,7 +81,7 @@
                     android:layout_height="50dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:hint="结束日期">
 
                     <EditText
@@ -96,7 +100,7 @@
                     android:layout_height="50dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:hint="目标值">
 
                     <EditText
@@ -116,7 +120,7 @@
                     android:layout_height="50dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:hint="当前完成值">
 
                     <EditText
@@ -136,7 +140,7 @@
                     android:layout_height="50dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:hint="单位">
 
                     <EditText

@@ -21,8 +21,6 @@ import butterknife.Unbinder;
  */
 public class ChoosePlanTypeFragment extends BaseFragment {
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
     Unbinder unbinder;
 
     @Override

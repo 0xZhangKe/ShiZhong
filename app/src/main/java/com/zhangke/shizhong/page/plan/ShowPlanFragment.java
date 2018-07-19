@@ -65,9 +65,7 @@ public class ShowPlanFragment extends BaseFragment implements IShowPlanContract.
 
         adapter.setOnItemClickListener(position -> {
             ShowPlanEntity plan = planList.get(position);
-            if (plan.getType() == 0) {
-
-            } else {
+            if (plan.getType() == 2) {
                 Intent intent = new Intent(mActivity, AddPlanActivity.class);
                 startActivity(intent);
             }

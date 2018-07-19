@@ -1,6 +1,9 @@
 package com.zhangke.shizhong.model.plan;
 
+import com.zhangke.shizhong.db.ClockPlan;
 import com.zhangke.shizhong.db.RationPlan;
+
+import java.util.List;
 
 /**
  * 计划列表的数据实体
@@ -9,22 +12,24 @@ import com.zhangke.shizhong.db.RationPlan;
 public class ShowPlanEntity {
 
     /**
-     * 0-显示普通计划
-     * 1-显示添加计划View
+     * 0-显示定量计划
+     * 1-显示打卡计划
+     * 2-显示添加计划View
      */
     private int type;
-    private RationPlan plan;
     private String planName;
-    private String targetValue;
-    private String unit;
+    private List<String> suggestionInput;
+
+    private RationPlan rationPlan;
     private String planInfo;
-    private String finishDate;
     private int progress;//0-100
     private String surplus;
     private boolean periodIsOpen;
     private String shortPlanTitle;
     private String shortPlanTarget;
     private String shortPlanSurplus;
+
+    private ClockPlan clockPlan;
 
     public ShowPlanEntity() {
     }
@@ -41,12 +46,28 @@ public class ShowPlanEntity {
         this.type = type;
     }
 
-    public RationPlan getPlan() {
-        return plan;
+    public RationPlan getRationPlan() {
+        return rationPlan;
     }
 
-    public void setPlan(RationPlan plan) {
-        this.plan = plan;
+    public void setRationPlan(RationPlan rationPlan) {
+        this.rationPlan = rationPlan;
+    }
+
+    public List<String> getSuggestionInput() {
+        return suggestionInput;
+    }
+
+    public void setSuggestionInput(List<String> suggestionInput) {
+        this.suggestionInput = suggestionInput;
+    }
+
+    public ClockPlan getClockPlan() {
+        return clockPlan;
+    }
+
+    public void setClockPlan(ClockPlan clockPlan) {
+        this.clockPlan = clockPlan;
     }
 
     public String getPlanName() {
@@ -57,36 +78,12 @@ public class ShowPlanEntity {
         this.planName = planName;
     }
 
-    public String getTargetValue() {
-        return targetValue;
-    }
-
-    public void setTargetValue(String targetValue) {
-        this.targetValue = targetValue;
-    }
-
-    public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
     public String getPlanInfo() {
         return planInfo;
     }
 
     public void setPlanInfo(String planInfo) {
         this.planInfo = planInfo;
-    }
-
-    public String getFinishDate() {
-        return finishDate;
-    }
-
-    public void setFinishDate(String finishDate) {
-        this.finishDate = finishDate;
     }
 
     public int getProgress() {

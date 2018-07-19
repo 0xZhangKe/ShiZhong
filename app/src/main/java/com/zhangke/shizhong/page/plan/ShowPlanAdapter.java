@@ -14,10 +14,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zhangke.shizhong.R;
+import com.zhangke.shizhong.db.ClockPlan;
+import com.zhangke.shizhong.db.ClockRecord;
+import com.zhangke.shizhong.db.ClockRecordDao;
+import com.zhangke.shizhong.db.DBManager;
+import com.zhangke.shizhong.db.DaoSession;
+import com.zhangke.shizhong.db.RationPlan;
 import com.zhangke.shizhong.db.RationPlanDao;
 import com.zhangke.shizhong.db.RationRecord;
-import com.zhangke.shizhong.db.DBManager;
-import com.zhangke.shizhong.db.RationPlan;
 import com.zhangke.shizhong.db.RationRecordDao;
 import com.zhangke.shizhong.event.PlanChangedEvent;
 import com.zhangke.shizhong.model.plan.ShowPlanEntity;
@@ -29,7 +33,6 @@ import com.zhangke.shizhong.widget.NumberProgressBar;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.text.DecimalFormat;
 import java.util.List;
 
 import butterknife.BindView;
@@ -41,9 +44,9 @@ import butterknife.ButterKnife;
  */
 public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.ViewHolder, ShowPlanEntity> {
 
-    private DecimalFormat decimalFormat = new DecimalFormat("0.00");
     private RationPlanDao planDao;
-    private RationRecordDao clockRecordDao;
+    private RationRecordDao rationClockRecordDao;
+    private ClockRecordDao clockRecordDao;
 
     public ShowPlanAdapter(Context context, List<ShowPlanEntity> listData) {
         super(context, listData);
@@ -53,23 +56,25 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return viewType == 0 ?
-                new ShowPlanViewHolder(inflater.inflate(R.layout.adapter_show_plan, parent, false)) :
-                new AddPlanViewHolder(inflater.inflate(R.layout.adapter_add_plan, parent, false));
+                new RationPlanViewHolder(inflater.inflate(R.layout.adapter_show_ration_plan, parent, false)) :
+                viewType == 1 ?
+                        new ClockPlanViewHolder(inflater.inflate(R.layout.adapter_show_clock_plan, parent, false)) :
+                        new AddPlanViewHolder(inflater.inflate(R.layout.adapter_add_plan, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull BaseRecyclerAdapter.ViewHolder holder, int position) {
-        if (holder instanceof ShowPlanViewHolder) {
-            ShowPlanViewHolder showPlanViewHolder = (ShowPlanViewHolder) holder;
-            final ShowPlanEntity plan = listData.get(position);
+        final ShowPlanEntity plan = listData.get(position);
+        if (holder instanceof RationPlanViewHolder) {
+            RationPlanViewHolder showPlanViewHolder = (RationPlanViewHolder) holder;
             showPlanViewHolder.tvPlanName.setText(plan.getPlanName());
-            showPlanViewHolder.tvTargetValue.setText(plan.getTargetValue());
-            showPlanViewHolder.tvTitleUnit.setText(plan.getUnit());
+            showPlanViewHolder.tvTargetValue.setText(String.valueOf(plan.getRationPlan().getTarget()));
+            showPlanViewHolder.tvTitleUnit.setText(plan.getRationPlan().getUnit());
             showPlanViewHolder.tvPlanInfo.setText(plan.getPlanInfo());
-            showPlanViewHolder.tvCountDown.setTargetDate(plan.getFinishDate(), "yyyy-MM-dd");
+            showPlanViewHolder.tvCountDown.setTargetDate(plan.getRationPlan().getFinishDate(), "yyyy-MM-dd");
             showPlanViewHolder.progressPlan.setProgress(plan.getProgress());
             showPlanViewHolder.tvSurplus.setText(plan.getSurplus());
-            showPlanViewHolder.tvClock.setOnClickListener(v -> showClockDialog(plan.getPlan()));
+            showPlanViewHolder.tvClock.setOnClickListener(v -> showRationClockDialog(plan.getRationPlan()));
             showPlanViewHolder.tvDetail.setOnClickListener(null);
             showPlanViewHolder.imgEdit.setOnClickListener(null);
             if (plan.isPeriodIsOpen()) {
@@ -79,24 +84,67 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
                 showPlanViewHolder.tvShortPlanTitle.setText(plan.getShortPlanTitle());
                 showPlanViewHolder.tvShortPlanTarget.setText(plan.getShortPlanTarget());
                 showPlanViewHolder.tvShortPlanSurplus.setText(plan.getShortPlanSurplus());
-
             } else {
                 showPlanViewHolder.tvAddShortPlanTip.setVisibility(View.VISIBLE);
                 showPlanViewHolder.llShortPlanView.setVisibility(View.GONE);
                 showPlanViewHolder.imgAddShortPlan.setVisibility(View.VISIBLE);
-
-                showPlanViewHolder.imgAddShortPlan.setOnClickListener(v -> showAddPeriodPlanDialog(plan.getPlan()));
+                showPlanViewHolder.imgAddShortPlan.setOnClickListener(v -> showAddPeriodPlanDialog(plan.getRationPlan()));
             }
+        } else if (holder instanceof ClockPlanViewHolder) {
+            ClockPlanViewHolder clockPlanViewHolder = (ClockPlanViewHolder) holder;
+            clockPlanViewHolder.tvPlanName.setText(plan.getPlanName());
+            if (TextUtils.isEmpty(plan.getPlanInfo())) {
+                clockPlanViewHolder.tvPlanDescription.setVisibility(View.GONE);
+            } else {
+                clockPlanViewHolder.tvPlanDescription.setVisibility(View.VISIBLE);
+                clockPlanViewHolder.tvPlanDescription.setText(plan.getPlanInfo());
+            }
+            List<ClockRecord> records = plan.getClockPlan().getClockRecords();
+            clockPlanViewHolder.tvClockCount.setText(String.valueOf(records == null ? 0 : records.size()));
+            clockPlanViewHolder.tvClock.setOnClickListener(v -> showClockDialog(plan.getClockPlan()));
         }
     }
 
-    private void showClockDialog(RationPlan plan) {
+    @Override
+    public int getItemViewType(int position) {
+        return listData.get(position).getType();
+    }
+
+    private void showClockDialog(ClockPlan clockPlan){
         final View rootView = inflater.inflate(R.layout.dialog_clock, null);
+        final EditText etClockName = rootView.findViewById(R.id.et_clock_comment);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("打卡");
+        builder.setView(rootView);
+        builder.setNegativeButton("取消", null);
+        builder.setPositiveButton("确定", (DialogInterface dialog, int which) -> {
+            String comment = etClockName.getText().toString();
+            requestClock(clockPlan, comment);
+        });
+        builder.create().show();
+    }
+
+    private void requestClock(ClockPlan clockPlan, String comment){
+        ClockRecord clockRecord = new ClockRecord();
+        clockRecord.setParentPlanId(clockPlan.getId());
+        clockRecord.setDate(DateUtils.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
+        if(!TextUtils.isEmpty(comment) && !TextUtils.equals(comment,"null")){
+            clockRecord.setDescription(comment);
+        }
+        if(clockRecordDao == null){
+            clockRecordDao = DBManager.getInstance().getClockRecordDao();
+        }
+        clockRecordDao.insert(clockRecord);
+        DBManager.getInstance().clear();
+        EventBus.getDefault().post(new PlanChangedEvent());
+    }
+
+    private void showRationClockDialog(RationPlan plan) {
+        final View rootView = inflater.inflate(R.layout.dialog_ration_clock, null);
         final EditText etClockName = rootView.findViewById(R.id.et_clock_name);
         final EditText etClockValue = rootView.findViewById(R.id.et_clock_value);
         final TextView tvUnit = rootView.findViewById(R.id.tv_unit);
         tvUnit.setText(plan.getUnit());
-
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("打卡");
         builder.setView(rootView);
@@ -112,7 +160,7 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
                 UiUtils.showToast(context, "请输入本次完成值");
                 return;
             }
-            clock(plan, clockName, Double.valueOf(clockValue));
+            rationClock(plan, clockName, Double.valueOf(clockValue));
         });
         builder.create().show();
     }
@@ -120,22 +168,22 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
     /**
      * 打卡
      */
-    private void clock(RationPlan plan, String clockName, double value) {
-        if(planDao == null){
+    private void rationClock(RationPlan plan, String clockName, double value) {
+        if (planDao == null) {
             planDao = DBManager.getInstance().getRationPlanDao();
         }
-        if (clockRecordDao == null) {
-            clockRecordDao = DBManager.getInstance().getRationRecordDao();
+        if (rationClockRecordDao == null) {
+            rationClockRecordDao = DBManager.getInstance().getRationRecordDao();
         }
         plan.setCurrent(plan.getCurrent() + value);
         planDao.insertOrReplace(plan);
-
         RationRecord clockRecord = new RationRecord();
         clockRecord.setDate(DateUtils.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
         clockRecord.setName(clockName);
         clockRecord.setParentPlanId(plan.getId());
         clockRecord.setValue(value);
-        clockRecordDao.insertOrReplace(clockRecord);
+        rationClockRecordDao.insertOrReplace(clockRecord);
+        DBManager.getInstance().clear();
         EventBus.getDefault().post(new PlanChangedEvent());
     }
 
@@ -205,12 +253,7 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
         EventBus.getDefault().post(new PlanChangedEvent());
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        return listData.get(position).getType();
-    }
-
-    class ShowPlanViewHolder extends ViewHolder {
+    class RationPlanViewHolder extends ViewHolder {
 
         @BindView(R.id.tv_plan_name)
         TextView tvPlanName;
@@ -245,7 +288,28 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
         @BindView(R.id.img_edit)
         ImageView imgEdit;
 
-        ShowPlanViewHolder(View itemView) {
+        RationPlanViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+    }
+
+    class ClockPlanViewHolder extends ViewHolder {
+
+        @BindView(R.id.tv_plan_name)
+        TextView tvPlanName;
+        @BindView(R.id.tv_plan_description)
+        TextView tvPlanDescription;
+        @BindView(R.id.tv_clock_count)
+        TextView tvClockCount;
+        @BindView(R.id.tv_clock)
+        TextView tvClock;
+        @BindView(R.id.tv_detail)
+        TextView tvDetail;
+        @BindView(R.id.img_edit)
+        ImageView imgEdit;
+
+        ClockPlanViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

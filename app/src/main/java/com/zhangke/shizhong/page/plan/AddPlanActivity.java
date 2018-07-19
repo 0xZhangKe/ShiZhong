@@ -57,7 +57,20 @@ public class AddPlanActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(PlanSelectedEvent event) {
-        viewPager.setCurrentItem(1);
+        if(event.getPlanType() == -1) {
+            viewPager.setCurrentItem(0);
+        }else{
+            viewPager.setCurrentItem(1);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(viewPager.getCurrentItem() == 1){
+            EventBus.getDefault().post(new PlanSelectedEvent(-1));
+        }else{
+            super.onBackPressed();
+        }
     }
 
     @Override

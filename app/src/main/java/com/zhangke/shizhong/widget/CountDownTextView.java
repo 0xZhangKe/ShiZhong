@@ -55,7 +55,6 @@ public class CountDownTextView extends AppCompatTextView {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
-                    ZLog.e(TAG, "CountDownThread", e);
                     if (destroyed) {
                         return;
                     } else {

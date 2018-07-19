@@ -1,58 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingBottom="20dp"
     android:paddingTop="20dp">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:text="备注"
+        android:textSize="10.0sp" />
+
     <EditText
-        android:id="@+id/et_clock_name"
+        android:id="@+id/et_clock_comment"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@null"
-        android:ellipsize="end"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
         android:gravity="center_vertical"
-        android:hint="请输入打卡名"
-        android:paddingLeft="15dp"
-        android:singleLine="true"
         android:textColor="@color/text_black"
         android:textSize="14sp" />
-
-    <View
-        style="@style/default_diver"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="5dp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/et_clock_value"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@null"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:hint="请输入本次完成值"
-            android:inputType="numberDecimal"
-            android:paddingLeft="15dp"
-            android:singleLine="true"
-            android:textColor="@color/text_black"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/tv_unit"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:paddingRight="50dp"
-            android:textColor="@color/text_black" />
-    </LinearLayout>
 
 </LinearLayout>

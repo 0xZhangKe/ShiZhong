@@ -169,9 +169,17 @@ public class AddPlanFragment extends BaseFragment {
         if (planType == 0) {
             llPlanSwitch.setVisibility(View.VISIBLE);
             tilDescription.setVisibility(View.GONE);
-        } else {
+        } else if(planType == 1){
             llPlanSwitch.setVisibility(View.GONE);
             tilDescription.setVisibility(View.VISIBLE);
+        } else {
+            etName.setText("");
+            etStartDate.setText("");
+            etFinishDate.setText("");
+            etTargetValue.setText("");
+            etCurValue.setText("");
+            etUnit.setText("");
+            etDesciption.setText("");
         }
     }
 
