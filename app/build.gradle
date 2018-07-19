@@ -57,7 +57,7 @@ dependencies {
 }
 
 greendao {
-    schemaVersion 10
+    schemaVersion 11
     daoPackage 'com.zhangke.shizhong.db'
     targetGenDir 'src/main/java'
 }

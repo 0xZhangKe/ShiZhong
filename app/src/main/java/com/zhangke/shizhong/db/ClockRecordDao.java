@@ -27,9 +27,8 @@ public class ClockRecordDao extends AbstractDao<ClockRecord, Long> {
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property ParentPlanId = new Property(1, Long.class, "parentPlanId", false, "PARENT_PLAN_ID");
-        public final static Property Name = new Property(2, String.class, "name", false, "NAME");
-        public final static Property Date = new Property(3, String.class, "date", false, "DATE");
-        public final static Property Description = new Property(4, String.class, "description", false, "DESCRIPTION");
+        public final static Property Date = new Property(2, String.class, "date", false, "DATE");
+        public final static Property Description = new Property(3, String.class, "description", false, "DESCRIPTION");
     }
 
     private Query<ClockRecord> clockPlan_ClockRecordsQuery;
@@ -48,9 +47,8 @@ public class ClockRecordDao extends AbstractDao<ClockRecord, Long> {
         db.execSQL("CREATE TABLE " + constraint + "\"CLOCK_RECORD\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"PARENT_PLAN_ID\" INTEGER," + // 1: parentPlanId
-                "\"NAME\" TEXT," + // 2: name
-                "\"DATE\" TEXT," + // 3: date
-                "\"DESCRIPTION\" TEXT);"); // 4: description
+                "\"DATE\" TEXT," + // 2: date
+                "\"DESCRIPTION\" TEXT);"); // 3: description
     }
 
     /** Drops the underlying database table. */
@@ -73,19 +71,14 @@ public class ClockRecordDao extends AbstractDao<ClockRecord, Long> {
             stmt.bindLong(2, parentPlanId);
         }
  
-        String name = entity.getName();
-        if (name != null) {
-            stmt.bindString(3, name);
-        }
- 
         String date = entity.getDate();
         if (date != null) {
-            stmt.bindString(4, date);
+            stmt.bindString(3, date);
         }
  
         String description = entity.getDescription();
         if (description != null) {
-            stmt.bindString(5, description);
+            stmt.bindString(4, description);
         }
     }
 
@@ -103,19 +96,14 @@ public class ClockRecordDao extends AbstractDao<ClockRecord, Long> {
             stmt.bindLong(2, parentPlanId);
         }
  
-        String name = entity.getName();
-        if (name != null) {
-            stmt.bindString(3, name);
-        }
- 
         String date = entity.getDate();
         if (date != null) {
-            stmt.bindString(4, date);
+            stmt.bindString(3, date);
         }
  
         String description = entity.getDescription();
         if (description != null) {
-            stmt.bindString(5, description);
+            stmt.bindString(4, description);
         }
     }
 
@@ -129,9 +117,8 @@ public class ClockRecordDao extends AbstractDao<ClockRecord, Long> {
         ClockRecord entity = new ClockRecord( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // parentPlanId
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // name
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // date
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4) // description
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // date
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // description
         );
         return entity;
     }
@@ -140,9 +127,8 @@ public class ClockRecordDao extends AbstractDao<ClockRecord, Long> {
     public void readEntity(Cursor cursor, ClockRecord entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setParentPlanId(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
-        entity.setName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setDate(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setDescription(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setDate(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setDescription(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
      }
     
     @Override

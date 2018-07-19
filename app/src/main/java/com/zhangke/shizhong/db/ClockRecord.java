@@ -5,6 +5,7 @@ import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
 
 /**
+ * 打卡计划的打卡记录
  * Created by ZhangKe on 2018/7/17.
  */
 @Entity
@@ -13,7 +14,6 @@ public class ClockRecord {
     @Id(autoincrement = true)
     private Long id;
     private Long parentPlanId;
-    private String name;
     /**
      * 日期
      */
@@ -22,12 +22,11 @@ public class ClockRecord {
      * 备注
      */
     private String description;
-    @Generated(hash = 2013652895)
-    public ClockRecord(Long id, Long parentPlanId, String name, String date,
+    @Generated(hash = 1334261604)
+    public ClockRecord(Long id, Long parentPlanId, String date,
             String description) {
         this.id = id;
         this.parentPlanId = parentPlanId;
-        this.name = name;
         this.date = date;
         this.description = description;
     }
@@ -45,12 +44,6 @@ public class ClockRecord {
     }
     public void setParentPlanId(Long parentPlanId) {
         this.parentPlanId = parentPlanId;
-    }
-    public String getName() {
-        return this.name;
-    }
-    public void setName(String name) {
-        this.name = name;
     }
     public String getDate() {
         return this.date;
