@@ -36,6 +36,10 @@ public class DBManager {
         daoSession = daoMaster.newSession();
     }
 
+    public void clear(){
+        daoSession.clear();
+    }
+
     public ApplicationInfoDao getApplicationInfoDao() {
         return daoSession.getApplicationInfoDao();
     }
