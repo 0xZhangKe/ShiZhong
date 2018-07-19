@@ -1,9 +1,8 @@
 package com.zhangke.shizhong.page.plan;
 
-import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.TextInputLayout;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
@@ -14,6 +13,7 @@ import com.zhangke.shizhong.db.RationPlan;
 import com.zhangke.shizhong.event.PlanChangedEvent;
 import com.zhangke.shizhong.event.PlanSelectedEvent;
 import com.zhangke.shizhong.page.base.BaseFragment;
+import com.zhangke.shizhong.util.DateUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -48,6 +48,11 @@ public class AddPlanFragment extends BaseFragment {
     EditText etUnit;
     @BindView(R.id.ll_plan_switch)
     LinearLayout llPlanSwitch;
+    @BindView(R.id.til_description)
+    TextInputLayout tilDescription;
+    @BindView(R.id.et_desciption)
+    EditText etDesciption;
+
     Unbinder unbinder;
 
     /**
@@ -75,9 +80,9 @@ public class AddPlanFragment extends BaseFragment {
             return;
         }
         String name = etName.getText().toString();
-        String startDate = etStartDate.getText().toString();
 
         if (planType == 0 && assertRationInput()) {
+            String startDate = etStartDate.getText().toString();
             String finishDate = etFinishDate.getText().toString();
             String targetValue = etTargetValue.getText().toString();
             String curValue = etCurValue.getText().toString();
@@ -103,7 +108,8 @@ public class AddPlanFragment extends BaseFragment {
         if (planType == 1 && !assertClockInput()) {
             final ClockPlan plan = new ClockPlan();
             plan.setName(name);
-            plan.setStartDate(startDate);
+            plan.setStartDate(DateUtils.getCurrentDate("yyyy-MM-dd"));
+            plan.setDescription(etDesciption.getText().toString());
             Observable.create(e -> {
                 DBManager.getInstance().getClockPlanDao().insert(plan);
                 e.onNext(1);
@@ -150,8 +156,8 @@ public class AddPlanFragment extends BaseFragment {
             showNoActionSnackbar("请输入计划名");
             return false;
         }
-        if (TextUtils.isEmpty(etStartDate.getText().toString())) {
-            showNoActionSnackbar("请输入开始日期");
+        if (TextUtils.isEmpty(etDesciption.getText().toString())) {
+            showNoActionSnackbar("请输入计划描述");
             return false;
         }
         return false;
@@ -162,8 +168,10 @@ public class AddPlanFragment extends BaseFragment {
         planType = event.getPlanType();
         if (planType == 0) {
             llPlanSwitch.setVisibility(View.VISIBLE);
+            tilDescription.setVisibility(View.GONE);
         } else {
             llPlanSwitch.setVisibility(View.GONE);
+            tilDescription.setVisibility(View.VISIBLE);
         }
     }
 
