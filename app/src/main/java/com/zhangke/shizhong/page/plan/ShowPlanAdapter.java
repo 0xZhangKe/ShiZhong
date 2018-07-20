@@ -2,6 +2,7 @@ package com.zhangke.shizhong.page.plan;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
@@ -93,6 +94,7 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
                 showPlanViewHolder.imgAddShortPlan.setVisibility(View.VISIBLE);
                 showPlanViewHolder.imgAddShortPlan.setOnClickListener(v -> showAddPeriodPlanDialog(plan.getRationPlan()));
             }
+            showPlanViewHolder.imgEdit.setOnClickListener(v -> EditPlanActivity.open(context, plan.getRationPlan().getId(), plan.getType()));
         } else if (holder instanceof ClockPlanViewHolder) {
             ClockPlanViewHolder clockPlanViewHolder = (ClockPlanViewHolder) holder;
             clockPlanViewHolder.tvPlanName.setText(plan.getPlanName());
@@ -105,6 +107,7 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
             List<ClockRecord> records = plan.getClockPlan().getClockRecords();
             clockPlanViewHolder.tvClockCount.setText(String.valueOf(records == null ? 0 : records.size()));
             clockPlanViewHolder.tvClock.setOnClickListener(v -> showClockDialog(plan));
+            clockPlanViewHolder.imgEdit.setOnClickListener(v -> EditPlanActivity.open(context, plan.getClockPlan().getId(), plan.getType()));
         }
     }
 
