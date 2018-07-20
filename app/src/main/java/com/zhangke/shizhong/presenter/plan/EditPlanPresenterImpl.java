@@ -127,8 +127,8 @@ public class EditPlanPresenterImpl implements IEditPlanContract.Presenter {
     }
 
     private void planDoesNotExits() {
-        view.showNoActionSnackbar("计划不存在");
-        mHandler.postDelayed(() -> ((Activity) view).finish(), 500);
+        view.showNoActionSnackbar("计划不存在啊？怎么回事");
+        mHandler.postDelayed(() -> ((Activity) view).finish(), 700);
     }
 
     @Override
@@ -170,14 +170,14 @@ public class EditPlanPresenterImpl implements IEditPlanContract.Presenter {
         }else{
             mClockPlanDao.deleteByKey(planId);
         }
-        view.showNoActionSnackbar("删除成功成功");
+        view.showNoActionSnackbar("搞定");
         DBManager.getInstance().clear();
         EventBus.getDefault().post(new PlanChangedEvent());
         mHandler.postDelayed(() -> ((Activity) context).finish(), 700);
     }
 
     private void editSuccess() {
-        view.showNoActionSnackbar("修改成功");
+        view.showNoActionSnackbar("修改好了");
         EventBus.getDefault().post(new PlanChangedEvent());
         mHandler.postDelayed(() -> ((Activity) context).finish(), 700);
     }

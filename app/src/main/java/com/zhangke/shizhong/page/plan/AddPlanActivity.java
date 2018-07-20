@@ -11,6 +11,7 @@ import com.zhangke.shizhong.common.CustomFragmentPagerAdapter;
 import com.zhangke.shizhong.event.PlanSelectedEvent;
 import com.zhangke.shizhong.page.base.BaseActivity;
 import com.zhangke.shizhong.page.main.SettingFragment;
+import com.zhangke.shizhong.widget.NoTouchViewPager;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -32,7 +33,7 @@ public class AddPlanActivity extends BaseActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.view_pager)
-    ViewPager viewPager;
+    NoTouchViewPager viewPager;
 
     @Override
     protected int getLayoutResId() {

@@ -169,9 +169,11 @@ public class AddPlanFragment extends BaseFragment {
         if (planType == 0) {
             llPlanSwitch.setVisibility(View.VISIBLE);
             tilDescription.setVisibility(View.GONE);
+            etName.setText("攒钱计划");
         } else if(planType == 1){
             llPlanSwitch.setVisibility(View.GONE);
             tilDescription.setVisibility(View.VISIBLE);
+            etName.setText("跑步计划");
         } else {
             etName.setText("");
             etStartDate.setText("");
