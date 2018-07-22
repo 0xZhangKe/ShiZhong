@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -15,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.zhangke.shizhong.R;
@@ -22,8 +22,6 @@ import com.zhangke.shizhong.contract.plan.IEditPlanContract;
 import com.zhangke.shizhong.db.ClockPlan;
 import com.zhangke.shizhong.db.RationPlan;
 import com.zhangke.shizhong.model.plan.EditPlanDataEntity;
-import com.zhangke.shizhong.page.application.ApplicationStatisticsActivity;
-import com.zhangke.shizhong.page.application.SearchApplicationActivity;
 import com.zhangke.shizhong.page.base.BaseActivity;
 import com.zhangke.shizhong.presenter.plan.EditPlanPresenterImpl;
 
@@ -38,27 +36,31 @@ import butterknife.OnClick;
  */
 public class EditPlanActivity extends BaseActivity implements IEditPlanContract.View {
 
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.view_toolbar_divider)
     View viewToolbarDivider;
     @BindView(R.id.et_name)
     EditText etName;
+    @BindView(R.id.fl_start_date)
+    FrameLayout flStartDate;
+    @BindView(R.id.et_start_date)
+    EditText etStartDate;
     @BindView(R.id.et_description)
     EditText etDescription;
-    @BindView(R.id.til_description)
-    TextInputLayout tilDescription;
+    @BindView(R.id.fl_plan_description)
+    FrameLayout flPlanDescription;
     @BindView(R.id.et_finish_date)
     EditText etFinishDate;
-    @BindView(R.id.et_target_value)
-    EditText etTargetValue;
-    @BindView(R.id.et_cur_value)
-    EditText etCurValue;
+    @BindView(R.id.et_target)
+    EditText etTarget;
+    @BindView(R.id.et_current)
+    EditText etCurrent;
     @BindView(R.id.et_unit)
     EditText etUnit;
     @BindView(R.id.ll_plan_switch)
     LinearLayout llPlanSwitch;
-
     /**
      * 计划ID
      */
@@ -109,8 +111,8 @@ public class EditPlanActivity extends BaseActivity implements IEditPlanContract.
         editData.setName(etName.getText().toString());
         editData.setFinishDate(etFinishDate.getText().toString());
         editData.setDescription(etDescription.getText().toString());
-        editData.setTarget(planType == 0 ? Double.valueOf(etTargetValue.getText().toString()) : 0);
-        editData.setCurrent(planType == 0 ? Double.valueOf(etCurValue.getText().toString()) : 0);
+        editData.setTarget(planType == 0 ? Double.valueOf(etTarget.getText().toString()) : 0);
+        editData.setCurrent(planType == 0 ? Double.valueOf(etCurrent.getText().toString()) : 0);
         editData.setUnit(etUnit.getText().toString());
         presenter.updatePlan(editData);
     }
@@ -124,11 +126,11 @@ public class EditPlanActivity extends BaseActivity implements IEditPlanContract.
             showNoActionSnackbar("请输入结束时间");
             return false;
         }
-        if (TextUtils.isEmpty(etTargetValue.getText().toString())) {
+        if (TextUtils.isEmpty(etTarget.getText().toString())) {
             showNoActionSnackbar("请输入目标值");
             return false;
         }
-        if (TextUtils.isEmpty(etCurValue.getText().toString())) {
+        if (TextUtils.isEmpty(etCurrent.getText().toString())) {
             showNoActionSnackbar("请输入当前值");
             return false;
         }
@@ -149,22 +151,24 @@ public class EditPlanActivity extends BaseActivity implements IEditPlanContract.
 
     @Override
     public void showRationPlan() {
-        tilDescription.setVisibility(View.GONE);
+        flPlanDescription.setVisibility(View.GONE);
         llPlanSwitch.setVisibility(View.VISIBLE);
+        flStartDate.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showClockPlan() {
-        tilDescription.setVisibility(View.VISIBLE);
+        flPlanDescription.setVisibility(View.VISIBLE);
         llPlanSwitch.setVisibility(View.GONE);
+        flStartDate.setVisibility(View.GONE);
     }
 
     @Override
     public void fillRationPlanData(RationPlan plan) {
         etName.setText(plan.getName());
         etFinishDate.setText(plan.getFinishDate());
-        etTargetValue.setText(String.valueOf(plan.getTarget()));
-        etCurValue.setText(String.valueOf(plan.getCurrent()));
+        etTarget.setText(String.valueOf(plan.getTarget()));
+        etCurrent.setText(String.valueOf(plan.getCurrent()));
         etUnit.setText(plan.getUnit());
     }
 
@@ -200,4 +204,5 @@ public class EditPlanActivity extends BaseActivity implements IEditPlanContract.
         presenter.onDestroy();
         super.onDestroy();
     }
+
 }

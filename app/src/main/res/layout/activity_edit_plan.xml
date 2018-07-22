@@ -22,122 +22,212 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="30dp">
 
-                <android.support.design.widget.TextInputLayout
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginTop="15dp"
-                    android:hint="计划名">
+                    android:layout_height="60dp"
+                    android:layout_marginTop="20dp"
+                    android:paddingLeft="10dp">
 
-                    <EditText
-                        android:id="@+id/et_name"
+                    <ImageView
+                        style="@style/InputIconStyle"
+                        android:layout_gravity="center_vertical"
+                        android:src="@mipmap/plan_name" />
+
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:ellipsize="end"
-                        android:maxLength="10"
-                        android:singleLine="true"
-                        android:textSize="14sp" />
-                </android.support.design.widget.TextInputLayout>
+                        android:layout_marginLeft="50dp"
+                        android:hint="计划名">
 
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/til_description"
+                        <EditText
+                            android:id="@+id/et_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:ellipsize="end"
+                            android:maxLength="10"
+                            android:singleLine="true"
+                            android:textSize="14sp" />
+                    </android.support.design.widget.TextInputLayout>
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/fl_start_date"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="10dp"
-                    android:hint="计划描述"
-                    android:visibility="gone">
+                    android:layout_height="60dp"
+                    android:paddingLeft="10dp">
 
-                    <EditText
-                        android:id="@+id/et_description"
+                    <ImageView
+                        style="@style/InputIconStyle"
+                        android:layout_gravity="center_vertical"
+                        android:src="@mipmap/start_date" />
+
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:textSize="14sp" />
-                </android.support.design.widget.TextInputLayout>
+                        android:layout_marginLeft="50dp"
+                        android:hint="开始日期">
+
+                        <EditText
+                            android:id="@+id/et_start_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:ellipsize="end"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false"
+                            android:maxLength="10"
+                            android:singleLine="true"
+                            android:textSize="14sp" />
+                    </android.support.design.widget.TextInputLayout>
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/fl_plan_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="20dp"
+                    android:visibility="gone"
+                    android:paddingLeft="10dp">
+
+                    <ImageView
+                        style="@style/InputIconStyle"
+                        android:layout_gravity="center_vertical"
+                        android:src="@mipmap/plan_description" />
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="50dp"
+                        android:hint="计划描述">
+
+                        <EditText
+                            android:id="@+id/et_description"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textSize="14sp" />
+                    </android.support.design.widget.TextInputLayout>
+                </FrameLayout>
 
                 <LinearLayout
                     android:id="@+id/ll_plan_switch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="visible">
+                    android:orientation="vertical">
 
-                    <android.support.design.widget.TextInputLayout
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginTop="10dp"
-                        android:hint="结束日期">
+                        android:layout_height="60dp"
+                        android:paddingLeft="10dp">
 
-                        <EditText
-                            android:id="@+id/et_finish_date"
+                        <ImageView
+                            style="@style/InputIconStyle"
+                            android:layout_gravity="center_vertical"
+                            android:src="@mipmap/finish_date" />
+
+                        <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:ellipsize="end"
-                            android:maxLength="10"
-                            android:singleLine="true"
-                            android:textSize="14sp" />
-                    </android.support.design.widget.TextInputLayout>
+                            android:layout_marginLeft="50dp"
+                            android:hint="结束日期">
 
-                    <android.support.design.widget.TextInputLayout
+                            <EditText
+                                android:id="@+id/et_finish_date"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:ellipsize="end"
+                                android:maxLength="10"
+                                android:singleLine="true"
+                                android:textSize="14sp" />
+                        </android.support.design.widget.TextInputLayout>
+
+                    </FrameLayout>
+
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginTop="10dp"
-                        android:hint="目标值">
+                        android:layout_height="60dp"
+                        android:paddingLeft="10dp">
 
-                        <EditText
-                            android:id="@+id/et_target_value"
+                        <ImageView
+                            style="@style/InputIconStyle"
+                            android:layout_gravity="center_vertical"
+                            android:src="@mipmap/plan_target" />
+
+                        <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:ellipsize="end"
-                            android:inputType="numberDecimal"
-                            android:maxLength="10"
-                            android:singleLine="true"
-                            android:textSize="14sp" />
-                    </android.support.design.widget.TextInputLayout>
+                            android:layout_marginLeft="50dp"
+                            android:hint="计划目标">
 
-                    <android.support.design.widget.TextInputLayout
+                            <EditText
+                                android:id="@+id/et_target"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:ellipsize="end"
+                                android:maxLength="10"
+                                android:singleLine="true"
+                                android:textSize="14sp" />
+                        </android.support.design.widget.TextInputLayout>
+
+                    </FrameLayout>
+
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginTop="10dp"
-                        android:hint="当前完成值">
+                        android:layout_height="60dp"
+                        android:paddingLeft="10dp">
 
-                        <EditText
-                            android:id="@+id/et_cur_value"
+                        <ImageView
+                            style="@style/InputIconStyle"
+                            android:layout_gravity="center_vertical"
+                            android:src="@mipmap/plan_current" />
+
+                        <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:ellipsize="end"
-                            android:inputType="numberDecimal"
-                            android:maxLength="10"
-                            android:singleLine="true"
-                            android:textSize="14sp" />
-                    </android.support.design.widget.TextInputLayout>
+                            android:layout_marginLeft="50dp"
+                            android:hint="当前值">
 
-                    <android.support.design.widget.TextInputLayout
+                            <EditText
+                                android:id="@+id/et_current"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:ellipsize="end"
+                                android:maxLength="10"
+                                android:singleLine="true"
+                                android:textSize="14sp" />
+                        </android.support.design.widget.TextInputLayout>
+
+                    </FrameLayout>
+
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginTop="10dp"
-                        android:hint="单位">
+                        android:layout_height="60dp"
+                        android:paddingLeft="10dp">
 
-                        <EditText
-                            android:id="@+id/et_unit"
+                        <ImageView
+                            style="@style/InputIconStyle"
+                            android:layout_gravity="center_vertical"
+                            android:src="@mipmap/plan_unit" />
+
+                        <android.support.design.widget.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:ellipsize="end"
-                            android:maxLength="10"
-                            android:singleLine="true"
-                            android:textSize="14sp" />
-                    </android.support.design.widget.TextInputLayout>
+                            android:layout_marginLeft="50dp"
+                            android:hint="单位">
+
+                            <EditText
+                                android:id="@+id/et_unit"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:ellipsize="end"
+                                android:maxLength="10"
+                                android:singleLine="true"
+                                android:textSize="14sp" />
+                        </android.support.design.widget.TextInputLayout>
+
+                    </FrameLayout>
                 </LinearLayout>
 
                 <Button
