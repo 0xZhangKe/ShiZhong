@@ -95,6 +95,7 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
                 showPlanViewHolder.imgAddShortPlan.setOnClickListener(v -> showAddPeriodPlanDialog(plan.getRationPlan()));
             }
             showPlanViewHolder.imgEdit.setOnClickListener(v -> EditPlanActivity.open(context, plan.getRationPlan().getId(), plan.getType()));
+            showPlanViewHolder.tvDetail.setOnClickListener(v -> PlanDetailActivity.open(context, plan.getRationPlan().getId(), plan.getType()));
         } else if (holder instanceof ClockPlanViewHolder) {
             ClockPlanViewHolder clockPlanViewHolder = (ClockPlanViewHolder) holder;
             clockPlanViewHolder.tvPlanName.setText(plan.getPlanName());
@@ -108,6 +109,7 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
             clockPlanViewHolder.tvClockCount.setText(String.valueOf(records == null ? 0 : records.size()));
             clockPlanViewHolder.tvClock.setOnClickListener(v -> showClockDialog(plan));
             clockPlanViewHolder.imgEdit.setOnClickListener(v -> EditPlanActivity.open(context, plan.getClockPlan().getId(), plan.getType()));
+            clockPlanViewHolder.tvDetail.setOnClickListener(v -> PlanDetailActivity.open(context, plan.getClockPlan().getId(), plan.getType()));
         }
     }
 

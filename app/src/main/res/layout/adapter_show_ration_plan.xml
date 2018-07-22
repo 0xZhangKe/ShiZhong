@@ -28,7 +28,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="攒钱计划"
                     android:textColor="@color/text_black"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -44,7 +43,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="100"
                     android:textColor="@color/plan_card_bg_color1"
                     android:textSize="40sp"
                     android:textStyle="bold" />
@@ -83,7 +81,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="10dp"
-                android:text="2018-02-01~2018-12-30        起始：20000元"
                 android:textSize="12sp" />
 
             <TextView
@@ -119,7 +116,6 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="5dp"
-                app:progress_current="80"
                 app:progress_max="100"
                 app:progress_text_visibility="visible" />
 
@@ -129,7 +125,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="10dp"
-                android:text="剩余：50000元"
                 android:textSize="12sp" />
 
             <LinearLayout
@@ -161,7 +156,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
                     android:layout_marginTop="15dp"
-                    android:text="目标：6000 元"
                     android:textSize="12sp" />
 
                 <TextView
@@ -170,7 +164,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
                     android:layout_marginTop="10dp"
-                    android:text="剩余：-1000 元"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -201,6 +194,7 @@
                     android:gravity="center_vertical"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
+                    android:textStyle="bold"
                     android:text="打卡"
                     android:textColor="#6200EA" />
 
@@ -213,6 +207,7 @@
                     android:gravity="center_vertical"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
+                    android:textStyle="bold"
                     android:text="详情"
                     android:textColor="#6200EA" />
 

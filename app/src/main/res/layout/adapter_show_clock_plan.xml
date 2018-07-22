@@ -25,7 +25,6 @@
                 android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="跑步计划"
                 android:textColor="@color/text_black"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -58,7 +57,6 @@
                     android:layout_gravity="bottom"
                     android:textColor="@color/plan_card_bg_color1"
                     android:textSize="28sp"
-                    android:text="10"
                     android:textStyle="bold"/>
 
                 <TextView
