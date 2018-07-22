@@ -193,9 +193,9 @@ public class EditPlanActivity extends BaseActivity implements IEditPlanContract.
             case R.id.delete:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("注意了");
-                builder.setMessage("确定要删除这个计划吗？？？");
-                builder.setNegativeButton("不", null);
-                builder.setPositiveButton("是的", (DialogInterface dialog, int which) -> presenter.deletePlan());
+                builder.setMessage("真的要删除这个计划吗？？？");
+                builder.setNegativeButton("不不不", null);
+                builder.setPositiveButton("删吧", (DialogInterface dialog, int which) -> presenter.deletePlan());
                 builder.create().show();
                 break;
         }
