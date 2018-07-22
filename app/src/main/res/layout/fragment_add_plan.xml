@@ -3,6 +3,7 @@
     android:id="@+id/coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/backgroundColor"
     android:orientation="vertical">
 
     <ScrollView
@@ -30,6 +31,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="50dp"
+                    android:textColorHint="?attr/textColor"
                     android:hint="计划名">
 
                     <EditText
@@ -39,6 +41,7 @@
                         android:ellipsize="end"
                         android:maxLength="10"
                         android:singleLine="true"
+                        android:textColor="?attr/textColor"
                         android:text="攒钱计划"
                         android:textSize="14sp" />
                 </android.support.design.widget.TextInputLayout>
@@ -60,6 +63,7 @@
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:textColorHint="?attr/textColor"
                     android:layout_marginLeft="50dp"
                     android:hint="计划描述">
 
@@ -67,6 +71,7 @@
                         android:id="@+id/et_description"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:textColor="?attr/textColor"
                         android:text="争取早日瘦到140"
                         android:textSize="14sp" />
                 </android.support.design.widget.TextInputLayout>
@@ -93,6 +98,7 @@
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:textColorHint="?attr/textColor"
                         android:layout_marginLeft="50dp"
                         android:hint="开始日期">
 
@@ -103,6 +109,7 @@
                             android:ellipsize="end"
                             android:editable="false"
                             android:focusable="false"
+                            android:textColor="?attr/textColor"
                             android:focusableInTouchMode="false"
                             android:maxLength="10"
                             android:singleLine="true"
@@ -125,6 +132,7 @@
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:textColorHint="?attr/textColor"
                         android:layout_marginLeft="50dp"
                         android:hint="结束日期">
 
@@ -135,6 +143,7 @@
                             android:ellipsize="end"
                             android:editable="false"
                             android:focusable="false"
+                            android:textColor="?attr/textColor"
                             android:focusableInTouchMode="false"
                             android:maxLength="10"
                             android:singleLine="true"
@@ -157,6 +166,7 @@
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:textColorHint="?attr/textColor"
                         android:layout_marginLeft="50dp"
                         android:hint="计划目标">
 
@@ -165,6 +175,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:ellipsize="end"
+                            android:textColor="?attr/textColor"
                             android:maxLength="10"
                             android:singleLine="true"
                             android:text="70000"
@@ -186,6 +197,7 @@
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:textColorHint="?attr/textColor"
                         android:layout_marginLeft="50dp"
                         android:hint="当前值">
 
@@ -194,6 +206,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:ellipsize="end"
+                            android:textColor="?attr/textColor"
                             android:maxLength="10"
                             android:singleLine="true"
                             android:text="1000"
@@ -215,6 +228,7 @@
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:textColorHint="?attr/textColor"
                         android:layout_marginLeft="50dp"
                         android:hint="单位">
 
@@ -223,6 +237,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:ellipsize="end"
+                            android:textColor="?attr/textColor"
                             android:maxLength="10"
                             android:singleLine="true"
                             android:text="元"

@@ -3,7 +3,7 @@
     android:id="@+id/coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFF"
+    android:background="?attr/backgroundColor"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical">
@@ -41,6 +41,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="50dp"
+                        android:textColorHint="?attr/textColor"
                         android:hint="计划名">
 
                         <EditText
@@ -50,6 +51,7 @@
                             android:editable="false"
                             android:ellipsize="end"
                             android:focusable="false"
+                            android:textColor="?attr/textColor"
                             android:focusableInTouchMode="false"
                             android:maxLength="10"
                             android:singleLine="true"
@@ -72,6 +74,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="50dp"
+                        android:textColorHint="?attr/textColor"
                         android:hint="开始日期">
 
                         <EditText
@@ -81,6 +84,7 @@
                             android:editable="false"
                             android:ellipsize="end"
                             android:focusable="false"
+                            android:textColor="?attr/textColor"
                             android:focusableInTouchMode="false"
                             android:maxLength="10"
                             android:singleLine="true"
@@ -105,6 +109,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="50dp"
+                        android:textColorHint="?attr/textColor"
                         android:hint="计划描述">
 
                         <EditText
@@ -113,6 +118,7 @@
                             android:layout_height="match_parent"
                             android:editable="false"
                             android:focusable="false"
+                            android:textColor="?attr/textColor"
                             android:focusableInTouchMode="false"
                             android:textSize="14sp" />
                     </android.support.design.widget.TextInputLayout>
@@ -139,6 +145,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="50dp"
+                            android:textColorHint="?attr/textColor"
                             android:hint="结束日期">
 
                             <EditText
@@ -148,6 +155,7 @@
                                 android:ellipsize="end"
                                 android:editable="false"
                                 android:focusable="false"
+                                android:textColor="?attr/textColor"
                                 android:focusableInTouchMode="false"
                                 android:maxLength="10"
                                 android:singleLine="true"
@@ -170,6 +178,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="50dp"
+                            android:textColorHint="?attr/textColor"
                             android:hint="计划目标">
 
                             <EditText
@@ -179,6 +188,7 @@
                                 android:ellipsize="end"
                                 android:editable="false"
                                 android:focusable="false"
+                                android:textColor="?attr/textColor"
                                 android:focusableInTouchMode="false"
                                 android:maxLength="10"
                                 android:singleLine="true"
@@ -201,6 +211,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="50dp"
+                            android:textColorHint="?attr/textColor"
                             android:hint="当前值">
 
                             <EditText
@@ -210,6 +221,7 @@
                                 android:ellipsize="end"
                                 android:editable="false"
                                 android:focusable="false"
+                                android:textColor="?attr/textColor"
                                 android:focusableInTouchMode="false"
                                 android:maxLength="10"
                                 android:singleLine="true"
@@ -232,6 +244,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="50dp"
+                            android:textColorHint="?attr/textColor"
                             android:hint="单位">
 
                             <EditText
@@ -241,6 +254,7 @@
                                 android:ellipsize="end"
                                 android:editable="false"
                                 android:focusable="false"
+                                android:textColor="?attr/textColor"
                                 android:focusableInTouchMode="false"
                                 android:maxLength="10"
                                 android:singleLine="true"
