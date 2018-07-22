@@ -98,7 +98,7 @@ public class EditPlanPresenterImpl implements IEditPlanContract.Presenter {
                     if (value == 0) {
                         planDoesNotExits();
                     } else {
-                        mHandler.postDelayed(() -> view.fillRationPlanData(rationPlan), 300);
+                        mHandler.postDelayed(() -> view.fillRationPlanData(rationPlan), 500);
                     }
                 });
     }
@@ -121,7 +121,7 @@ public class EditPlanPresenterImpl implements IEditPlanContract.Presenter {
                     if (value == 0) {
                         planDoesNotExits();
                     } else {
-                        mHandler.postDelayed(() -> view.fillClockPlanData(clockPlan), 300);
+                        mHandler.postDelayed(() -> view.fillClockPlanData(clockPlan), 500);
                     }
                 });
     }
