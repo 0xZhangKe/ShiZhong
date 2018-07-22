@@ -54,37 +54,6 @@
                 </FrameLayout>
 
                 <FrameLayout
-                    android:id="@+id/fl_start_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:paddingLeft="10dp">
-
-                    <ImageView
-                        style="@style/InputIconStyle"
-                        android:layout_gravity="center_vertical"
-                        android:src="@mipmap/start_date" />
-
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="50dp"
-                        android:hint="开始日期">
-
-                        <EditText
-                            android:id="@+id/et_start_date"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:ellipsize="end"
-                            android:focusable="false"
-                            android:focusableInTouchMode="false"
-                            android:maxLength="10"
-                            android:singleLine="true"
-                            android:textSize="14sp" />
-                    </android.support.design.widget.TextInputLayout>
-
-                </FrameLayout>
-
-                <FrameLayout
                     android:id="@+id/fl_plan_description"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
@@ -138,6 +107,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:ellipsize="end"
+                                android:editable="false"
+                                android:focusable="false"
+                                android:focusableInTouchMode="false"
                                 android:maxLength="10"
                                 android:singleLine="true"
                                 android:textSize="14sp" />

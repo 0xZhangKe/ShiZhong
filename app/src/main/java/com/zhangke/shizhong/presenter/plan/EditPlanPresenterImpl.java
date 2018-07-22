@@ -15,6 +15,7 @@ import com.zhangke.shizhong.db.RationPlanDao;
 import com.zhangke.shizhong.event.PlanChangedEvent;
 import com.zhangke.shizhong.model.plan.EditPlanDataEntity;
 import com.zhangke.shizhong.model.plan.ShowPlanEntity;
+import com.zhangke.shizhong.util.DateUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -134,6 +135,10 @@ public class EditPlanPresenterImpl implements IEditPlanContract.Presenter {
     @Override
     public void updatePlan(final EditPlanDataEntity editData) {
         if (planType == 0) {
+            if (DateUtils.compareDate("yyyy-MM-dd", rationPlan.getStartDate(), editData.getFinishDate()) != -1) {
+                view.showNoActionSnackbar("结束时间不能小于开始时间！！！");
+                return;
+            }
             Observable.create((ObservableEmitter<Integer> e) -> {
                 rationPlan.setName(editData.getName());
                 rationPlan.setTarget(editData.getTarget());
@@ -165,9 +170,9 @@ public class EditPlanPresenterImpl implements IEditPlanContract.Presenter {
 
     @Override
     public void deletePlan() {
-        if(planType == 0){
+        if (planType == 0) {
             mRationPlanDao.deleteByKey(planId);
-        }else{
+        } else {
             mClockPlanDao.deleteByKey(planId);
         }
         view.showNoActionSnackbar("搞定");

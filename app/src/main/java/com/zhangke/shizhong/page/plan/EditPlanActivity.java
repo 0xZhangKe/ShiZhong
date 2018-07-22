@@ -24,6 +24,8 @@ import com.zhangke.shizhong.db.RationPlan;
 import com.zhangke.shizhong.model.plan.EditPlanDataEntity;
 import com.zhangke.shizhong.page.base.BaseActivity;
 import com.zhangke.shizhong.presenter.plan.EditPlanPresenterImpl;
+import com.zhangke.shizhong.util.DateTimePickerHelper;
+import com.zhangke.shizhong.util.DateUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,17 +38,12 @@ import butterknife.OnClick;
  */
 public class EditPlanActivity extends BaseActivity implements IEditPlanContract.View {
 
-
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.view_toolbar_divider)
     View viewToolbarDivider;
     @BindView(R.id.et_name)
     EditText etName;
-    @BindView(R.id.fl_start_date)
-    FrameLayout flStartDate;
-    @BindView(R.id.et_start_date)
-    EditText etStartDate;
     @BindView(R.id.et_description)
     EditText etDescription;
     @BindView(R.id.fl_plan_description)
@@ -149,18 +146,24 @@ public class EditPlanActivity extends BaseActivity implements IEditPlanContract.
         return true;
     }
 
+    @OnClick(R.id.et_finish_date)
+    public void onFinishDateClick() {
+        DateTimePickerHelper.showDateDialog(this,
+                "yyyy-MM-dd",
+                TextUtils.isEmpty(etFinishDate.getText().toString()) ? "" : etFinishDate.getText().toString(),
+                etFinishDate::setText);
+    }
+
     @Override
     public void showRationPlan() {
         flPlanDescription.setVisibility(View.GONE);
         llPlanSwitch.setVisibility(View.VISIBLE);
-        flStartDate.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showClockPlan() {
         flPlanDescription.setVisibility(View.VISIBLE);
         llPlanSwitch.setVisibility(View.GONE);
-        flStartDate.setVisibility(View.GONE);
     }
 
     @Override

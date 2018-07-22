@@ -1,9 +1,11 @@
 package com.zhangke.shizhong.page.plan;
 
+import android.app.DatePickerDialog;
 import android.support.design.widget.TextInputLayout;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.zhangke.shizhong.R;
@@ -13,6 +15,7 @@ import com.zhangke.shizhong.db.RationPlan;
 import com.zhangke.shizhong.event.PlanChangedEvent;
 import com.zhangke.shizhong.event.PlanSelectedEvent;
 import com.zhangke.shizhong.page.base.BaseFragment;
+import com.zhangke.shizhong.util.DateTimePickerHelper;
 import com.zhangke.shizhong.util.DateUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -48,10 +51,10 @@ public class AddPlanFragment extends BaseFragment {
     EditText etUnit;
     @BindView(R.id.ll_plan_switch)
     LinearLayout llPlanSwitch;
-    @BindView(R.id.til_description)
-    TextInputLayout tilDescription;
-    @BindView(R.id.et_desciption)
-    EditText etDesciption;
+    @BindView(R.id.fl_plan_description)
+    FrameLayout flPlanDescription;
+    @BindView(R.id.et_description)
+    EditText etDescription;
 
     Unbinder unbinder;
 
@@ -109,7 +112,7 @@ public class AddPlanFragment extends BaseFragment {
             final ClockPlan plan = new ClockPlan();
             plan.setName(name);
             plan.setStartDate(DateUtils.getCurrentDate("yyyy-MM-dd"));
-            plan.setDescription(etDesciption.getText().toString());
+            plan.setDescription(etDescription.getText().toString());
             Observable.create(e -> {
                 DBManager.getInstance().getClockPlanDao().insert(plan);
                 e.onNext(1);
@@ -136,6 +139,10 @@ public class AddPlanFragment extends BaseFragment {
             showNoActionSnackbar("请输入结束日期");
             return false;
         }
+        if (DateUtils.compareDate("yyyy-MM-dd", etStartDate.getText().toString(), etFinishDate.getText().toString()) != -1) {
+            showNoActionSnackbar("结束时间不能小于开始时间！！！");
+            return false;
+        }
         if (TextUtils.isEmpty(etTargetValue.getText().toString())) {
             showNoActionSnackbar("请输入目标值");
             return false;
@@ -156,11 +163,27 @@ public class AddPlanFragment extends BaseFragment {
             showNoActionSnackbar("请输入计划名");
             return false;
         }
-        if (TextUtils.isEmpty(etDesciption.getText().toString())) {
+        if (TextUtils.isEmpty(etDescription.getText().toString())) {
             showNoActionSnackbar("请输入计划描述");
             return false;
         }
         return false;
+    }
+
+    @OnClick(R.id.et_start_date)
+    public void onStartDateClick() {
+        DateTimePickerHelper.showDateDialog(mActivity,
+                "yyyy-MM-dd",
+                TextUtils.isEmpty(etStartDate.getText().toString()) ? "" : etStartDate.getText().toString(),
+                etStartDate::setText);
+    }
+
+    @OnClick(R.id.et_finish_date)
+    public void onFinishDateClick() {
+        DateTimePickerHelper.showDateDialog(mActivity,
+                "yyyy-MM-dd",
+                TextUtils.isEmpty(etFinishDate.getText().toString()) ? "" : etFinishDate.getText().toString(),
+                etFinishDate::setText);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -168,10 +191,10 @@ public class AddPlanFragment extends BaseFragment {
         planType = event.getPlanType();
         if (planType == 0) {
             llPlanSwitch.setVisibility(View.VISIBLE);
-            tilDescription.setVisibility(View.GONE);
-        } else if(planType == 1){
+            flPlanDescription.setVisibility(View.GONE);
+        } else if (planType == 1) {
             llPlanSwitch.setVisibility(View.GONE);
-            tilDescription.setVisibility(View.VISIBLE);
+            flPlanDescription.setVisibility(View.VISIBLE);
         } else {
             etName.setText("");
             etStartDate.setText("");
@@ -179,7 +202,7 @@ public class AddPlanFragment extends BaseFragment {
             etTargetValue.setText("");
             etCurValue.setText("");
             etUnit.setText("");
-            etDesciption.setText("");
+            etDescription.setText("");
         }
     }
 
