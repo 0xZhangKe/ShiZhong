@@ -5,7 +5,8 @@
     android:tag="@string/change_theme_need_refresh_flag"
     android:background="?attr/backgroundColor">
 
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

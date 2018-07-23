@@ -14,7 +14,7 @@ import com.zhangke.shizhong.R;
 import com.zhangke.shizhong.common.CustomFragmentPagerAdapter;
 import com.zhangke.shizhong.event.ThemeChangedEvent;
 import com.zhangke.shizhong.page.base.BaseActivity;
-import com.zhangke.shizhong.page.plan.MadeFragment;
+import com.zhangke.shizhong.page.todo.ShowTodoFragment;
 import com.zhangke.shizhong.page.plan.ShowPlanFragment;
 import com.zhangke.shizhong.util.ThemeUtils;
 
@@ -64,7 +64,7 @@ public class MainActivity extends BaseActivity {
     private void initFragment() {
         List<Fragment> fragmentList = new ArrayList<>();
         fragmentList.add(new ShowPlanFragment());
-        fragmentList.add(new MadeFragment());
+        fragmentList.add(new ShowTodoFragment());
         fragmentList.add(new SettingFragment());
         fragmentPagerAdapter = new CustomFragmentPagerAdapter(getSupportFragmentManager(), fragmentList);
 
