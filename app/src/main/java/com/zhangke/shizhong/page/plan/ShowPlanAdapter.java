@@ -9,6 +9,7 @@ import android.support.v7.widget.PopupMenu;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -151,6 +152,9 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
         EventBus.getDefault().post(new PlanChangedEvent());
     }
 
+    /**
+     * 显示计量打卡对话框
+     */
     private void showRationClockDialog(ShowPlanEntity plan) {
         final View rootView = inflater.inflate(R.layout.dialog_ration_clock, null);
         final CustomAutoCompleteTextView etClockName = rootView.findViewById(R.id.et_clock_name);
@@ -160,6 +164,7 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
             ArrayAdapter adapter = new ArrayAdapter<>(context, android.R.layout.simple_dropdown_item_1line, plan.getSuggestionInput());
             etClockName.setAdapter(adapter);
         }
+        etClockValue.requestFocus();
         tvUnit.setText(plan.getRationPlan().getUnit());
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("打卡");
@@ -169,8 +174,7 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
             String clockName = etClockName.getText().toString();
             String clockValue = etClockValue.getText().toString();
             if (TextUtils.isEmpty(clockName)) {
-                UiUtils.showToast(context, "请输入打卡名");
-                return;
+                clockName = "其它";
             }
             if (TextUtils.isEmpty(clockValue)) {
                 UiUtils.showToast(context, "请输入本次完成值");
@@ -179,6 +183,7 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
             rationClock(plan.getRationPlan(), clockName, Double.valueOf(clockValue));
         });
         builder.create().show();
+        etClockValue.post(()->showInputKeyBord(etClockValue));
     }
 
     /**
@@ -244,6 +249,13 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
             addPeriodToPlan(plan, type, Double.valueOf(periodTarget));
         });
         builder.create().show();
+    }
+
+    private void showInputKeyBord(EditText et){
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if(imm != null){
+            imm.showSoftInput(et, InputMethodManager.SHOW_IMPLICIT);
+        }
     }
 
     private void showPeriodTypePopup(final TextView tv) {

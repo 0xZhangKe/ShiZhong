@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"
-        android:text="备注"
+        android:text="备注（可选）"
         android:textSize="10.0sp" />
 
     <com.zhangke.shizhong.widget.CustomAutoCompleteTextView
