@@ -59,4 +59,8 @@ public class DBManager {
     public ClockRecordDao getClockRecordDao(){
         return daoSession.getClockRecordDao();
     }
+
+    public TodoDao getTodoDao(){
+        return daoSession.getTodoDao();
+    }
 }
