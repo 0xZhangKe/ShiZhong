@@ -1,6 +1,7 @@
 package com.zhangke.shizhong.contract.plan;
 
 import com.zhangke.shizhong.db.Todo;
+import com.zhangke.shizhong.model.todo.ShowTodoEntity;
 import com.zhangke.shizhong.page.base.IBasePage;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 public interface IShowTodoContract {
 
     interface View extends IBasePage{
-        void notifyTodoChanged(List<Todo> todoList);
+        void notifyTodoChanged(List<ShowTodoEntity> todoList);
     }
 
     interface Presenter{

@@ -30,6 +30,7 @@
         <activity android:name=".page.plan.AddPlanActivity"/>
         <activity android:name=".page.plan.EditPlanActivity"/>
         <activity android:name=".page.plan.PlanDetailActivity"/>
+        <activity android:name=".page.todo.AddTodoActivity"/>
 
 
     </application>

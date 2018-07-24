@@ -1,19 +1,23 @@
 package com.zhangke.shizhong.page.todo;
 
+import android.content.Intent;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.zhangke.shizhong.R;
 import com.zhangke.shizhong.contract.plan.IShowTodoContract;
-import com.zhangke.shizhong.db.Todo;
 import com.zhangke.shizhong.event.ThemeChangedEvent;
 import com.zhangke.shizhong.event.TodoChangedEvent;
+import com.zhangke.shizhong.model.todo.ShowTodoEntity;
 import com.zhangke.shizhong.page.base.BaseFragment;
+import com.zhangke.shizhong.presenter.todo.ShowTodoPresenterImpl;
 import com.zhangke.shizhong.util.ThemeUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -32,6 +36,9 @@ public class ShowTodoFragment extends BaseFragment implements IShowTodoContract.
     RecyclerView recyclerView;
     Unbinder unbinder;
 
+    private List<ShowTodoEntity> todoList = new ArrayList<>();
+    private ShowTodoAdapter adapter;
+
     private IShowTodoContract.Presenter presenter;
 
     @Override
@@ -45,6 +52,18 @@ public class ShowTodoFragment extends BaseFragment implements IShowTodoContract.
             EventBus.getDefault().register(this);
         }
         unbinder = ButterKnife.bind(this, rootView);
+
+        adapter = new ShowTodoAdapter(mActivity, todoList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
+        recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(position -> {
+            if(todoList.get(position).getType() == 1){
+                Intent intent = new Intent(mActivity, AddTodoActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        presenter = new ShowTodoPresenterImpl(mActivity, this);
         presenter.update();
     }
 
@@ -67,8 +86,10 @@ public class ShowTodoFragment extends BaseFragment implements IShowTodoContract.
     }
 
     @Override
-    public void notifyTodoChanged(List<Todo> todoList) {
-
+    public void notifyTodoChanged(List<ShowTodoEntity> list) {
+        todoList.clear();
+        todoList.addAll(list);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
