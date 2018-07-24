@@ -1,13 +1,18 @@
 package com.zhangke.shizhong.util;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.DatePicker;
+import android.widget.TimePicker;
 
 import com.zhangke.zlog.ZLog;
 
+import java.lang.reflect.Field;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -110,6 +115,71 @@ public class DateTimePickerHelper {
             }
         });
         mDialog.show();
+    }
+
+    public static void showDateTimePicker(Context context,
+                                          final String dateFormat,
+                                          final String timeFormat,
+                                          final String selectDate,
+                                          final String selectTime,
+                                          final OnCallbackListener onCallbackListener) {
+        showDateDialog(context, dateFormat, selectDate, (date) -> {
+            showTimeDialog(context, timeFormat, selectTime, time -> {
+                onCallbackListener.onCallback(date + " " + time);
+            });
+        });
+    }
+
+    /**
+     * 显示时间选择框
+     *
+     * @param type 时间格式
+     */
+    public static void showTimeDialog(Context context,
+                                       final String type,
+                                       final String selectTime,
+                                       final OnCallbackListener onCallbackListener) {
+        Calendar calendar = Calendar.getInstance();
+        if (!TextUtils.isEmpty(selectTime)) {
+            try {
+                calendar.setTime(new SimpleDateFormat(type, Locale.CHINA).parse(selectTime));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        final TimePickerDialog timePickerDialog = new TimePickerDialog(context,
+                null,
+                calendar.get(Calendar.HOUR_OF_DAY),
+                calendar.get(Calendar.MINUTE),
+                true);
+
+        try {
+            Class<TimePickerDialog> timePickerDialogClass = TimePickerDialog.class;
+            Field field = timePickerDialogClass.getDeclaredField("mTimePicker");
+            field.setAccessible(true);
+            final TimePicker timePicker = (TimePicker) field.get(timePickerDialog);
+
+            timePickerDialog.setButton(DialogInterface.BUTTON_POSITIVE, "确定",
+                    (DialogInterface dialog, int which) -> {
+                        Calendar selectCalendar = Calendar.getInstance();
+                        selectCalendar.set(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH, timePicker.getCurrentHour(),
+                                timePicker.getCurrentMinute());
+                        SimpleDateFormat sdf;
+                        if (TextUtils.isEmpty(type)) {
+                            sdf = new SimpleDateFormat("HH:mm:ss", Locale.CHINA);
+                        } else {
+                            sdf = new SimpleDateFormat(type, Locale.CHINA);
+                        }
+                        onCallbackListener.onCallback(sdf.format(selectCalendar.getTime()));
+                    });
+        } catch (Exception e) {
+            Log.e(TAG, "showTimeDialog", e);
+        }
+
+        timePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "取消", (DialogInterface dialog, int which) -> {
+
+        });
+        timePickerDialog.show();
     }
 
     public interface OnCallbackListener {
