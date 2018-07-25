@@ -33,10 +33,8 @@ public class MainActivity extends BaseActivity {
 
     @BindView(R.id.ll_root)
     ViewGroup llRoot;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.view_toolbar_divider)
-    View viewToolbarDivider;
+//    @BindView(R.id.view_toolbar_divider)
+//    View viewToolbarDivider;
     @BindView(R.id.view_pager)
     ViewPager viewPager;
     @BindView(R.id.ll_tab_group)
@@ -55,8 +53,6 @@ public class MainActivity extends BaseActivity {
     protected void initView(@Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
-
-        initToolbar(toolbar, getResources().getString(R.string.app_name), false);
 
         initFragment();
     }
@@ -117,7 +113,7 @@ public class MainActivity extends BaseActivity {
         theme.resolveAttribute(R.attr.toolbarColor, toolbarColor, true);
         llTabGroup.setBackgroundResource(toolbarColor.resourceId);
 
-        viewToolbarDivider.setBackground(getResources().getDrawable(R.drawable.toolbar_bottom_line));
+//        viewToolbarDivider.setBackground(getResources().getDrawable(R.drawable.toolbar_bottom_line));
         viewTabDivider.setBackground(getResources().getDrawable(R.drawable.tab_top_line));
     }
 
