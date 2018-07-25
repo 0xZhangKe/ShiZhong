@@ -5,8 +5,6 @@
     android:id="@+id/ll_root"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar" />
-
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
