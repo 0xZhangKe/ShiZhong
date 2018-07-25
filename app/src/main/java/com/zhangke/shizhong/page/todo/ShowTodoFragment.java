@@ -3,6 +3,10 @@ package com.zhangke.shizhong.page.todo;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.zhangke.shizhong.R;
 import com.zhangke.shizhong.contract.plan.IShowTodoContract;
@@ -30,8 +34,10 @@ import butterknife.Unbinder;
  * Created by ZhangKe on 2018/4/15.
  */
 
-public class ShowTodoFragment extends BaseFragment implements IShowTodoContract.View{
+public class ShowTodoFragment extends BaseFragment implements IShowTodoContract.View {
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     Unbinder unbinder;
@@ -53,11 +59,14 @@ public class ShowTodoFragment extends BaseFragment implements IShowTodoContract.
         }
         unbinder = ButterKnife.bind(this, rootView);
 
+        initToolbar(toolbar, "TODO List", false);
+        setHasOptionsMenu(true);
+
         adapter = new ShowTodoAdapter(mActivity, todoList);
         recyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(position -> {
-            if(todoList.get(position).getType() == 1){
+            if (todoList.get(position).getType() == 1) {
                 Intent intent = new Intent(mActivity, AddTodoActivity.class);
                 startActivity(intent);
             }
@@ -83,6 +92,22 @@ public class ShowTodoFragment extends BaseFragment implements IShowTodoContract.
             EventBus.getDefault().unregister(this);
         }
         super.onDestroy();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.show_todo_menu, menu);
+        super.onCreateOptionsMenu(menu,inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.completed){
+            showToastMessage("已完成的计划在这里哦");
+            return true;
+        }else{
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
