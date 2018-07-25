@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:tag="@string/change_theme_need_refresh_flag"
-    android:background="?attr/backgroundColor">
+    android:background="?attr/backgroundColor"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
@@ -14,4 +17,4 @@
         android:tag="@string/change_theme_need_refresh_flag"
         android:text="EditPlan"/>
 
-</FrameLayout>
+</LinearLayout>
