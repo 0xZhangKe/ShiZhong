@@ -86,9 +86,9 @@
         <item name="progress_current">0</item>
 
         <item name="progress_unreached_color">#CCCCCC</item>
-        <item name="progress_reached_color">#FF530D</item>
+        <item name="progress_reached_color">#6200EE</item>
         <item name="progress_text_size">10sp</item>
-        <item name="progress_text_color">#FF530D</item>
+        <item name="progress_text_color">#6200EE</item>
 
         <item name="progress_reached_bar_height">1.5dp</item>
         <item name="progress_unreached_bar_height">0.75dp</item>
