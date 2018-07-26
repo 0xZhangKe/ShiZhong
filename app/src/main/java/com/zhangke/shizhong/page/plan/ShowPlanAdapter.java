@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.PopupMenu;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -38,6 +39,7 @@ import com.zhangke.shizhong.widget.NumberProgressBar;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import butterknife.BindView;
@@ -48,6 +50,8 @@ import butterknife.ButterKnife;
  * Created by ZhangKe on 2018/5/17.
  */
 public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.ViewHolder, ShowPlanEntity> {
+
+    private static final String TAG = "ShowPlanAdapter";
 
     private RationPlanDao planDao;
     private RationRecordDao rationClockRecordDao;
@@ -181,7 +185,7 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
             rationClock(plan.getRationPlan(), clockName, Double.valueOf(clockValue));
         });
         builder.create().show();
-        etClockValue.post(()->showInputKeyBord(etClockValue));
+        etClockValue.post(() -> showInputKeyBord(etClockValue));
     }
 
     /**
@@ -215,7 +219,7 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
         final EditText etPeriodTarget = rootView.findViewById(R.id.et_period_target);
         final TextView tvUnit = rootView.findViewById(R.id.tv_unit);
         tvUnit.setText(plan.getUnit());
-        tvPeriodType.setOnClickListener(v -> showPeriodTypePopup(tvPeriodType));
+        tvPeriodType.setOnClickListener(v -> showPeriodTypePopup(plan, tvPeriodType, etPeriodTarget));
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("设置短期计划");
@@ -249,20 +253,42 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
         builder.create().show();
     }
 
-    private void showInputKeyBord(EditText et){
+    private void showInputKeyBord(EditText et) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        if(imm != null){
+        if (imm != null) {
             imm.showSoftInput(et, InputMethodManager.SHOW_IMPLICIT);
         }
     }
 
-    private void showPeriodTypePopup(final TextView tv) {
+    private DecimalFormat decimalFormat = new DecimalFormat("0.00");
+
+    private void showPeriodTypePopup(final RationPlan plan, final TextView tv, final EditText editText) {
         PopupMenu popupMenu = new PopupMenu(context, tv);
         popupMenu.getMenu().add(0, 0, 0, "天");
         popupMenu.getMenu().add(0, 1, 0, "周");
         popupMenu.getMenu().add(0, 2, 0, "月");
         popupMenu.setOnMenuItemClickListener(item -> {
             tv.setText(item.getTitle());
+            switch (item.getItemId()) {
+                case 0: {
+                    //天
+                    double value = (plan.getTarget() - plan.getCurrent()) / (DateUtils.getDaySpace("yyyy-MM-dd", plan.getStartDate(), plan.getFinishDate()) + 1);
+                    editText.setText(decimalFormat.format(value));
+                    break;
+                }
+                case 1: {
+                    //周
+                    double value = (plan.getTarget() - plan.getCurrent()) / (DateUtils.getWeekSpace("yyyy-MM-dd", plan.getStartDate(), plan.getFinishDate()) + 1);
+                    editText.setText(decimalFormat.format(value));
+                    break;
+                }
+                case 2: {
+                    //月
+                    double value = (plan.getTarget() - plan.getCurrent()) / (DateUtils.getMonthSpace("yyyy-MM-dd", plan.getStartDate(), plan.getFinishDate()) + 1);
+                    editText.setText(decimalFormat.format(value));
+                    break;
+                }
+            }
             return true;
         });
         popupMenu.show();
