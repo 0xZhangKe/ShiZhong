@@ -1,17 +1,19 @@
 package com.zhangke.shizhong.util;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.zhangke.zlog.ZLog;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 /**
  * 日期相关工具
- *
+ * <p>
  * Created by ZhangKe on 2018/5/21.
  */
 public class DateUtils {
@@ -49,6 +51,51 @@ public class DateUtils {
             ZLog.e(TAG, "compareDate()", e);
             return 1;
         }
+    }
+
+    /**
+     * 获取两个日期相差的月份
+     */
+    public static int getMonthSpace(String format, String startDate, String endDate) {
+        int monthSpace = 0;
+        SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.CHINA);
+        Calendar c1 = Calendar.getInstance();
+        Calendar c2 = Calendar.getInstance();
+        try {
+            c1.setTime(sdf.parse(startDate));
+            c2.setTime(sdf.parse(endDate));
+        } catch (ParseException e) {
+            Log.e(TAG, "getMonthSpace: ", e);
+        }
+        monthSpace = c2.get(Calendar.MONTH) - c1.get(Calendar.MONTH);
+        monthSpace += (c2.get(Calendar.YEAR) - c1.get(Calendar.YEAR)) * 12;
+        return Math.abs(monthSpace);
+    }
+
+    /**
+     * 获取两个日期相差的天数
+     */
+    public static int getDaySpace(String format, String startDate, String endDate) {
+        int daySpace = 0;
+        SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.CHINA);
+        Calendar c1 = Calendar.getInstance();
+        Calendar c2 = Calendar.getInstance();
+        try {
+            c1.setTime(sdf.parse(startDate));
+            c2.setTime(sdf.parse(endDate));
+        } catch (ParseException e) {
+            Log.e(TAG, "getMonthSpace: ", e);
+        }
+        daySpace = c2.get(Calendar.DAY_OF_YEAR) - c1.get(Calendar.DAY_OF_YEAR);
+        daySpace += (c2.get(Calendar.YEAR) - c1.get(Calendar.YEAR)) * 365;
+        return Math.abs(daySpace);
+    }
+
+    /**
+     * 获取两个日期相差的天数
+     */
+    public static int getWeekSpace(String format, String startDate, String endDate) {
+        return getDaySpace(format, startDate, endDate) / 7;
     }
 
 }
