@@ -27,4 +27,17 @@
             <enum name="invisible" value="1"/>
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="SemicircleProgressView">
+        <attr name="semicircleSize" format="dimension" />
+        <attr name="semicirclebackgroundLineColor" format="color" />
+        <attr name="semicirclefrontLineColor" format="color" />
+        <attr name="semicircletitleColor" format="color" />
+        <attr name="semicirclesubtitleColor" format="color" />
+        <attr name="semicirclelineSize" format="dimension" />
+        <attr name="semicircletitleSize" format="dimension" />
+        <attr name="semicirclesubtitleSize" format="dimension" />
+        <attr name="semicircletitleText" format="string" />
+        <attr name="semicirclesubtitleText" format="string" />
+    </declare-styleable>
 </resources>
