@@ -111,41 +111,43 @@ public class ShowPlanPresenterImpl implements IShowPlanContract.Presenter {
                     showPlanEntity.setProgress(PlanHelper.getProgress(plan));
                     showPlanEntity.setSurplus(String.format("剩余：%s%s", plan.getTarget() - plan.getCurrent(), plan.getUnit()));
                     showPlanEntity.setPeriodIsOpen(plan.getPeriodIsOpen());
+                    List<RationRecord> records = plan.getClockRecords();
                     if (plan.getPeriodIsOpen()) {
                         showPlanEntity.setShortPlanTitle(plan.getPeriodPlanType() == 0
                                 ? "今日计划" : plan.getPeriodPlanType() == 1
                                 ? "本周计划" : "本月计划");
                         showPlanEntity.setShortPlanTarget(String.format("目标：%s%s", plan.getPeriodPlanTarget(), plan.getUnit()));
                         double currentValue = 0.0;
-                        List<RationRecord> records = plan.getClockRecords();
                         if (records != null && !records.isEmpty()) {
                             for (RationRecord record : records) {
                                 if (PlanHelper.isCurPeriod(plan.getPeriodPlanType(), record)) {
                                     currentValue += record.getValue();
                                 }
                             }
-                            List<InputCount> suggestionInput = new ArrayList<>();
-                            for (RationRecord record : records) {
-                                if (!TextUtils.isEmpty(record.getName())) {
-                                    InputCount item = new InputCount(record.getName(), 0);
-                                    if (suggestionInput.contains(item)) {
-                                        int i = suggestionInput.indexOf(item);
-                                        suggestionInput.get(i).setCount(suggestionInput.get(i).getCount() + 1);
-                                    } else {
-                                        suggestionInput.add(new InputCount(record.getName(), 0));
-                                    }
-                                }
-                            }
-                            if (!suggestionInput.isEmpty()) {
-                                Collections.sort(suggestionInput, (InputCount o1, InputCount o2) -> o2.getCount() - o1.getCount());
-                                showPlanEntity.setSuggestionInput(
-                                        Observable.fromIterable(suggestionInput)
-                                                .map(InputCount::getInput)
-                                                .toList()
-                                                .blockingGet());
-                            }
                         }
                         showPlanEntity.setShortPlanSurplus(String.format("剩余：%s%s", plan.getPeriodPlanTarget() - currentValue, plan.getUnit()));
+                    }
+                    if (records != null && !records.isEmpty()) {
+                        List<InputCount> suggestionInput = new ArrayList<>();
+                        for (RationRecord record : records) {
+                            if (!TextUtils.isEmpty(record.getName())) {
+                                InputCount item = new InputCount(record.getName(), 0);
+                                if (suggestionInput.contains(item)) {
+                                    int i = suggestionInput.indexOf(item);
+                                    suggestionInput.get(i).setCount(suggestionInput.get(i).getCount() + 1);
+                                } else {
+                                    suggestionInput.add(new InputCount(record.getName(), 0));
+                                }
+                            }
+                        }
+                        if (!suggestionInput.isEmpty()) {
+                            Collections.sort(suggestionInput, (InputCount o1, InputCount o2) -> o2.getCount() - o1.getCount());
+                            showPlanEntity.setSuggestionInput(
+                                    Observable.fromIterable(suggestionInput)
+                                            .map(InputCount::getInput)
+                                            .toList()
+                                            .blockingGet());
+                        }
                     }
                     return showPlanEntity;
                 })
