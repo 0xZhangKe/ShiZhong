@@ -31,6 +31,7 @@
         <activity android:name=".page.plan.EditPlanActivity"/>
         <activity android:name=".page.plan.PlanDetailActivity"/>
         <activity android:name=".page.todo.AddTodoActivity"/>
+        <activity android:name=".page.plan.RationPlanDetailActivity"/>
 
 
     </application>

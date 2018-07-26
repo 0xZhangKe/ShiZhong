@@ -80,8 +80,6 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
             showPlanViewHolder.progressPlan.setProgress(plan.getProgress());
             showPlanViewHolder.tvSurplus.setText(plan.getSurplus());
             showPlanViewHolder.tvClock.setOnClickListener(v -> showRationClockDialog(plan));
-            showPlanViewHolder.tvDetail.setOnClickListener(null);
-            showPlanViewHolder.imgEdit.setOnClickListener(null);
             if (plan.isPeriodIsOpen()) {
                 showPlanViewHolder.tvAddShortPlanTip.setVisibility(View.GONE);
                 showPlanViewHolder.llShortPlanView.setVisibility(View.VISIBLE);
@@ -96,7 +94,7 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
                 showPlanViewHolder.imgAddShortPlan.setOnClickListener(v -> showAddPeriodPlanDialog(plan.getRationPlan()));
             }
             showPlanViewHolder.imgEdit.setOnClickListener(v -> EditPlanActivity.open(context, plan.getRationPlan().getId(), plan.getType()));
-            showPlanViewHolder.tvDetail.setOnClickListener(v -> PlanDetailActivity.open(context, plan.getRationPlan().getId(), plan.getType()));
+            showPlanViewHolder.tvDetail.setOnClickListener(v -> RationPlanDetailActivity.open(context, plan.getRationPlan().getId()));
         } else if (holder instanceof ClockPlanViewHolder) {
             ClockPlanViewHolder clockPlanViewHolder = (ClockPlanViewHolder) holder;
             clockPlanViewHolder.tvPlanName.setText(plan.getPlanName());
