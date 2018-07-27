@@ -1,8 +1,6 @@
 package com.zhangke.shizhong.presenter.todo;
 
-import android.content.Context;
-
-import com.zhangke.shizhong.contract.todo.IShowTodoContract;
+import com.zhangke.shizhong.contract.todo.ICompletedTodoContract;
 import com.zhangke.shizhong.db.DBManager;
 import com.zhangke.shizhong.db.Todo;
 import com.zhangke.shizhong.db.TodoDao;
@@ -16,22 +14,21 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * 待办事项展示
- * <p>
- * Created by ZhangKe on 2018/7/24.
+ * 已完成的待办事项
+ *
+ * Created by ZhangKe on 2018/7/28.
  */
-public class ShowTodoPresenterImpl implements IShowTodoContract.Presenter {
+public class CompletedTodoPresenterImpl implements ICompletedTodoContract.Presenter {
 
-    private Context context;
-    private IShowTodoContract.View view;
+    private ICompletedTodoContract.View view;
+
 
     private TodoDao mTodoDao;
     private Observable<Integer> updateTodoObservable;
 
     private List<ShowTodoEntity> listData = new ArrayList<>();
 
-    public ShowTodoPresenterImpl(Context context, IShowTodoContract.View view) {
-        this.context = context;
+    public CompletedTodoPresenterImpl(ICompletedTodoContract.View view) {
         this.view = view;
 
         mTodoDao = DBManager.getInstance().getTodoDao();
@@ -39,7 +36,7 @@ public class ShowTodoPresenterImpl implements IShowTodoContract.Presenter {
         updateTodoObservable = Observable.create(e -> {
             listData.clear();
             List<Todo> todoList = mTodoDao.queryBuilder()
-                    .where(TodoDao.Properties.Completed.eq(false))
+                    .where(TodoDao.Properties.Completed.eq(true))
                     .orderAsc(TodoDao.Properties.Date)
                     .list();
             if (!todoList.isEmpty()) {
@@ -53,9 +50,6 @@ public class ShowTodoPresenterImpl implements IShowTodoContract.Presenter {
                         .toList()
                         .blockingGet());
             }
-            ShowTodoEntity addTodoEntity = new ShowTodoEntity();
-            addTodoEntity.setType(1);
-            listData.add(addTodoEntity);
             e.onNext(0);
             e.onComplete();
         });
@@ -66,6 +60,5 @@ public class ShowTodoPresenterImpl implements IShowTodoContract.Presenter {
         updateTodoObservable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(integer -> view.notifyTodoChanged(listData));
-
     }
 }

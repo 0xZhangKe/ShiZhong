@@ -1,19 +1,18 @@
-package com.zhangke.shizhong.contract.plan;
+package com.zhangke.shizhong.contract.todo;
 
-import com.zhangke.shizhong.db.Todo;
 import com.zhangke.shizhong.model.todo.ShowTodoEntity;
 import com.zhangke.shizhong.page.base.IBasePage;
 
 import java.util.List;
 
 /**
- * 待办事项
- * <p>
- * Created by ZhangKe on 2018/7/23.
+ * 已完成的待办事项
+ *
+ * Created by ZhangKe on 2018/7/28.
  */
-public interface IShowTodoContract {
+public interface ICompletedTodoContract {
 
-    interface View extends IBasePage{
+    interface View extends IBasePage {
         void notifyTodoChanged(List<ShowTodoEntity> todoList);
     }
 
