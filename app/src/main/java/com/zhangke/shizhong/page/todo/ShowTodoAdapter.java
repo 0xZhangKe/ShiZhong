@@ -29,11 +29,8 @@ import butterknife.ButterKnife;
  */
 public class ShowTodoAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.ViewHolder, ShowTodoEntity> {
 
-    private TodoDao mTodoDao;
-
     public ShowTodoAdapter(Context context, List<ShowTodoEntity> listData) {
         super(context, listData);
-        mTodoDao = DBManager.getInstance().getTodoDao();
     }
 
     @NonNull
@@ -65,31 +62,9 @@ public class ShowTodoAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
         @BindView(R.id.tv_title)
         TextView tvTitle;
 
-        private AlertDialog todoOptionDialog;
-
         TodoHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            itemView.setOnLongClickListener(v -> {
-                View dialogView = inflater.inflate(R.layout.dialog_todo_option, null);
-                dialogView.findViewById(R.id.tv_complete).setOnClickListener(view -> {
-                    Todo todo = listData.get(getAdapterPosition()).getTodo();
-                    todo.setCompleted(true);
-                    mTodoDao.insertOrReplace(todo);
-                    EventBus.getDefault().post(new TodoChangedEvent());
-                    todoOptionDialog.cancel();
-                });
-                dialogView.findViewById(R.id.tv_delete).setOnClickListener(view -> {
-                    mTodoDao.delete(listData.get(getAdapterPosition()).getTodo());
-                    EventBus.getDefault().post(new TodoChangedEvent());
-                    todoOptionDialog.cancel();
-                });
-                todoOptionDialog = new AlertDialog.Builder(context)
-                        .setView(dialogView)
-                        .create();
-                todoOptionDialog.show();
-                return true;
-            });
         }
     }
 
