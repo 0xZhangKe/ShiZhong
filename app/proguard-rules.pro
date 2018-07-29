@@ -19,3 +19,12 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-keep class com.zhangke.shizhong.MonthView {
+    public <init>(android.content.Context);
+}
+-keep class com.zhangke.shizhong.WeekBar {
+    public <init>(android.content.Context);
+}
+-keep class com.zhangke.shizhong.WeekView {
+    public <init>(android.content.Context);
+}
