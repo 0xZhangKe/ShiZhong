@@ -29,10 +29,10 @@
         <activity android:name=".page.application.SearchApplicationActivity"/>
         <activity android:name=".page.plan.AddPlanActivity"/>
         <activity android:name=".page.plan.EditPlanActivity"/>
-        <activity android:name=".page.plan.PlanDetailActivity"/>
         <activity android:name=".page.todo.AddTodoActivity"/>
         <activity android:name=".page.plan.RationPlanDetailActivity"/>
         <activity android:name=".page.todo.CompletedTodoActivity"/>
+        <activity android:name=".page.plan.ClockPlanDetailActivity"/>
 
 
     </application>

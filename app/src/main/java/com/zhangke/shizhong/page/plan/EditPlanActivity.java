@@ -134,6 +134,17 @@ public class EditPlanActivity extends BaseActivity implements IEditPlanContract.
         editData.setPeriodIsOpen(periodIsOpen);
         if (periodIsOpen) {
             editData.setPeriodTarget(Double.valueOf(etPeriodTarget.getText().toString()));
+            switch(etPeriodType.getText().toString()){
+                case "天":
+                    editData.setPeriodPlanType(0);
+                    break;
+                case "周":
+                    editData.setPeriodPlanType(1);
+                    break;
+                case "月":
+                    editData.setPeriodPlanType(3);
+                    break;
+            }
         }
         presenter.updatePlan(editData);
     }

@@ -146,6 +146,11 @@ public class EditPlanPresenterImpl implements IEditPlanContract.Presenter {
                 rationPlan.setCurrent(editData.getCurrent());
                 rationPlan.setFinishDate(editData.getFinishDate());
                 rationPlan.setUnit(editData.getUnit());
+                rationPlan.setPeriodIsOpen(editData.isPeriodIsOpen());
+                if(editData.isPeriodIsOpen()){
+                    rationPlan.setPeriodPlanTarget(editData.getPeriodTarget());
+                    rationPlan.setPeriodPlanType(editData.getPeriodPlanType());
+                }
                 mRationPlanDao.insertOrReplace(rationPlan);
                 DBManager.getInstance().clear();
                 e.onNext(0);

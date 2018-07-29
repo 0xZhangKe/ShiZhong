@@ -112,7 +112,7 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
             clockPlanViewHolder.tvClockCount.setText(String.valueOf(records == null ? 0 : records.size()));
             clockPlanViewHolder.tvClock.setOnClickListener(v -> showClockDialog(plan));
             clockPlanViewHolder.imgEdit.setOnClickListener(v -> EditPlanActivity.open(context, plan.getClockPlan().getId(), plan.getType()));
-            clockPlanViewHolder.tvDetail.setOnClickListener(v -> PlanDetailActivity.open(context, plan.getClockPlan().getId(), plan.getType()));
+            clockPlanViewHolder.tvDetail.setOnClickListener(v -> ClockPlanDetailActivity.open(context, plan.getClockPlan().getId()));
         }
     }
 
