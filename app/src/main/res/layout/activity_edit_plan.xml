@@ -41,8 +41,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="50dp"
-                        android:textColorHint="?attr/textColor"
-                        android:hint="计划名">
+                        android:hint="计划名"
+                        android:textColorHint="?attr/textColor">
 
                         <EditText
                             android:id="@+id/et_name"
@@ -50,8 +50,8 @@
                             android:layout_height="match_parent"
                             android:ellipsize="end"
                             android:maxLength="10"
-                            android:textColor="?attr/textColor"
                             android:singleLine="true"
+                            android:textColor="?attr/textColor"
                             android:textSize="14sp" />
                     </android.support.design.widget.TextInputLayout>
                 </FrameLayout>
@@ -61,8 +61,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginTop="20dp"
-                    android:visibility="gone"
-                    android:paddingLeft="10dp">
+                    android:paddingLeft="10dp"
+                    android:visibility="gone">
 
                     <ImageView
                         style="@style/InputIconStyle"
@@ -73,8 +73,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="50dp"
-                        android:textColorHint="?attr/textColor"
-                        android:hint="计划描述">
+                        android:hint="计划描述"
+                        android:textColorHint="?attr/textColor">
 
                         <EditText
                             android:id="@+id/et_description"
@@ -105,20 +105,20 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="50dp"
-                            android:textColorHint="?attr/textColor"
-                            android:hint="结束日期">
+                            android:hint="结束日期"
+                            android:textColorHint="?attr/textColor">
 
                             <EditText
                                 android:id="@+id/et_finish_date"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:ellipsize="end"
                                 android:editable="false"
+                                android:ellipsize="end"
                                 android:focusable="false"
                                 android:focusableInTouchMode="false"
-                                android:textColor="?attr/textColor"
                                 android:maxLength="10"
                                 android:singleLine="true"
+                                android:textColor="?attr/textColor"
                                 android:textSize="14sp" />
                         </android.support.design.widget.TextInputLayout>
 
@@ -138,17 +138,17 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="50dp"
-                            android:textColorHint="?attr/textColor"
-                            android:hint="计划目标">
+                            android:hint="计划目标"
+                            android:textColorHint="?attr/textColor">
 
                             <EditText
                                 android:id="@+id/et_target"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:textColor="?attr/textColor"
                                 android:ellipsize="end"
                                 android:maxLength="10"
                                 android:singleLine="true"
+                                android:textColor="?attr/textColor"
                                 android:textSize="14sp" />
                         </android.support.design.widget.TextInputLayout>
 
@@ -168,17 +168,17 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="50dp"
-                            android:textColorHint="?attr/textColor"
-                            android:hint="当前值">
+                            android:hint="当前值"
+                            android:textColorHint="?attr/textColor">
 
                             <EditText
                                 android:id="@+id/et_current"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:textColor="?attr/textColor"
                                 android:ellipsize="end"
                                 android:maxLength="10"
                                 android:singleLine="true"
+                                android:textColor="?attr/textColor"
                                 android:textSize="14sp" />
                         </android.support.design.widget.TextInputLayout>
 
@@ -198,21 +198,117 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="50dp"
-                            android:textColorHint="?attr/textColor"
-                            android:hint="单位">
+                            android:hint="单位"
+                            android:textColorHint="?attr/textColor">
 
                             <EditText
                                 android:id="@+id/et_unit"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:textColor="?attr/textColor"
                                 android:ellipsize="end"
                                 android:maxLength="10"
                                 android:singleLine="true"
+                                android:textColor="?attr/textColor"
                                 android:textSize="14sp" />
                         </android.support.design.widget.TextInputLayout>
 
                     </FrameLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_period"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:visibility="gone"
+                        android:orientation="vertical">
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_gravity="center_vertical"
+                                android:textSize="16sp"
+                                android:textColor="?attr/textColor"
+                                android:text="短期计划"/>
+
+                            <ImageView
+                                android:id="@+id/img_delete_period"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:scaleType="centerInside"
+                                android:layout_marginRight="10dp"
+                                android:padding="10dp"
+                                android:layout_gravity="right|center_vertical"
+                                android:src="@drawable/svg_delete"/>
+                        </FrameLayout>
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:paddingLeft="10dp">
+
+                            <ImageView
+                                style="@style/InputIconStyle"
+                                android:layout_gravity="center_vertical"
+                                android:src="@mipmap/plan_target" />
+
+                            <android.support.design.widget.TextInputLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="50dp"
+                                android:hint="短期计划周期"
+                                android:textColorHint="?attr/textColor">
+
+                                <EditText
+                                    android:id="@+id/et_period_type"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:ellipsize="end"
+                                    android:editable="false"
+                                    android:focusable="false"
+                                    android:focusableInTouchMode="false"
+                                    android:maxLength="10"
+                                    android:singleLine="true"
+                                    android:textColor="?attr/textColor"
+                                    android:textSize="14sp" />
+                            </android.support.design.widget.TextInputLayout>
+
+                        </FrameLayout>
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:paddingLeft="10dp">
+
+                            <ImageView
+                                style="@style/InputIconStyle"
+                                android:layout_gravity="center_vertical"
+                                android:src="@mipmap/plan_target" />
+
+                            <android.support.design.widget.TextInputLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="50dp"
+                                android:hint="短期计划目标值"
+                                android:textColorHint="?attr/textColor">
+
+                                <EditText
+                                    android:id="@+id/et_period_target"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:ellipsize="end"
+                                    android:inputType="numberDecimal"
+                                    android:maxLength="10"
+                                    android:singleLine="true"
+                                    android:textColor="?attr/textColor"
+                                    android:textSize="14sp" />
+                            </android.support.design.widget.TextInputLayout>
+
+                        </FrameLayout>
+                    </LinearLayout>
                 </LinearLayout>
 
                 <Button

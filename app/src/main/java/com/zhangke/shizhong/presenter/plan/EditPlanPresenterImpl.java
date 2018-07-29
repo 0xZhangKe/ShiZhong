@@ -72,6 +72,7 @@ public class EditPlanPresenterImpl implements IEditPlanContract.Presenter {
     public void initDate(long planId, int planType) {
         this.planId = planId;
         this.planType = planType;
+        view.showRoundProgressDialog();
         if (planType == 0) {
             view.showRationPlan();
             getRationPlanWithId();
@@ -179,6 +180,16 @@ public class EditPlanPresenterImpl implements IEditPlanContract.Presenter {
         DBManager.getInstance().clear();
         EventBus.getDefault().post(new PlanChangedEvent());
         mHandler.postDelayed(() -> ((Activity) context).finish(), 700);
+    }
+
+    @Override
+    public void deletePeriod() {
+        if (rationPlan != null) {
+            rationPlan.setPeriodIsOpen(false);
+            mRationPlanDao.insertOrReplace(rationPlan);
+            DBManager.getInstance().clear();
+            initDate(planId, planType);
+        }
     }
 
     private void editSuccess() {

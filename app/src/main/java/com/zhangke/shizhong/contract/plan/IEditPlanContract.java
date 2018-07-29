@@ -23,6 +23,7 @@ public interface IEditPlanContract {
     interface Presenter{
         void initDate(long planId, int planType);
         void updatePlan(EditPlanDataEntity editData);
+        void deletePeriod();
         void deletePlan();
         void onDestroy();
     }

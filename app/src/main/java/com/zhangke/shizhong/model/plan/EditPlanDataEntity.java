@@ -12,17 +12,21 @@ public class EditPlanDataEntity {
     private double target;
     private double current;
     private String unit;
+    private boolean periodIsOpen;
+    private double periodTarget;
 
     public EditPlanDataEntity() {
     }
 
-    public EditPlanDataEntity(String name, String finishDate, String description, double target, double current, String unit) {
+    public EditPlanDataEntity(String name, String finishDate, String description, double target, double current, String unit, boolean periodIsOpen, double periodTarget) {
         this.name = name;
         this.finishDate = finishDate;
         this.description = description;
         this.target = target;
         this.current = current;
         this.unit = unit;
+        this.periodIsOpen = periodIsOpen;
+        this.periodTarget = periodTarget;
     }
 
     public String getName() {
@@ -71,5 +75,21 @@ public class EditPlanDataEntity {
 
     public void setUnit(String unit) {
         this.unit = unit;
+    }
+
+    public boolean isPeriodIsOpen() {
+        return periodIsOpen;
+    }
+
+    public void setPeriodIsOpen(boolean periodIsOpen) {
+        this.periodIsOpen = periodIsOpen;
+    }
+
+    public double getPeriodTarget() {
+        return periodTarget;
+    }
+
+    public void setPeriodTarget(double periodTarget) {
+        this.periodTarget = periodTarget;
     }
 }
