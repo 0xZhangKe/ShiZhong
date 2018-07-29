@@ -13,13 +13,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NightTheme">
-        <activity android:name=".page.main.MainActivity">
+        <activity android:name=".page.main.LaunchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".page.main.MainActivity"/>
         <activity android:name=".page.poster.InputNameActivity" />
         <activity android:name=".page.poster.SearchResultActivity" />
         <activity android:name=".page.poster.ShowMusicPosterActivity" />

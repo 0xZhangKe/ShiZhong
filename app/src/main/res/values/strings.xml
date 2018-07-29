@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">始终</string>
+    <string name="slogan01">不\n忘\n初\n心</string>
+    <string name="slogan02">方\n得\n始\n终</string>
     <string name="update_date">2018/04/15</string>
     <string name="statement">本 APP 数据通过非正常手段获取，仅供个人娱乐及作行业交流，禁止用作商业用途。</string>
     <string name="search_name_text">搜寻</string>
