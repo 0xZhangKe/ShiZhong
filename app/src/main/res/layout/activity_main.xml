@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/ll_root"
     android:orientation="vertical">
 
     <android.support.v4.view.ViewPager
@@ -32,8 +32,8 @@
             android:background="?android:attr/selectableItemBackground"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:tag="@string/change_theme_need_refresh_flag"
-            android:src="@drawable/svg_search" />
+            android:src="@drawable/svg_home"
+            android:tag="@string/change_theme_need_refresh_flag" />
 
         <ImageView
             android:id="@+id/img_edit_plan"
@@ -43,9 +43,9 @@
             android:background="?android:attr/selectableItemBackground"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:tag="@string/change_theme_need_refresh_flag"
             android:scaleType="centerInside"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/svg_todo"
+            android:tag="@string/change_theme_need_refresh_flag" />
 
         <ImageView
             android:id="@+id/img_setting"
@@ -54,8 +54,8 @@
             android:layout_weight="1"
             android:background="?android:attr/selectableItemBackground"
             android:paddingBottom="10dp"
-            android:tag="@string/change_theme_need_refresh_flag"
             android:paddingTop="10dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/svg_extend"
+            android:tag="@string/change_theme_need_refresh_flag" />
     </LinearLayout>
 </LinearLayout>
