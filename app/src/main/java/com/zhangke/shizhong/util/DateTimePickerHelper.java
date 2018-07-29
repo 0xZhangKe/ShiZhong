@@ -136,9 +136,9 @@ public class DateTimePickerHelper {
      * @param type 时间格式
      */
     public static void showTimeDialog(Context context,
-                                       final String type,
-                                       final String selectTime,
-                                       final OnCallbackListener onCallbackListener) {
+                                      final String type,
+                                      final String selectTime,
+                                      final OnCallbackListener onCallbackListener) {
         Calendar calendar = Calendar.getInstance();
         if (!TextUtils.isEmpty(selectTime)) {
             try {
@@ -147,39 +147,22 @@ public class DateTimePickerHelper {
                 e.printStackTrace();
             }
         }
-        final TimePickerDialog timePickerDialog = new TimePickerDialog(context,
-                null,
+        new TimePickerDialog(context,
+                (TimePicker view, int hourOfDay, int minute) -> {
+                    Calendar selectCalendar = Calendar.getInstance();
+                    selectCalendar.set(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH, hourOfDay, minute);
+                    SimpleDateFormat sdf;
+                    if (TextUtils.isEmpty(type)) {
+                        sdf = new SimpleDateFormat("HH:mm:ss", Locale.CHINA);
+                    } else {
+                        sdf = new SimpleDateFormat(type, Locale.CHINA);
+                    }
+                    onCallbackListener.onCallback(sdf.format(selectCalendar.getTime()));
+                },
                 calendar.get(Calendar.HOUR_OF_DAY),
                 calendar.get(Calendar.MINUTE),
-                true);
-
-        try {
-            Class<TimePickerDialog> timePickerDialogClass = TimePickerDialog.class;
-            Field field = timePickerDialogClass.getDeclaredField("mTimePicker");
-            field.setAccessible(true);
-            final TimePicker timePicker = (TimePicker) field.get(timePickerDialog);
-
-            timePickerDialog.setButton(DialogInterface.BUTTON_POSITIVE, "确定",
-                    (DialogInterface dialog, int which) -> {
-                        Calendar selectCalendar = Calendar.getInstance();
-                        selectCalendar.set(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH, timePicker.getCurrentHour(),
-                                timePicker.getCurrentMinute());
-                        SimpleDateFormat sdf;
-                        if (TextUtils.isEmpty(type)) {
-                            sdf = new SimpleDateFormat("HH:mm:ss", Locale.CHINA);
-                        } else {
-                            sdf = new SimpleDateFormat(type, Locale.CHINA);
-                        }
-                        onCallbackListener.onCallback(sdf.format(selectCalendar.getTime()));
-                    });
-        } catch (Exception e) {
-            Log.e(TAG, "showTimeDialog", e);
-        }
-
-        timePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "取消", (DialogInterface dialog, int which) -> {
-
-        });
-        timePickerDialog.show();
+                true)
+                .show();
     }
 
     public interface OnCallbackListener {
