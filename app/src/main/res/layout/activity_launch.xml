@@ -7,15 +7,19 @@
     android:gravity="center">
 
     <ImageView
+        android:id="@+id/img_slogan_02"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:visibility="invisible"
+        android:layout_marginTop="50dp"
         android:src="@mipmap/slogan02"/>
 
     <ImageView
+        android:id="@+id/img_slogan_01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:visibility="invisible"
+        android:layout_marginBottom="50dp"
         android:src="@mipmap/slogan01"/>
 
 </LinearLayout>

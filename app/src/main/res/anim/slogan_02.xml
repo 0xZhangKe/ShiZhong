@@ -5,6 +5,6 @@
     android:fromXDelta="0"
     android:fromYDelta="0"
     android:repeatCount="0"
-    android:toXDelta="0"
     android:interpolator="@android:anim/decelerate_interpolator"
-    android:toYDelta="50"/>
+    android:toXDelta="0"
+    android:toYDelta="-50" />
