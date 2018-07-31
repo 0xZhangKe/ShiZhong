@@ -12,7 +12,7 @@
 
         <include layout="@layout/toolbar" />
 
-        <com.zhangke.shizhong.widget.NoTouchViewPager
+        <com.zhangke.shizhong.widget.NoScrollViewPager
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
