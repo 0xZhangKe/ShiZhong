@@ -42,7 +42,6 @@
                         android:maxLength="10"
                         android:singleLine="true"
                         android:textColor="?attr/textColor"
-                        android:text="攒钱计划"
                         android:textSize="14sp" />
                 </android.support.design.widget.TextInputLayout>
             </FrameLayout>
@@ -72,7 +71,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:textColor="?attr/textColor"
-                        android:text="争取早日瘦到140"
                         android:textSize="14sp" />
                 </android.support.design.widget.TextInputLayout>
             </FrameLayout>
@@ -113,7 +111,6 @@
                             android:focusableInTouchMode="false"
                             android:maxLength="10"
                             android:singleLine="true"
-                            android:text="2018-02-01"
                             android:textSize="14sp" />
                     </android.support.design.widget.TextInputLayout>
 
@@ -147,7 +144,6 @@
                             android:focusableInTouchMode="false"
                             android:maxLength="10"
                             android:singleLine="true"
-                            android:text="2018-12-30"
                             android:textSize="14sp" />
                     </android.support.design.widget.TextInputLayout>
 
@@ -179,7 +175,6 @@
                             android:inputType="numberDecimal"
                             android:maxLength="10"
                             android:singleLine="true"
-                            android:text="70000"
                             android:textSize="14sp" />
                     </android.support.design.widget.TextInputLayout>
 
@@ -211,7 +206,6 @@
                             android:inputType="numberDecimal"
                             android:maxLength="10"
                             android:singleLine="true"
-                            android:text="1000"
                             android:textSize="14sp" />
                     </android.support.design.widget.TextInputLayout>
 
@@ -242,7 +236,6 @@
                             android:textColor="?attr/textColor"
                             android:maxLength="10"
                             android:singleLine="true"
-                            android:text="元"
                             android:textSize="14sp" />
                     </android.support.design.widget.TextInputLayout>
 

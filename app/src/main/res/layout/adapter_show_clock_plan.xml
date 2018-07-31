@@ -85,7 +85,7 @@
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
                     android:text="打卡"
-                    android:textColor="#6200EA"
+                    android:textColor="#26A69A"
                     android:textStyle="bold" />
 
                 <TextView
@@ -98,7 +98,7 @@
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
                     android:text="详情"
-                    android:textColor="#6200EA"
+                    android:textColor="#26A69A"
                     android:textStyle="bold" />
 
                 <Space

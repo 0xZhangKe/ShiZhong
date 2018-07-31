@@ -196,7 +196,7 @@
                     android:paddingRight="15dp"
                     android:textStyle="bold"
                     android:text="打卡"
-                    android:textColor="#6200EA" />
+                    android:textColor="#26A69A" />
 
                 <TextView
                     android:id="@+id/tv_detail"
@@ -209,7 +209,7 @@
                     android:paddingRight="15dp"
                     android:textStyle="bold"
                     android:text="详情"
-                    android:textColor="#6200EA" />
+                    android:textColor="#26A69A" />
 
                 <Space
                     android:layout_width="0dp"
