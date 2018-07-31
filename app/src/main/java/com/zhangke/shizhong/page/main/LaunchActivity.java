@@ -7,11 +7,13 @@ import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 
 import com.zhangke.shizhong.R;
 import com.zhangke.shizhong.page.base.BaseActivity;
+import com.zhangke.shizhong.util.UiUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,8 +40,10 @@ public class LaunchActivity extends BaseActivity {
     protected void initView(@Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this);
 
-        final TranslateAnimation animation_01 = (TranslateAnimation) AnimationUtils.loadAnimation(LaunchActivity.this, R.anim.slogan_01);
-        final TranslateAnimation animation_02 = (TranslateAnimation) AnimationUtils.loadAnimation(LaunchActivity.this, R.anim.slogan_02);
+        final TranslateAnimation animation_01 = new TranslateAnimation(0, 0, 0, UiUtils.dip2px(this, 40));
+        final TranslateAnimation animation_02 = new TranslateAnimation(0, 0, 0, -UiUtils.dip2px(this, 40));
+        setupAnim(animation_01);
+        setupAnim(animation_02);
 
         final Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(()->{
@@ -51,8 +55,15 @@ public class LaunchActivity extends BaseActivity {
                 handler.postDelayed(()->{
                     startActivity(new Intent(LaunchActivity.this, MainActivity.class));
                     finish();
-                }, 800);
+                }, 1000);
             }, 400);
-        }, 500);
+        }, 300);
+    }
+
+    private void setupAnim(TranslateAnimation anim){
+        anim.setDuration(400);
+        anim.setFillAfter(true);
+        anim.setRepeatCount(0);
+        anim.setInterpolator(new DecelerateInterpolator());
     }
 }

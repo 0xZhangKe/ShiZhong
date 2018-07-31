@@ -3,23 +3,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:background="#FFF"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="#FFF">
 
-    <ImageView
-        android:id="@+id/img_slogan_02"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
-        android:layout_marginTop="50dp"
-        android:src="@mipmap/slogan02"/>
+        android:layout_height="220dp"
+        android:gravity="top"
+        android:layout_marginTop="70dp"
+        android:layout_marginLeft="30dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:src="@mipmap/round_logo"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/img_slogan_02"
+            android:layout_width="35dp"
+            android:layout_height="130dp"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center"
+            android:src="@mipmap/slogan02"
+            android:visibility="invisible" />
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/img_slogan_01"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
-        android:layout_marginBottom="50dp"
-        android:src="@mipmap/slogan01"/>
+        android:layout_width="35dp"
+        android:layout_height="130dp"
+        android:layout_marginBottom="90dp"
+        android:layout_marginLeft="2dp"
+        android:layout_gravity="center"
+        android:src="@mipmap/slogan01"
+        android:visibility="invisible" />
 
 </LinearLayout>
