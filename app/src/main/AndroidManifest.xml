@@ -34,6 +34,7 @@
         <activity android:name=".page.plan.RationPlanDetailActivity"/>
         <activity android:name=".page.todo.CompletedTodoActivity"/>
         <activity android:name=".page.plan.ClockPlanDetailActivity"/>
+        <activity android:name=".page.other.WifiInfoActivity"/>
 
 
     </application>

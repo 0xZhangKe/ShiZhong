@@ -10,6 +10,7 @@ import com.zhangke.shizhong.common.APPConfig;
 import com.zhangke.shizhong.event.ThemeChangedEvent;
 import com.zhangke.shizhong.page.application.ApplicationStatisticsActivity;
 import com.zhangke.shizhong.page.base.BaseFragment;
+import com.zhangke.shizhong.page.other.WifiInfoActivity;
 import com.zhangke.shizhong.page.poster.InputNameActivity;
 import com.zhangke.shizhong.widget.RippleAnimationView;
 
@@ -75,7 +76,9 @@ public class SettingFragment extends BaseFragment {
         EventBus.getDefault().post(new ThemeChangedEvent());
     }
 
-    @OnClick({R.id.tv_douban_movie_poster, R.id.tv_music_poster, R.id.tv_app_manager})
+    @OnClick({R.id.tv_douban_movie_poster, R.id.tv_music_poster,
+            R.id.tv_app_manager, R.id.tv_wifi,
+            R.id.tv_qr_code})
     public void onViewClick(View view) {
         switch (view.getId()) {
             case R.id.tv_douban_movie_poster: {
@@ -93,6 +96,14 @@ public class SettingFragment extends BaseFragment {
             case R.id.tv_app_manager: {
                 Intent intent = new Intent(mActivity, ApplicationStatisticsActivity.class);
                 startActivity(intent);
+                break;
+            }
+            case R.id.tv_wifi: {
+                startActivity(new Intent(mActivity, WifiInfoActivity.class));
+                break;
+            }
+            case R.id.tv_qr_code:{
+
                 break;
             }
         }

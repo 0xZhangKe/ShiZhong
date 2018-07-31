@@ -13,6 +13,40 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tv_wifi"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="15dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:tag="@string/change_theme_need_refresh_flag"
+            android:text="查看 WIFI 密码（需 root 权限）"
+            android:textColor="?attr/textColor" />
+
+        <TextView
+            android:id="@+id/tv_app_manager"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:tag="@string/change_theme_need_refresh_flag"
+            android:text="应用录"
+            android:textColor="?attr/textColor" />
+
+        <TextView
+            android:id="@+id/tv_qr_code"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:tag="@string/change_theme_need_refresh_flag"
+            android:text="二维码扫描"
+            android:textColor="?attr/textColor" />
+
+        <TextView
             android:id="@+id/tv_douban_movie_poster"
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -32,17 +66,6 @@
             android:paddingLeft="20dp"
             android:tag="@string/change_theme_need_refresh_flag"
             android:text="网易云音乐封面"
-            android:textColor="?attr/textColor" />
-
-        <TextView
-            android:id="@+id/tv_app_manager"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="?android:attr/selectableItemBackground"
-            android:gravity="center_vertical"
-            android:paddingLeft="20dp"
-            android:tag="@string/change_theme_need_refresh_flag"
-            android:text="应用录"
             android:textColor="?attr/textColor" />
 
         <FrameLayout
