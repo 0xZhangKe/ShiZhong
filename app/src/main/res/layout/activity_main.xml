@@ -53,8 +53,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="?android:attr/selectableItemBackground"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
             android:src="@drawable/svg_extend"
             android:tag="@string/change_theme_need_refresh_flag" />
     </LinearLayout>
