@@ -2,9 +2,14 @@ package com.zhangke.shizhong.page.base;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -14,8 +19,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.zhangke.shizhong.R;
+import com.zhangke.shizhong.util.PermissionUtil;
 import com.zhangke.shizhong.util.UiUtils;
 import com.zhangke.shizhong.widget.RoundProgressDialog;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Fragment 基类
@@ -43,6 +55,7 @@ public abstract class BaseFragment extends Fragment implements IBasePage {
     private RoundProgressDialog roundProgressDialog;
     protected Activity mActivity;
     protected ViewGroup rootView;
+    private Handler mHandler = new Handler(Looper.getMainLooper());
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -202,5 +215,67 @@ public abstract class BaseFragment extends Fragment implements IBasePage {
     @Override
     public Context getContext() {
         return mActivity;
+    }
+
+    private Map<Short, Runnable> requestPermissionMap = new HashMap<>();
+
+    /**
+     * 判断是否具有改权限，不具备则申请
+     *
+     * @param runnable   获取到权限之后做的事情
+     * @param permission 权限列表
+     */
+    protected void checkAndRequestPermission(Runnable runnable, String... permission) {
+        List<String> permissionList = new ArrayList<>();
+        for (String item : permission) {
+            if (PermissionUtil.isLacksOfPermission(mActivity, item)) {
+                permissionList.add(item);
+            }
+        }
+        if (permissionList.isEmpty()) {
+            mHandler.post(runnable);
+        } else {
+            short requestCode = getRequestCode();
+            requestPermissionMap.put(requestCode, runnable);
+            ActivityCompat.requestPermissions(mActivity, permissionList.toArray(new String[permissionList.size()]), requestCode);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        Set<Short> requestCodeSet = requestPermissionMap.keySet();
+        if (!requestCodeSet.isEmpty()) {
+            for (Short key : requestCodeSet) {
+                if (requestCode == (int) key) {
+                    boolean get = true;
+                    for (int i : grantResults) {
+                        if (i != PackageManager.PERMISSION_GRANTED) {
+                            get = false;
+                            break;
+                        }
+                    }
+                    if (get) {
+                        Runnable runnable = requestPermissionMap.get(key);
+                        if (runnable != null) {
+                            mHandler.post(runnable);
+                        }
+                        requestPermissionMap.remove(key);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    private short getRequestCode() {
+        short requestCode = 1963;
+        Set<Short> requestCodeSet = requestPermissionMap.keySet();
+        if (!requestCodeSet.isEmpty()) {
+            while (requestCodeSet.contains(requestCode)) {
+                requestCode = (short) (Math.random() * 100);
+            }
+        }
+        return requestCode;
     }
 }
