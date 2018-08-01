@@ -1,15 +1,19 @@
 package com.zhangke.shizhong.page.main;
 
+import android.Manifest;
 import android.content.Intent;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 
+import com.zhangke.qrcodeview.QRCodeView;
 import com.zhangke.shizhong.R;
 import com.zhangke.shizhong.common.APPConfig;
 import com.zhangke.shizhong.event.ThemeChangedEvent;
 import com.zhangke.shizhong.page.application.ApplicationStatisticsActivity;
 import com.zhangke.shizhong.page.base.BaseFragment;
+import com.zhangke.shizhong.page.other.AboutActivity;
+import com.zhangke.shizhong.page.other.QRCodeActivity;
 import com.zhangke.shizhong.page.other.WifiInfoActivity;
 import com.zhangke.shizhong.page.poster.InputNameActivity;
 import com.zhangke.shizhong.widget.RippleAnimationView;
@@ -78,7 +82,7 @@ public class SettingFragment extends BaseFragment {
 
     @OnClick({R.id.tv_douban_movie_poster, R.id.tv_music_poster,
             R.id.tv_app_manager, R.id.tv_wifi,
-            R.id.tv_qr_code})
+            R.id.tv_qr_code, R.id.tv_android_links})
     public void onViewClick(View view) {
         switch (view.getId()) {
             case R.id.tv_douban_movie_poster: {
@@ -102,8 +106,14 @@ public class SettingFragment extends BaseFragment {
                 startActivity(new Intent(mActivity, WifiInfoActivity.class));
                 break;
             }
-            case R.id.tv_qr_code:{
-
+            case R.id.tv_qr_code: {
+                checkAndRequestPermission(() -> {
+                    startActivity(new Intent(mActivity, QRCodeActivity.class));
+                }, Manifest.permission.CAMERA);
+                break;
+            }
+            case R.id.tv_android_links:{
+                startActivity(new Intent(mActivity, AboutActivity.class));
                 break;
             }
         }

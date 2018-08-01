@@ -4,6 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
         android:name=".common.SZApplication"
@@ -35,6 +38,9 @@
         <activity android:name=".page.todo.CompletedTodoActivity"/>
         <activity android:name=".page.plan.ClockPlanDetailActivity"/>
         <activity android:name=".page.other.WifiInfoActivity"/>
+        <activity android:name=".page.other.QRCodeActivity"/>
+        <activity android:name=".page.other.ShowQRCodeContentActivity"/>
+        <activity android:name=".page.other.AboutActivity"/>
 
 
     </application>

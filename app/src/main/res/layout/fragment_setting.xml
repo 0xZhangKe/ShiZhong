@@ -15,7 +15,7 @@
         <TextView
             android:id="@+id/tv_wifi"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:layout_marginTop="15dp"
             android:background="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
@@ -27,7 +27,7 @@
         <TextView
             android:id="@+id/tv_app_manager"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:background="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:paddingLeft="20dp"
@@ -38,7 +38,7 @@
         <TextView
             android:id="@+id/tv_qr_code"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:background="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:paddingLeft="20dp"
@@ -47,9 +47,20 @@
             android:textColor="?attr/textColor" />
 
         <TextView
+            android:id="@+id/tv_android_links"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:tag="@string/change_theme_need_refresh_flag"
+            android:text="Android 友链"
+            android:textColor="?attr/textColor" />
+
+        <TextView
             android:id="@+id/tv_douban_movie_poster"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:background="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:paddingLeft="20dp"
@@ -60,7 +71,7 @@
         <TextView
             android:id="@+id/tv_music_poster"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:background="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:paddingLeft="20dp"
@@ -70,8 +81,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="300dp">
+            android:layout_height="50dp">
 
             <TextView
                 android:layout_width="wrap_content"
