@@ -237,7 +237,7 @@ public abstract class BaseFragment extends Fragment implements IBasePage {
         } else {
             short requestCode = getRequestCode();
             requestPermissionMap.put(requestCode, runnable);
-            ActivityCompat.requestPermissions(mActivity, permissionList.toArray(new String[permissionList.size()]), requestCode);
+            requestPermissions(permissionList.toArray(new String[permissionList.size()]), requestCode);
         }
     }
 
