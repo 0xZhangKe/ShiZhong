@@ -46,13 +46,13 @@ public class QRCodeActivity extends BaseActivity {
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         qrCode.startPreview();
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
         qrCode.stopPreview();
     }

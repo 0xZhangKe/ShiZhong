@@ -31,6 +31,10 @@ public class APPConfig {
      * 存储在 SharedPreferences 的APP主题配置字段key
      */
     private static final String THEME_SP_KEY = "theme";
+    /**
+     * 海报功能是否开启
+     */
+    private static final String POSTER_HIDE = "poster_hide";
 
     /**
      * APP当前主题</br>
@@ -39,6 +43,10 @@ public class APPConfig {
      * 1-日间
      */
     private static int theme = -1;
+    /**
+     * 海报功能是否开启
+     */
+    private static boolean posterHide = true;
 
     /**
      * 获取 APP 主题
@@ -57,6 +65,19 @@ public class APPConfig {
         APPConfig.theme = newTheme;
         getSharedPreferencesEditorInstance();
         editor.putInt(THEME_SP_KEY, newTheme);
+        editor.commit();
+    }
+
+    public static boolean posterHide() {
+        getSharedPreferencesInstance();
+        posterHide = sharedPreferences.getBoolean(POSTER_HIDE, posterHide);
+        return posterHide;
+    }
+
+    public static void setPosterHide(boolean posterHide) {
+        APPConfig.posterHide = posterHide;
+        getSharedPreferencesEditorInstance();
+        editor.putBoolean(POSTER_HIDE, posterHide);
         editor.commit();
     }
 

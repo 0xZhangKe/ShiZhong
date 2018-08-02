@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
+import android.widget.TextView;
 
 import com.zhangke.qrcodeview.QRCodeView;
 import com.zhangke.shizhong.R;
 import com.zhangke.shizhong.common.APPConfig;
+import com.zhangke.shizhong.event.PosterHideChangedEvent;
 import com.zhangke.shizhong.event.ThemeChangedEvent;
 import com.zhangke.shizhong.page.application.ApplicationStatisticsActivity;
 import com.zhangke.shizhong.page.base.BaseFragment;
@@ -19,6 +21,8 @@ import com.zhangke.shizhong.page.poster.InputNameActivity;
 import com.zhangke.shizhong.widget.RippleAnimationView;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,6 +41,10 @@ public class SettingFragment extends BaseFragment {
     NestedScrollView nestedScrollView;
     @BindView(R.id.switch_compat)
     SwitchCompat switchCompat;
+    @BindView(R.id.tv_douban_movie_poster)
+    TextView tvDoubanMoviePoster;
+    @BindView(R.id.tv_music_poster)
+    TextView tvMusicPoster;
     Unbinder unbinder;
 
     @Override
@@ -47,8 +55,10 @@ public class SettingFragment extends BaseFragment {
     @Override
     protected void initView() {
         unbinder = ButterKnife.bind(this, rootView);
+        EventBus.getDefault().register(this);
 
         initSwitch();
+        setupPosterPermission();
     }
 
     private void initSwitch() {
@@ -76,8 +86,18 @@ public class SettingFragment extends BaseFragment {
             mActivity.setTheme(R.style.NightTheme);
             switchCompat.setText("夜间");
         }
-        RippleAnimationView.create(switchCompat).setDuration(400).start();
+        RippleAnimationView.create(switchCompat).setDuration(600).start();
         EventBus.getDefault().post(new ThemeChangedEvent());
+    }
+
+    private void setupPosterPermission(){
+        if(APPConfig.posterHide()){
+            tvDoubanMoviePoster.setVisibility(View.GONE);
+            tvMusicPoster.setVisibility(View.GONE);
+        }else{
+            tvDoubanMoviePoster.setVisibility(View.VISIBLE);
+            tvMusicPoster.setVisibility(View.VISIBLE);
+        }
     }
 
     @OnClick({R.id.tv_douban_movie_poster, R.id.tv_music_poster,
@@ -119,9 +139,15 @@ public class SettingFragment extends BaseFragment {
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(PosterHideChangedEvent event) {
+        setupPosterPermission();
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        EventBus.getDefault().unregister(this);
     }
 }

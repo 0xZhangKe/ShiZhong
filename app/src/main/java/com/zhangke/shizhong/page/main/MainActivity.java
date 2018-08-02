@@ -11,7 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.zhangke.shizhong.R;
+import com.zhangke.shizhong.common.APPConfig;
 import com.zhangke.shizhong.common.CustomFragmentPagerAdapter;
+import com.zhangke.shizhong.event.PosterHideChangedEvent;
 import com.zhangke.shizhong.event.ThemeChangedEvent;
 import com.zhangke.shizhong.page.base.BaseActivity;
 import com.zhangke.shizhong.page.todo.ShowTodoFragment;
@@ -86,6 +88,9 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+    private long lastClickTime = 0;
+    private int switchCount = 0;
+
     @OnClick({R.id.img_show_plan, R.id.img_edit_plan, R.id.img_setting})
     public void onViewClick(View view) {
         switch (view.getId()) {
@@ -97,6 +102,15 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.img_setting:
                 viewPager.setCurrentItem(2);
+                if(System.currentTimeMillis() - lastClickTime < 300){
+                    switchCount ++;
+                }
+                lastClickTime = System.currentTimeMillis();
+                if(switchCount >= 3){
+                    APPConfig.setPosterHide(!APPConfig.posterHide());
+                    EventBus.getDefault().post(new PosterHideChangedEvent());
+                    switchCount = 0;
+                }
                 break;
         }
     }
