@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.umeng.analytics.MobclickAgent;
 import com.zhangke.shizhong.R;
 import com.zhangke.shizhong.common.APPConfig;
 import com.zhangke.shizhong.util.PermissionUtil;
@@ -134,6 +135,18 @@ public abstract class BaseActivity extends AppCompatActivity implements IBasePag
     @Override
     public Context getContext() {
         return this;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     private Map<Short, Runnable> requestPermissionMap = new HashMap<>();

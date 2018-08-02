@@ -1,5 +1,6 @@
 package com.zhangke.shizhong.util;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Environment;
 import android.util.Log;
@@ -26,6 +27,30 @@ import java.util.List;
 public class FileUtils {
 
     private static final String TAG = "FileUtils";
+
+    /**
+     * 获取磁盘缓存文件夹
+     */
+    public static String getDiskCacheDirPath(Context context) {
+        return getDiskCacheDirFile(context).getPath();
+    }
+
+    /**
+     * 获取磁盘缓存文件夹
+     */
+    public static File getDiskCacheDirFile(Context context) {
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
+                || !Environment.isExternalStorageRemovable()) {
+            File file = context.getExternalFilesDir(null);
+            if (file == null) {
+                return context.getCacheDir();
+            } else {
+                return file;
+            }
+        } else {
+            return context.getCacheDir();
+        }
+    }
 
     /**
      * 获取存储跟路径

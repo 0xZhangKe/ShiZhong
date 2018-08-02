@@ -28,3 +28,11 @@
 -keep class com.zhangke.shizhong.WeekView {
     public <init>(android.content.Context);
 }
+-keep class com.umeng.** {*;}
+-keepclassmembers class * {
+   public <init> (org.json.JSONObject);
+}
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
