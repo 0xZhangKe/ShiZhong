@@ -9,5 +9,5 @@
     <string name="data_error">数据错误</string>
     <string name="get_data_error">数据获取失败</string>
     <string name="change_theme_need_refresh_flag">change_theme_need_refresh</string>
-    <string name="introduce">用于制定一些乱七八糟的计划，同时提供了几个并没什么用的小工具。\n对了，作者比较穷，也比较忙，所以这个 APP 没有后台服务，数据不会云同步，卸载了数据就没了，更新可能也就没了，但是也不一定，到时候看更新说明（如果有的话）。\n-顺手给我点个 star 呗，就在最下面。</string>
+    <string name="introduce">用于制定一些乱七八糟的计划，同时提供了几个并没什么用的小工具。\n对了，作者比较穷，也比较懒，所以这个 APP 没有后台服务，数据不会云同步，卸载了数据就没了，更新可能也就没了，但是也不一定，到时候看更新说明（如果有的话）。\n-另外，顺手给我点个 star 呗~地址在最下面。</string>
 </resources>
