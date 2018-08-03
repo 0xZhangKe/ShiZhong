@@ -122,6 +122,7 @@ public class MainActivity extends BaseActivity {
 
     private void refreshUI(){
         ThemeUtils.refreshUI(this, llRoot);
+        initStatusBar();
         TypedValue toolbarColor = new TypedValue();
         Resources.Theme theme = getTheme();
         theme.resolveAttribute(R.attr.toolbarColor, toolbarColor, true);

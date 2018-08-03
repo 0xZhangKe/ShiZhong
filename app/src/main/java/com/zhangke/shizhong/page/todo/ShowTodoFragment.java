@@ -44,6 +44,8 @@ public class ShowTodoFragment extends BaseFragment implements IShowTodoContract.
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.view_toolbar_divider)
+    View viewToolbarDivider;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     Unbinder unbinder;
@@ -111,6 +113,7 @@ public class ShowTodoFragment extends BaseFragment implements IShowTodoContract.
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(ThemeChangedEvent event) {
         ThemeUtils.refreshUI(mActivity, rootView);
+        viewToolbarDivider.setBackground(getResources().getDrawable(R.drawable.toolbar_bottom_line));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

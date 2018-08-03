@@ -82,6 +82,7 @@ public class ThemeUtils {
                 if (itemView instanceof ImageView) {
                     ImageView img = (ImageView) itemView;
                     Drawable drawable = img.getDrawable();
+                    img.setImageDrawable(null);
                     img.setImageDrawable(drawable);
                 }
             }
