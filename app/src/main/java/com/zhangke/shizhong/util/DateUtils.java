@@ -98,4 +98,19 @@ public class DateUtils {
         return getDaySpace(format, startDate, endDate) / 7;
     }
 
+    /**
+     * 获取两个日期相差的小时
+     */
+    public static int getHourSpace(String format, String startDate, String finishDate) {
+        int result = 0;
+        SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.CHINA);
+        try {
+            Date beginDate = sdf.parse(startDate);
+            Date endDate = sdf.parse(finishDate);
+            result = Math.abs(((int) (endDate.getTime() - beginDate.getTime()) / (1000 * 60 * 60)));
+        } catch (ParseException e) {
+            ZLog.e(TAG, "getHourSpace", e);
+        }
+        return result;
+    }
 }
