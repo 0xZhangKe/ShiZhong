@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zhangke.shizhong.R;
@@ -47,6 +48,26 @@ public class ShowTodoAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
             TodoHolder todoHolder = (TodoHolder) holder;
             todoHolder.tvTime.setText(listData.get(position).getTodo().getDate());
             todoHolder.tvTitle.setText(listData.get(position).getTodo().getTitle());
+            switch (listData.get(position).getLevel()) {
+                case 1:
+                    todoHolder.llRoot.setBackground(context.getDrawable(R.color.plan_card_bg_color1));
+                    break;
+                case 2:
+                    todoHolder.llRoot.setBackground(context.getDrawable(R.color.plan_card_bg_color2));
+                    break;
+                case 3:
+                    todoHolder.llRoot.setBackground(context.getDrawable(R.color.plan_card_bg_color3));
+                    break;
+                case 4:
+                    todoHolder.llRoot.setBackground(context.getDrawable(R.color.plan_card_bg_color4));
+                    break;
+                case 5:
+                    todoHolder.llRoot.setBackground(context.getDrawable(R.color.plan_card_bg_color5));
+                    break;
+                case 6:
+                    todoHolder.llRoot.setBackground(context.getDrawable(R.color.plan_card_bg_color6));
+                    break;
+            }
         }
     }
 
@@ -61,6 +82,8 @@ public class ShowTodoAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
         TextView tvTime;
         @BindView(R.id.tv_title)
         TextView tvTitle;
+        @BindView(R.id.ll_root)
+        LinearLayout llRoot;
 
         TodoHolder(View itemView) {
             super(itemView);

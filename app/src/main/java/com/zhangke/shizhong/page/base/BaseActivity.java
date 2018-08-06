@@ -2,6 +2,7 @@ package com.zhangke.shizhong.page.base;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.umeng.analytics.MobclickAgent;
 import com.zhangke.shizhong.R;
 import com.zhangke.shizhong.common.APPConfig;
 import com.zhangke.shizhong.util.PermissionUtil;
@@ -45,6 +47,9 @@ public abstract class BaseActivity extends AppCompatActivity implements IBasePag
         super.onCreate(savedInstanceState);
         initTheme();
         setContentView(getLayoutResId());
+        if(showImmersionWindowStatus()) {
+            initStatusBar();
+        }
         roundProgressDialog = new RoundProgressDialog(this);
         mHandler = new Handler();
         initView(savedInstanceState);
@@ -59,6 +64,24 @@ public abstract class BaseActivity extends AppCompatActivity implements IBasePag
     }
 
     protected abstract int getLayoutResId();
+
+    protected void initStatusBar(){
+        if (APPConfig.getTheme() == 0) {
+            UiUtils.setWindowColorRect(this, getResources().getColor(R.color.nightColorPrimary));
+            if(Build.VERSION.SDK_INT >= 23) {
+                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            }
+        }else{
+            UiUtils.setWindowColorRect(this, getResources().getColor(R.color.dayColorPrimary));
+            if(Build.VERSION.SDK_INT >= 23) {
+                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            }
+        }
+    }
+
+    protected boolean showImmersionWindowStatus(){
+        return true;
+    }
 
     protected abstract void initView(@Nullable Bundle savedInstanceState);
 
@@ -134,6 +157,18 @@ public abstract class BaseActivity extends AppCompatActivity implements IBasePag
     @Override
     public Context getContext() {
         return this;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     private Map<Short, Runnable> requestPermissionMap = new HashMap<>();

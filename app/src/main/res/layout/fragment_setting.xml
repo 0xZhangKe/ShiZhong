@@ -64,6 +64,7 @@
             android:background="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:paddingLeft="20dp"
+            android:visibility="gone"
             android:tag="@string/change_theme_need_refresh_flag"
             android:text="豆瓣电影海报"
             android:textColor="?attr/textColor" />
@@ -75,6 +76,7 @@
             android:background="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:paddingLeft="20dp"
+            android:visibility="visible"
             android:tag="@string/change_theme_need_refresh_flag"
             android:text="网易云音乐封面"
             android:textColor="?attr/textColor" />

@@ -7,6 +7,7 @@ import com.zhangke.shizhong.db.DBManager;
 import com.zhangke.shizhong.db.Todo;
 import com.zhangke.shizhong.db.TodoDao;
 import com.zhangke.shizhong.model.todo.ShowTodoEntity;
+import com.zhangke.shizhong.util.DateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,9 @@ public class ShowTodoPresenterImpl implements IShowTodoContract.Presenter {
     private TodoDao mTodoDao;
     private Observable<Integer> updateTodoObservable;
 
+    private String dateFormat = "yyyy-MM-dd HH:mm";
+    private String currentDate = DateUtils.getCurrentDate(dateFormat);
+
     private List<ShowTodoEntity> listData = new ArrayList<>();
 
     public ShowTodoPresenterImpl(Context context, IShowTodoContract.View view) {
@@ -48,6 +52,7 @@ public class ShowTodoPresenterImpl implements IShowTodoContract.Presenter {
                             ShowTodoEntity showTodo = new ShowTodoEntity();
                             showTodo.setType(0);
                             showTodo.setTodo(todo);
+                            showTodo.setLevel(getLevel(todo));
                             return showTodo;
                         })
                         .toList()
@@ -59,6 +64,26 @@ public class ShowTodoPresenterImpl implements IShowTodoContract.Presenter {
             e.onNext(0);
             e.onComplete();
         });
+    }
+
+    /**
+     * 获取待办事项紧急等级
+     */
+    private int getLevel(Todo todo) {
+        int level = 1;
+        int hourSpace = DateUtils.getHourSpace(dateFormat, currentDate, todo.getDate());
+        if (hourSpace <= 1) {
+            level = 6;
+        } else if (hourSpace <= 5) {
+            level = 5;
+        } else if (hourSpace <= 12) {
+            level = 4;
+        } else if (hourSpace <= 24) {
+            level = 3;
+        } else if (hourSpace <= 48) {
+            level = 2;
+        }
+        return level;
     }
 
     @Override

@@ -66,4 +66,9 @@ public class LaunchActivity extends BaseActivity {
         anim.setRepeatCount(0);
         anim.setInterpolator(new DecelerateInterpolator());
     }
+
+    @Override
+    protected boolean showImmersionWindowStatus() {
+        return false;
+    }
 }

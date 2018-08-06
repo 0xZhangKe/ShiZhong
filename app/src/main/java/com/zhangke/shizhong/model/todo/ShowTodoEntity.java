@@ -14,6 +14,12 @@ public class ShowTodoEntity {
      * 1-添加
      */
     private int type = 0;
+    /**
+     * 紧急等级：1-6
+     * 1-最低
+     * 6-最高
+     */
+    private int level;
 
     private Todo todo;
 
@@ -31,6 +37,14 @@ public class ShowTodoEntity {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 
     public Todo getTodo() {
