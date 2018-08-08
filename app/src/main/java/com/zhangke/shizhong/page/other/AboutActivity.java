@@ -43,7 +43,7 @@ public class AboutActivity extends AbsAboutActivity implements OnRecommendedClic
     @Override
     protected void onCreateHeader(@NonNull ImageView icon, @NonNull TextView slogan, @NonNull TextView version) {
         icon.setImageResource(R.mipmap.round_logo);
-        slogan.setText("不忘初心，方得始终。");
+        slogan.setText("纪经一龙喹");
         version.setText("v " + BuildConfig.VERSION_NAME);
     }
 
