@@ -46,6 +46,7 @@
         <activity android:name=".page.other.ShowQRCodeContentActivity"/>
         <activity android:name=".page.other.AboutActivity"/>
 
+        <service android:name=".service.ProcessPlanService"/>
 
         <!--友盟统计-->
         <meta-data

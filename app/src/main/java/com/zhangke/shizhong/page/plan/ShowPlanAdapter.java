@@ -31,6 +31,7 @@ import com.zhangke.shizhong.db.RationRecordDao;
 import com.zhangke.shizhong.event.PlanChangedEvent;
 import com.zhangke.shizhong.model.plan.ShowPlanEntity;
 import com.zhangke.shizhong.page.base.BaseRecyclerAdapter;
+import com.zhangke.shizhong.presenter.plan.PlanHelper;
 import com.zhangke.shizhong.util.DateUtils;
 import com.zhangke.shizhong.util.UiUtils;
 import com.zhangke.shizhong.widget.CountDownTextView;
@@ -216,10 +217,10 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
     private void showAddPeriodPlanDialog(RationPlan plan) {
         final View rootView = inflater.inflate(R.layout.dialog_add_period_plan, null);
         final TextView tvPeriodType = rootView.findViewById(R.id.tv_period_type);
-        final EditText etPeriodTarget = rootView.findViewById(R.id.et_period_target);
+        final TextView tvPeriodTarget = rootView.findViewById(R.id.tv_period_target);
         final TextView tvUnit = rootView.findViewById(R.id.tv_unit);
         tvUnit.setText(plan.getUnit());
-        tvPeriodType.setOnClickListener(v -> showPeriodTypePopup(plan, tvPeriodType, etPeriodTarget));
+        tvPeriodType.setOnClickListener(v -> showPeriodTypePopup(plan, tvPeriodType, tvPeriodTarget));
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("设置短期计划");
@@ -227,7 +228,7 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
         builder.setNegativeButton("取消", null);
         builder.setPositiveButton("确定", (DialogInterface dialog, int which) -> {
             String periodType = tvPeriodType.getText().toString();
-            String periodTarget = etPeriodTarget.getText().toString();
+            String periodTarget = tvPeriodTarget.getText().toString();
             if (TextUtils.isEmpty(periodType)) {
                 UiUtils.showToast(context, "请选择短期计划类型");
                 return;
@@ -262,7 +263,7 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
 
     private DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
-    private void showPeriodTypePopup(final RationPlan plan, final TextView tv, final EditText editText) {
+    private void showPeriodTypePopup(final RationPlan plan, final TextView tv, final TextView editText) {
         PopupMenu popupMenu = new PopupMenu(context, tv);
         popupMenu.getMenu().add(0, 0, 0, "天");
         popupMenu.getMenu().add(0, 1, 0, "周");
@@ -272,20 +273,17 @@ public class ShowPlanAdapter extends BaseRecyclerAdapter<BaseRecyclerAdapter.Vie
             switch (item.getItemId()) {
                 case 0: {
                     //天
-                    double value = (plan.getTarget() - plan.getCurrent()) / (DateUtils.getDaySpace("yyyy-MM-dd", plan.getStartDate(), plan.getFinishDate()) + 1);
-                    editText.setText(decimalFormat.format(value));
+                    editText.setText(decimalFormat.format(PlanHelper.getPeriodTarget(plan, 0)));
                     break;
                 }
                 case 1: {
                     //周
-                    double value = (plan.getTarget() - plan.getCurrent()) / (DateUtils.getWeekSpace("yyyy-MM-dd", plan.getStartDate(), plan.getFinishDate()) + 1);
-                    editText.setText(decimalFormat.format(value));
+                    editText.setText(decimalFormat.format(PlanHelper.getPeriodTarget(plan, 1)));
                     break;
                 }
                 case 2: {
                     //月
-                    double value = (plan.getTarget() - plan.getCurrent()) / (DateUtils.getMonthSpace("yyyy-MM-dd", plan.getStartDate(), plan.getFinishDate()) + 1);
-                    editText.setText(decimalFormat.format(value));
+                    editText.setText(decimalFormat.format(PlanHelper.getPeriodTarget(plan, 2)));
                     break;
                 }
             }

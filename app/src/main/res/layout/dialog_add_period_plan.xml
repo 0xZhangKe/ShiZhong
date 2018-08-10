@@ -27,16 +27,14 @@
         android:layout_marginTop="5dp"
         android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/et_period_target"
+        <TextView
+            android:id="@+id/tv_period_target"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@null"
             android:ellipsize="end"
             android:gravity="center_vertical"
-            android:hint="请输入短期计划目标值"
-            android:inputType="numberDecimal"
             android:paddingLeft="15dp"
             android:singleLine="true"
             android:textColor="@color/text_black"

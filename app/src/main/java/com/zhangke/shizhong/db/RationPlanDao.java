@@ -33,6 +33,7 @@ public class RationPlanDao extends AbstractDao<RationPlan, Long> {
         public final static Property PeriodIsOpen = new Property(8, boolean.class, "periodIsOpen", false, "PERIOD_IS_OPEN");
         public final static Property PeriodPlanType = new Property(9, int.class, "periodPlanType", false, "PERIOD_PLAN_TYPE");
         public final static Property PeriodPlanTarget = new Property(10, double.class, "periodPlanTarget", false, "PERIOD_PLAN_TARGET");
+        public final static Property LastUpdatePeriodDate = new Property(11, String.class, "lastUpdatePeriodDate", false, "LAST_UPDATE_PERIOD_DATE");
     }
 
     private DaoSession daoSession;
@@ -61,7 +62,8 @@ public class RationPlanDao extends AbstractDao<RationPlan, Long> {
                 "\"PLAN_TYPE\" INTEGER NOT NULL ," + // 7: planType
                 "\"PERIOD_IS_OPEN\" INTEGER NOT NULL ," + // 8: periodIsOpen
                 "\"PERIOD_PLAN_TYPE\" INTEGER NOT NULL ," + // 9: periodPlanType
-                "\"PERIOD_PLAN_TARGET\" REAL NOT NULL );"); // 10: periodPlanTarget
+                "\"PERIOD_PLAN_TARGET\" REAL NOT NULL ," + // 10: periodPlanTarget
+                "\"LAST_UPDATE_PERIOD_DATE\" TEXT);"); // 11: lastUpdatePeriodDate
     }
 
     /** Drops the underlying database table. */
@@ -104,6 +106,11 @@ public class RationPlanDao extends AbstractDao<RationPlan, Long> {
         stmt.bindLong(9, entity.getPeriodIsOpen() ? 1L: 0L);
         stmt.bindLong(10, entity.getPeriodPlanType());
         stmt.bindDouble(11, entity.getPeriodPlanTarget());
+ 
+        String lastUpdatePeriodDate = entity.getLastUpdatePeriodDate();
+        if (lastUpdatePeriodDate != null) {
+            stmt.bindString(12, lastUpdatePeriodDate);
+        }
     }
 
     @Override
@@ -140,6 +147,11 @@ public class RationPlanDao extends AbstractDao<RationPlan, Long> {
         stmt.bindLong(9, entity.getPeriodIsOpen() ? 1L: 0L);
         stmt.bindLong(10, entity.getPeriodPlanType());
         stmt.bindDouble(11, entity.getPeriodPlanTarget());
+ 
+        String lastUpdatePeriodDate = entity.getLastUpdatePeriodDate();
+        if (lastUpdatePeriodDate != null) {
+            stmt.bindString(12, lastUpdatePeriodDate);
+        }
     }
 
     @Override
@@ -166,7 +178,8 @@ public class RationPlanDao extends AbstractDao<RationPlan, Long> {
             cursor.getInt(offset + 7), // planType
             cursor.getShort(offset + 8) != 0, // periodIsOpen
             cursor.getInt(offset + 9), // periodPlanType
-            cursor.getDouble(offset + 10) // periodPlanTarget
+            cursor.getDouble(offset + 10), // periodPlanTarget
+            cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11) // lastUpdatePeriodDate
         );
         return entity;
     }
@@ -184,6 +197,7 @@ public class RationPlanDao extends AbstractDao<RationPlan, Long> {
         entity.setPeriodIsOpen(cursor.getShort(offset + 8) != 0);
         entity.setPeriodPlanType(cursor.getInt(offset + 9));
         entity.setPeriodPlanTarget(cursor.getDouble(offset + 10));
+        entity.setLastUpdatePeriodDate(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
      }
     
     @Override

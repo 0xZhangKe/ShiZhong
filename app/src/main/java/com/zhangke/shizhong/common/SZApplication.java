@@ -1,11 +1,13 @@
 package com.zhangke.shizhong.common;
 
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.support.multidex.MultiDexApplication;
 
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 import com.zhangke.shizhong.db.DBManager;
+import com.zhangke.shizhong.service.ProcessPlanService;
 import com.zhangke.shizhong.util.CrashHandler;
 import com.zhangke.shizhong.util.FileUtils;
 import com.zhangke.zlog.ZLog;
@@ -30,14 +32,16 @@ public class SZApplication extends MultiDexApplication {
 
         DBManager.getInstance().init(this);
 
-        if(debug()) {
+        if (debug()) {
             CrashHandler crashHandler = CrashHandler.getInstance();
             crashHandler.init(this);
-        }else{
+        } else {
             UMConfigure.init(this, UMConfigure.DEVICE_TYPE_PHONE, "");
             UMConfigure.setLogEnabled(debug());
             MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
         }
+
+        startService(new Intent(this, ProcessPlanService.class));
     }
 
     public static SZApplication getInstance() {

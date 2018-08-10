@@ -241,8 +241,9 @@ public class EditPlanActivity extends BaseActivity implements IEditPlanContract.
         String finishDate = !TextUtils.isEmpty(etFinishDate.getText().toString()) ?
                 etFinishDate.getText().toString() :
                 rationPlan.getFinishDate();
-        if (target != 0 && current != 0
-                && !TextUtils.isEmpty(startDate) && !TextUtils.isEmpty(finishDate)) {
+        if (target != 0
+                && !TextUtils.isEmpty(startDate)
+                && !TextUtils.isEmpty(finishDate)) {
             switch (periodType) {
                 case 0: {
                     //天

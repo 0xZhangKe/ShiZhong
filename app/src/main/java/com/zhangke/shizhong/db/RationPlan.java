@@ -61,19 +61,28 @@ public class RationPlan {
      */
     private double periodPlanTarget;
 
+    /**
+     * 上次更新短期计划目标日期
+     */
+    private String lastUpdatePeriodDate;
+
     @ToMany(referencedJoinProperty = "parentPlanId")
     private List<RationRecord> clockRecords;
-    /** Used to resolve relations */
+    /**
+     * Used to resolve relations
+     */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
-    /** Used for active entity operations. */
+    /**
+     * Used for active entity operations.
+     */
     @Generated(hash = 135137572)
     private transient RationPlanDao myDao;
 
-    @Generated(hash = 789519901)
+    @Generated(hash = 734893141)
     public RationPlan(Long id, String name, String startDate, String finishDate,
-            double current, double target, String unit, int planType,
-            boolean periodIsOpen, int periodPlanType, double periodPlanTarget) {
+            double current, double target, String unit, int planType, boolean periodIsOpen,
+            int periodPlanType, double periodPlanTarget, String lastUpdatePeriodDate) {
         this.id = id;
         this.name = name;
         this.startDate = startDate;
@@ -85,6 +94,7 @@ public class RationPlan {
         this.periodIsOpen = periodIsOpen;
         this.periodPlanType = periodPlanType;
         this.periodPlanTarget = periodPlanTarget;
+        this.lastUpdatePeriodDate = lastUpdatePeriodDate;
     }
 
     @Generated(hash = 1681540746)
@@ -202,7 +212,9 @@ public class RationPlan {
         return clockRecords;
     }
 
-    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    /**
+     * Resets a to-many relationship, making the next get call to query for a fresh result.
+     */
     @Generated(hash = 501215887)
     public synchronized void resetClockRecords() {
         clockRecords = null;
@@ -244,11 +256,21 @@ public class RationPlan {
         myDao.update(this);
     }
 
-    /** called by internal mechanisms, do not call yourself. */
+    /**
+     * called by internal mechanisms, do not call yourself.
+     */
     @Generated(hash = 572427226)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getRationPlanDao() : null;
+    }
+
+    public String getLastUpdatePeriodDate() {
+        return this.lastUpdatePeriodDate;
+    }
+
+    public void setLastUpdatePeriodDate(String lastUpdatePeriodDate) {
+        this.lastUpdatePeriodDate = lastUpdatePeriodDate;
     }
 
 }
