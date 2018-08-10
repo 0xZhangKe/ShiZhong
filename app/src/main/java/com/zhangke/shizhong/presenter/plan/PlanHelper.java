@@ -24,11 +24,11 @@ public class PlanHelper {
     private static String curDate = DateUtils.getCurrentDate("yyyy-MM-dd HH:mm:ss");
 
     /**
-     * 计判断此记录是否属于当前周期
+     * 计判断此日期是否属于当前周期
      *
      * @param periodType 0-天，1-周，2-月
      */
-    public static boolean isCurPeriod(int periodType, RationRecord record) {
+    public static boolean isCurPeriod(int periodType, String date) {
         boolean current = false;
         switch (periodType) {
             case 0: {
@@ -37,7 +37,7 @@ public class PlanHelper {
                 Calendar c2 = Calendar.getInstance();
                 try {
                     c1.setTime(sdf.parse(curDate));
-                    c2.setTime(sdf.parse(record.getDate()));
+                    c2.setTime(sdf.parse(date));
                     current = c2.get(Calendar.YEAR) == c1.get(Calendar.YEAR) || c2.get(Calendar.DAY_OF_YEAR) == c1.get(Calendar.DAY_OF_YEAR);
                 } catch (ParseException e) {
                     ZLog.e(TAG, "isCurPeriod()", e);
@@ -51,7 +51,7 @@ public class PlanHelper {
                 Calendar c2 = Calendar.getInstance();
                 try {
                     c1.setTime(sdf.parse(curDate));
-                    c2.setTime(sdf.parse(record.getDate()));
+                    c2.setTime(sdf.parse(date));
                     current = c2.get(Calendar.WEEK_OF_YEAR) == c1.get(Calendar.WEEK_OF_YEAR);
                 } catch (ParseException e) {
                     ZLog.e(TAG, "isCurPeriod()", e);
@@ -65,7 +65,7 @@ public class PlanHelper {
                 Calendar c2 = Calendar.getInstance();
                 try {
                     c1.setTime(sdf.parse(curDate));
-                    c2.setTime(sdf.parse(record.getDate()));
+                    c2.setTime(sdf.parse(date));
                     current = c2.get(Calendar.MONTH) == c1.get(Calendar.MONTH);
                 } catch (ParseException e) {
                     ZLog.e(TAG, "isCurPeriod()", e);
@@ -103,11 +103,33 @@ public class PlanHelper {
             if (!TextUtils.isEmpty(planName)) {
                 if ((plan.getName().contains("钱") || plan.getUnit().contains("元")) && plan.getTarget() > plan.getCurrent()) {
                     planType = 0;
-                }else if((plan.getName().contains("减肥") || plan.getName().contains("变瘦") || plan.getUnit().contains("斤")) && plan.getCurrent() > plan.getTarget()){
+                } else if ((plan.getName().contains("减肥") || plan.getName().contains("变瘦") || plan.getUnit().contains("斤")) && plan.getCurrent() > plan.getTarget()) {
                     planType = 1;
                 }
             }
         }
         return planType;
+    }
+
+    /**
+     * 计算短期计划目标值
+     *
+     * @param plan 定量计划实体
+     * @param type 短期计划周期类型，0-日，1-周，2-月
+     */
+    public static double getPeriodTarget(RationPlan plan, int type) {
+        double value = 0.0;
+        switch (type) {
+            case 0:
+                value = (plan.getTarget() - plan.getCurrent()) / (DateUtils.getDaySpace("yyyy-MM-dd", plan.getStartDate(), plan.getFinishDate()) + 1);
+                break;
+            case 1:
+                value = (plan.getTarget() - plan.getCurrent()) / (DateUtils.getWeekSpace("yyyy-MM-dd", plan.getStartDate(), plan.getFinishDate()) + 1);
+                break;
+            case 2:
+                value = (plan.getTarget() - plan.getCurrent()) / (DateUtils.getMonthSpace("yyyy-MM-dd", plan.getStartDate(), plan.getFinishDate()) + 1);
+                break;
+        }
+        return value;
     }
 }

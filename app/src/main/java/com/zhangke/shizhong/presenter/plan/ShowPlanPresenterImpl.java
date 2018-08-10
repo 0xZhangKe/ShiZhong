@@ -120,7 +120,7 @@ public class ShowPlanPresenterImpl implements IShowPlanContract.Presenter {
                         double currentValue = 0.0;
                         if (records != null && !records.isEmpty()) {
                             for (RationRecord record : records) {
-                                if (PlanHelper.isCurPeriod(plan.getPeriodPlanType(), record)) {
+                                if (PlanHelper.isCurPeriod(plan.getPeriodPlanType(), record.getDate())) {
                                     currentValue += record.getValue();
                                 }
                             }
