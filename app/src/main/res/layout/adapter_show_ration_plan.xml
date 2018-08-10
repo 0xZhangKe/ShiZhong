@@ -146,7 +146,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
                     android:layout_marginTop="10dp"
-                    android:text="本月计划"
                     android:textColor="@color/text_black"
                     android:textStyle="bold" />
 

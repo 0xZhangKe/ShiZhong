@@ -13,6 +13,7 @@ import com.zhangke.shizhong.db.DBManager;
 import com.zhangke.shizhong.db.RationPlan;
 import com.zhangke.shizhong.model.plan.ShowPlanEntity;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -23,6 +24,7 @@ import io.reactivex.ObservableEmitter;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -40,6 +42,8 @@ public class ShowPlanPresenterImpl implements IShowPlanContract.Presenter {
 
     private Observable<List<ShowPlanEntity>> planObservable;
     private Disposable planDisposable;
+
+    private DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
     public ShowPlanPresenterImpl(IShowPlanContract.View mShowPlanView) {
         this.mShowPlanView = mShowPlanView;
@@ -125,12 +129,12 @@ public class ShowPlanPresenterImpl implements IShowPlanContract.Presenter {
                                 }
                             }
                         }
-                        showPlanEntity.setShortPlanSurplus(String.format("剩余：%s%s", plan.getPeriodPlanTarget() - currentValue, plan.getUnit()));
+                        showPlanEntity.setShortPlanSurplus(String.format("剩余：%s%s", decimalFormat.format(plan.getPeriodPlanTarget() - currentValue), plan.getUnit()));
                     }
                     if (records != null && !records.isEmpty()) {
                         List<InputCount> suggestionInput = new ArrayList<>();
                         for (RationRecord record : records) {
-                            if (!TextUtils.isEmpty(record.getName())) {
+                            if (!TextUtils.isEmpty(record.getName()) && !TextUtils.equals("其它", record.getName())) {
                                 InputCount item = new InputCount(record.getName(), 0);
                                 if (suggestionInput.contains(item)) {
                                     int i = suggestionInput.indexOf(item);
