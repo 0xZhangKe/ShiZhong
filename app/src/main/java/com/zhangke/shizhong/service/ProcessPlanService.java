@@ -48,7 +48,7 @@ public class ProcessPlanService extends IntentService {
     private void processRationPlan(RationPlan plan) {
         if (plan.getPeriodIsOpen() &&
                 (TextUtils.isEmpty(plan.getLastUpdatePeriodDate()) ||
-                        !PlanHelper.isCurPeriod(plan.getPeriodPlanType(), plan.getLastUpdatePeriodDate()))) {
+                        !PlanHelper.isCurPeriod(plan.getPeriodPlanType(), plan.getLastUpdatePeriodDate(), "yyyy-MM-dd"))) {
             plan.setPeriodPlanTarget(Double.valueOf(decimalFormat.format(PlanHelper.getPeriodTarget(plan, plan.getPeriodPlanType()))));
             plan.setLastUpdatePeriodDate(curDate);
             rationPlanDao.update(plan);
