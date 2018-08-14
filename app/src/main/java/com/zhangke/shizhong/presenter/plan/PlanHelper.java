@@ -28,17 +28,17 @@ public class PlanHelper {
      *
      * @param periodType 0-天，1-周，2-月
      */
-    public static boolean isCurPeriod(int periodType, String date) {
+    public static boolean isCurPeriod(int periodType, String date, String dateFormat) {
         boolean current = false;
         switch (periodType) {
             case 0: {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
+                SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.CHINA);
                 Calendar c1 = Calendar.getInstance();
                 Calendar c2 = Calendar.getInstance();
                 try {
                     c1.setTime(sdf.parse(curDate));
                     c2.setTime(sdf.parse(date));
-                    current = c2.get(Calendar.YEAR) == c1.get(Calendar.YEAR) || c2.get(Calendar.DAY_OF_YEAR) == c1.get(Calendar.DAY_OF_YEAR);
+                    current = c2.get(Calendar.YEAR) == c1.get(Calendar.YEAR) && c2.get(Calendar.DAY_OF_YEAR) == c1.get(Calendar.DAY_OF_YEAR);
                 } catch (ParseException e) {
                     ZLog.e(TAG, "isCurPeriod()", e);
                     current = false;
@@ -46,13 +46,13 @@ public class PlanHelper {
                 break;
             }
             case 1: {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
+                SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.CHINA);
                 Calendar c1 = Calendar.getInstance();
                 Calendar c2 = Calendar.getInstance();
                 try {
                     c1.setTime(sdf.parse(curDate));
                     c2.setTime(sdf.parse(date));
-                    current = c2.get(Calendar.WEEK_OF_YEAR) == c1.get(Calendar.WEEK_OF_YEAR);
+                    current = c2.get(Calendar.YEAR) == c1.get(Calendar.YEAR) && c2.get(Calendar.WEEK_OF_YEAR) == c1.get(Calendar.WEEK_OF_YEAR);
                 } catch (ParseException e) {
                     ZLog.e(TAG, "isCurPeriod()", e);
                     current = false;
@@ -60,13 +60,13 @@ public class PlanHelper {
                 break;
             }
             case 2: {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
+                SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.CHINA);
                 Calendar c1 = Calendar.getInstance();
                 Calendar c2 = Calendar.getInstance();
                 try {
                     c1.setTime(sdf.parse(curDate));
                     c2.setTime(sdf.parse(date));
-                    current = c2.get(Calendar.MONTH) == c1.get(Calendar.MONTH);
+                    current = c2.get(Calendar.YEAR) == c1.get(Calendar.YEAR) && c2.get(Calendar.MONTH) == c1.get(Calendar.MONTH);
                 } catch (ParseException e) {
                     ZLog.e(TAG, "isCurPeriod()", e);
                     current = false;
