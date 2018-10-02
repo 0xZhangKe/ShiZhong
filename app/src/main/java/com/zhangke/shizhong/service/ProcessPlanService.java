@@ -49,6 +49,7 @@ public class ProcessPlanService extends IntentService {
         if (plan.getPeriodIsOpen() &&
                 (TextUtils.isEmpty(plan.getLastUpdatePeriodDate()) ||
                         !PlanHelper.isCurPeriod(plan.getPeriodPlanType(), plan.getLastUpdatePeriodDate(), "yyyy-MM-dd"))) {
+            //短期计划存在且短期计划上次更新时间为空或者上次更新时间不在当前周期
             plan.setPeriodPlanTarget(Double.valueOf(decimalFormat.format(PlanHelper.getPeriodTarget(plan, plan.getPeriodPlanType()))));
             plan.setLastUpdatePeriodDate(curDate);
             rationPlanDao.update(plan);

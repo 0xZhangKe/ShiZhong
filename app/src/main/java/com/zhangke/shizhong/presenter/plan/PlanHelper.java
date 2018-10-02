@@ -119,15 +119,16 @@ public class PlanHelper {
      */
     public static double getPeriodTarget(RationPlan plan, int type) {
         double value = 0.0;
+        String curDate = DateUtils.getCurrentDate("yyyy-MM-dd");
         switch (type) {
             case 0:
-                value = (plan.getTarget() - plan.getCurrent()) / (DateUtils.getDaySpace("yyyy-MM-dd", plan.getStartDate(), plan.getFinishDate()) + 1);
+                value = (plan.getTarget() - plan.getCurrent()) / (DateUtils.getDaySpace("yyyy-MM-dd", curDate, plan.getFinishDate()) + 1);
                 break;
             case 1:
-                value = (plan.getTarget() - plan.getCurrent()) / (DateUtils.getWeekSpace("yyyy-MM-dd", plan.getStartDate(), plan.getFinishDate()) + 1);
+                value = (plan.getTarget() - plan.getCurrent()) / (DateUtils.getWeekSpace("yyyy-MM-dd", curDate, plan.getFinishDate()) + 1);
                 break;
             case 2:
-                value = (plan.getTarget() - plan.getCurrent()) / (DateUtils.getMonthSpace("yyyy-MM-dd", plan.getStartDate(), plan.getFinishDate()) + 1);
+                value = (plan.getTarget() - plan.getCurrent()) / (DateUtils.getMonthSpace("yyyy-MM-dd", curDate, plan.getFinishDate()) + 1);
                 break;
         }
         return value;
