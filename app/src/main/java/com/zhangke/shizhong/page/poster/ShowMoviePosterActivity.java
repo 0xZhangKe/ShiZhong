@@ -59,7 +59,7 @@ public class ShowMoviePosterActivity extends BaseActivity implements IShowMovieP
         recyclerView.setAdapter(adapter);
 
         UserBean userBean = (UserBean) getIntent().getSerializableExtra(INTENT_ARG_01);
-        showMoviePosterModel = new ShowMoviePosterModel(this, this, userBean.getNickName());
+        showMoviePosterModel = new ShowMoviePosterModel(this, this, userBean.getUserId());
         showMoviePosterModel.getMoviePoster();
     }
 

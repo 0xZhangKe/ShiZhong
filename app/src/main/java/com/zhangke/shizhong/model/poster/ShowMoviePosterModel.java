@@ -20,6 +20,8 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.ResponseBody;
+import retrofit2.Response;
 
 /**
  * 负责通过 UserId 获取海报数据
@@ -56,7 +58,7 @@ public class ShowMoviePosterModel implements IShowMoviePosterContract.Model {
         apiStores.getMoviePosters(userId, start)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new HttpObserver<String>() {
+                .subscribe(new HttpObserver<Response<ResponseBody>>() {
                     @Override
                     protected void onErrorResponse(String errorMessage) {
                         showMovieView.closeRoundProgressDialog();
@@ -64,10 +66,11 @@ public class ShowMoviePosterModel implements IShowMoviePosterContract.Model {
                     }
 
                     @Override
-                    protected void onSuccessResponse(String response) {
+                    protected void onSuccessResponse(Response<ResponseBody> response) {
                         try {
-                            if (!TextUtils.isEmpty(response)) {
-                                analysisPosterFromHtml(response);
+                            if (response.body() != null
+                                    && !TextUtils.isEmpty(response.toString())) {
+                                analysisPosterFromHtml(response.toString());
                                 start += 15;
                             } else {
                                 showMovieView.closeRoundProgressDialog();

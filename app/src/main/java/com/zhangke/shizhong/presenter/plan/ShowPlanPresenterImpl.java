@@ -90,7 +90,7 @@ public class ShowPlanPresenterImpl implements IShowPlanContract.Presenter {
             public void onError(Throwable e) {
                 mShowPlanView.notifyPlanDataChanged(mPlanList);
                 mShowPlanView.closeRoundProgressDialog();
-                mShowPlanView.showNoActionSnackbar(mShowPlanView.getContext().getResources().getString(R.string.get_data_error));
+                mShowPlanView.showNoActionSnackbar(mShowPlanView.getContext().getResources().getString(R.string.network_error));
             }
 
             @Override

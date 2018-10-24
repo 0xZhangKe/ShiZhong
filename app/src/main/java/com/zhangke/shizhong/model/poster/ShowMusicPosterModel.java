@@ -75,7 +75,7 @@ public class ShowMusicPosterModel implements IShowMusicPosterContract.Model {
                                     }
                                     showMusicPosterView.notifyDataChanged(listData);
                                 } else {
-                                    showMusicPosterView.showNoActionSnackbar(SZApplication.getInstance().getString(R.string.internet_error));
+                                    showMusicPosterView.showNoActionSnackbar(SZApplication.getInstance().getString(R.string.network_error));
                                 }
                             } else {
                                 showMusicPosterView.showNoActionSnackbar(SZApplication.getInstance().getString(R.string.data_error));

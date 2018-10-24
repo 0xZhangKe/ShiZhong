@@ -6,6 +6,8 @@ import com.zhangke.shizhong.model.poster.MusicAlbumBean;
 import com.zhangke.shizhong.model.poster.MusicPosterBean;
 
 import io.reactivex.Observable;
+import okhttp3.ResponseBody;
+import retrofit2.Response;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -32,7 +34,7 @@ public interface ApiStores {
      * @param start  页码
      */
     @GET("people/{userId}/collect?sort=time&rating=all&filter=all&mode=grid")
-    Observable<String> getMoviePosters(@Path("userId") String userId, @Query("start") int start);
+    Observable<Response<ResponseBody>> getMoviePosters(@Path("userId") String userId, @Query("start") int start);
 
     /**
      * 搜索云音乐用户
