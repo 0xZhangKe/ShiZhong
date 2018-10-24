@@ -14,6 +14,7 @@ import com.zhangke.shizhong.common.AppClient;
 import com.zhangke.shizhong.common.SZApplication;
 import com.zhangke.shizhong.contract.poster.IShowMusicPosterContract;
 import com.zhangke.shizhong.util.FileUtils;
+import com.zhangke.shizhong.util.HttpObserver;
 import com.zhangke.shizhong.util.PosterUtils;
 
 import java.io.File;
@@ -38,6 +39,7 @@ public class ShowMusicPosterModel implements IShowMusicPosterContract.Model {
     private MusicAlbumBean.ResultBean.PlaylistsBean mAlbumBean;
 
     private List<MusicPosterBean.PlaylistBean.TracksBean> listData = new ArrayList<>();
+    private ApiStores apiStores = AppClient.musicRetrofit().create(ApiStores.class);
 
     public ShowMusicPosterModel(Context context,
                          IShowMusicPosterContract.View showMusicPosterView,
@@ -50,18 +52,18 @@ public class ShowMusicPosterModel implements IShowMusicPosterContract.Model {
     @Override
     public void getMusicPoster() {
         showMusicPosterView.showRoundProgressDialog();
-        ApiStores apiStores = AppClient.musicRetrofit().create(ApiStores.class);
         apiStores.getMusicsWithAlbum(mAlbumBean.getId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<MusicPosterBean>() {
+                .subscribe(new HttpObserver<MusicPosterBean>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-
+                    protected void onErrorResponse(String errorMessage) {
+                        showMusicPosterView.closeRoundProgressDialog();
+                        showMusicPosterView.showNoActionSnackbar(errorMessage);
                     }
 
                     @Override
-                    public void onNext(MusicPosterBean musicAlbumBean) {
+                    protected void onSuccessResponse(MusicPosterBean musicAlbumBean) {
                         showMusicPosterView.closeRoundProgressDialog();
                         try {
                             if (musicAlbumBean != null) {
@@ -81,17 +83,6 @@ public class ShowMusicPosterModel implements IShowMusicPosterContract.Model {
                         } catch (Exception e) {
                             showMusicPosterView.showNoActionSnackbar(SZApplication.getInstance().getString(R.string.data_error));
                         }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        showMusicPosterView.closeRoundProgressDialog();
-                        showMusicPosterView.showNoActionSnackbar(SZApplication.getInstance().getString(R.string.internet_error));
-                    }
-
-                    @Override
-                    public void onComplete() {
-
                     }
                 });
     }

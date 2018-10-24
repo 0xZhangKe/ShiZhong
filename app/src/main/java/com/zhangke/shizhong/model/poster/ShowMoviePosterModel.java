@@ -8,6 +8,7 @@ import com.zhangke.shizhong.common.ApiStores;
 import com.zhangke.shizhong.common.AppClient;
 import com.zhangke.shizhong.common.SZApplication;
 import com.zhangke.shizhong.contract.poster.IShowMoviePosterContract;
+import com.zhangke.shizhong.util.HttpObserver;
 import com.zhangke.zlog.ZLog;
 
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class ShowMoviePosterModel implements IShowMoviePosterContract.Model {
 
     private int start = 0;
     private List<MoviePosterBean> listData = new ArrayList<>();
+    private ApiStores apiStores = AppClient.moviePosterRetrofit().create(ApiStores.class);
 
     public ShowMoviePosterModel(Context context,
                                 IShowMoviePosterContract.View showMovieView,
@@ -51,18 +53,18 @@ public class ShowMoviePosterModel implements IShowMoviePosterContract.Model {
     }
 
     private void performMoviePosterRequest() {
-        ApiStores apiStores = AppClient.moviePosterRetrofit().create(ApiStores.class);
         apiStores.getMoviePosters(userId, start)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<String>() {
+                .subscribe(new HttpObserver<String>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-
+                    protected void onErrorResponse(String errorMessage) {
+                        showMovieView.closeRoundProgressDialog();
+                        showMovieView.showNoActionSnackbar(errorMessage);
                     }
 
                     @Override
-                    public void onNext(String response) {
+                    protected void onSuccessResponse(String response) {
                         try {
                             if (!TextUtils.isEmpty(response)) {
                                 analysisPosterFromHtml(response);
@@ -75,17 +77,6 @@ public class ShowMoviePosterModel implements IShowMoviePosterContract.Model {
                             showMovieView.closeRoundProgressDialog();
                             showMovieView.showNoActionSnackbar(SZApplication.getInstance().getString(R.string.data_error));
                         }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        showMovieView.closeRoundProgressDialog();
-                        showMovieView.showNoActionSnackbar(SZApplication.getInstance().getString(R.string.internet_error));
-                    }
-
-                    @Override
-                    public void onComplete() {
-
                     }
                 });
     }

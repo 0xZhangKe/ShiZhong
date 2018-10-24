@@ -5,6 +5,7 @@ import com.zhangke.shizhong.common.ApiStores;
 import com.zhangke.shizhong.common.AppClient;
 import com.zhangke.shizhong.common.SZApplication;
 import com.zhangke.shizhong.contract.poster.IShowMusicAlbumContract;
+import com.zhangke.shizhong.util.HttpObserver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ public class ShowMusicAlbumModel implements IShowMusicAlbumContract.Model {
     private String userName;
 
     private List<MusicAlbumBean.ResultBean.PlaylistsBean> listData = new ArrayList<>();
+    private ApiStores apiStores = AppClient.musicRetrofit().create(ApiStores.class);
 
     public ShowMusicAlbumModel(IShowMusicAlbumContract.View showMusicAlbumView, String userName) {
         this.showMusicAlbumView = showMusicAlbumView;
@@ -34,19 +36,18 @@ public class ShowMusicAlbumModel implements IShowMusicAlbumContract.Model {
     @Override
     public void getAlbum() {
         showMusicAlbumView.showRoundProgressDialog();
-
-        ApiStores apiStores = AppClient.musicRetrofit().create(ApiStores.class);
         apiStores.getAlbumWithUser(userName)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<MusicAlbumBean>() {
+                .subscribe(new HttpObserver<MusicAlbumBean>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-
+                    protected void onErrorResponse(String errorMessage) {
+                        showMusicAlbumView.closeRoundProgressDialog();
+                        showMusicAlbumView.showNoActionSnackbar(errorMessage);
                     }
 
                     @Override
-                    public void onNext(MusicAlbumBean response) {
+                    protected void onSuccessResponse(MusicAlbumBean response) {
                         showMusicAlbumView.closeRoundProgressDialog();
                         try {
                             if (response != null) {
@@ -66,17 +67,6 @@ public class ShowMusicAlbumModel implements IShowMusicAlbumContract.Model {
                         } catch (Exception e) {
                             showMusicAlbumView.showNoActionSnackbar(SZApplication.getInstance().getString(R.string.data_error));
                         }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        showMusicAlbumView.closeRoundProgressDialog();
-                        showMusicAlbumView.showNoActionSnackbar(SZApplication.getInstance().getString(R.string.internet_error));
-                    }
-
-                    @Override
-                    public void onComplete() {
-
                     }
                 });
     }

@@ -6,6 +6,7 @@ import com.zhangke.shizhong.common.AppClient;
 import com.zhangke.shizhong.common.NetWorkResponseListener;
 import com.zhangke.shizhong.common.SZApplication;
 import com.zhangke.shizhong.contract.poster.IInputNameContract;
+import com.zhangke.shizhong.util.HttpObserver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,7 @@ public class InputNameModel implements IInputNameContract.Model {
 
     private int start = 0;
     private List<UserBean> listData = new ArrayList<>();
+    private ApiStores apiStores = AppClient.doubanRetrofit().create(ApiStores.class);
 
     public InputNameModel() {
     }
@@ -40,20 +42,20 @@ public class InputNameModel implements IInputNameContract.Model {
     public void getDoubanUsers(String name,
                                NetWorkResponseListener.OnSuccessResponse<List<UserBean>> successResponseListener,
                                NetWorkResponseListener.OnError onErrorListener) {
-        ApiStores apiStores = AppClient.doubanRetrofit().create(ApiStores.class);
         apiStores.getMovieUsers(name, start)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<DoubanSearchResultUserBean>() {
+                .subscribe(new HttpObserver<DoubanSearchResultUserBean>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
+                    protected void onErrorResponse(String errorMessage) {
+                        onErrorListener.onError(errorMessage);
                     }
 
                     @Override
-                    public void onNext(DoubanSearchResultUserBean resultBean) {
+                    protected void onSuccessResponse(DoubanSearchResultUserBean response) {
                         try {
-                            if (resultBean != null) {
-                                List<String> userList = resultBean.getItems();
+                            if (response != null) {
+                                List<String> userList = response.getItems();
                                 if (userList != null && !userList.isEmpty()) {
                                     for (String s : userList) {
                                         listData.add(new UserBean(s));
@@ -68,38 +70,28 @@ public class InputNameModel implements IInputNameContract.Model {
                             onErrorListener.onError(SZApplication.getInstance().getString(R.string.data_error));
                         }
                     }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        onErrorListener.onError(SZApplication.getInstance().getString(R.string.internet_error));
-                    }
-
-                    @Override
-                    public void onComplete() {
-                    }
                 });
     }
 
     @Override
     public void get163MusicUsers(String name,
-                                 NetWorkResponseListener.OnSuccessResponse successResponseListener,
+                                 NetWorkResponseListener.OnSuccessResponse<List<UserBean>> successResponseListener,
                                  NetWorkResponseListener.OnError onErrorListener) {
-        ApiStores apiStores = AppClient.musicRetrofit().create(ApiStores.class);
         apiStores.getMusicUsers(name)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<MusicSearchResultUserBean>() {
+                .subscribe(new HttpObserver<MusicSearchResultUserBean>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-
+                    protected void onErrorResponse(String errorMessage) {
+                        onErrorListener.onError(errorMessage);
                     }
 
                     @Override
-                    public void onNext(MusicSearchResultUserBean resultBean) {
+                    protected void onSuccessResponse(MusicSearchResultUserBean response) {
                         try {
-                            if (resultBean != null) {
-                                if (resultBean.getCode() == 200) {
-                                    List<MusicSearchResultUserBean.ResultBean.UserprofilesBean> userList = resultBean.getResult().getUserprofiles();
+                            if (response != null) {
+                                if (response.getCode() == 200) {
+                                    List<MusicSearchResultUserBean.ResultBean.UserprofilesBean> userList = response.getResult().getUserprofiles();
                                     if (userList != null && !userList.isEmpty()) {
                                         for (MusicSearchResultUserBean.ResultBean.UserprofilesBean s : userList) {
                                             listData.add(new UserBean(s));
@@ -115,16 +107,6 @@ public class InputNameModel implements IInputNameContract.Model {
                         } catch (Exception e) {
                             onErrorListener.onError(SZApplication.getInstance().getString(R.string.data_error));
                         }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        onErrorListener.onError(SZApplication.getInstance().getString(R.string.internet_error));
-                    }
-
-                    @Override
-                    public void onComplete() {
-
                     }
                 });
     }
