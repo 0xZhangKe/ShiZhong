@@ -43,9 +43,13 @@
 
 ## 地址
 我上架到酷安了，别的没上传，太麻烦了，国内一堆的市场。
+
 酷安地址：
 https://www.coolapk.com/apk/199335
+
+
 另外 APK 我也传到 Github 上了（记得点 star 啊）：
+
 https://github.com/0xZhangKe/ShiZhong
 
 还有啥问题欢迎给我提 issue，我会尽力改的。
