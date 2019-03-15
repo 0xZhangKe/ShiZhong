@@ -47,6 +47,17 @@
             android:textColor="?attr/textColor" />
 
         <TextView
+            android:id="@+id/tv_tax"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:tag="@string/change_theme_need_refresh_flag"
+            android:text="个税计算"
+            android:textColor="?attr/textColor" />
+
+        <TextView
             android:id="@+id/tv_android_links"
             android:layout_width="match_parent"
             android:layout_height="50dp"

@@ -69,7 +69,7 @@ public class ShowMoviePosterModel implements IShowMoviePosterContract.Model {
                     protected void onSuccessResponse(Response<ResponseBody> response) {
                         try {
                             if (response.body() != null
-                                    && !TextUtils.isEmpty(response.toString())) {
+                                    && !TextUtils.isEmpty(response.body().toString())) {
                                 analysisPosterFromHtml(response.toString());
                                 start += 15;
                             } else {

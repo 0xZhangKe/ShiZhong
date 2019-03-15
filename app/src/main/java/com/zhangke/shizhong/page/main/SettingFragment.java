@@ -16,6 +16,7 @@ import com.zhangke.shizhong.page.application.ApplicationStatisticsActivity;
 import com.zhangke.shizhong.page.base.BaseFragment;
 import com.zhangke.shizhong.page.other.AboutActivity;
 import com.zhangke.shizhong.page.other.QRCodeActivity;
+import com.zhangke.shizhong.page.other.TaxCalculationActivity;
 import com.zhangke.shizhong.page.other.WifiInfoActivity;
 import com.zhangke.shizhong.page.poster.InputNameActivity;
 import com.zhangke.shizhong.widget.RippleAnimationView;
@@ -90,11 +91,11 @@ public class SettingFragment extends BaseFragment {
         EventBus.getDefault().post(new ThemeChangedEvent());
     }
 
-    private void setupPosterPermission(){
-        if(APPConfig.posterHide()){
+    private void setupPosterPermission() {
+        if (APPConfig.posterHide()) {
             tvDoubanMoviePoster.setVisibility(View.GONE);
             tvMusicPoster.setVisibility(View.GONE);
-        }else{
+        } else {
             tvDoubanMoviePoster.setVisibility(View.VISIBLE);
             tvMusicPoster.setVisibility(View.VISIBLE);
         }
@@ -102,7 +103,8 @@ public class SettingFragment extends BaseFragment {
 
     @OnClick({R.id.tv_douban_movie_poster, R.id.tv_music_poster,
             R.id.tv_app_manager, R.id.tv_wifi,
-            R.id.tv_qr_code, R.id.tv_android_links})
+            R.id.tv_qr_code, R.id.tv_android_links,
+            R.id.tv_tax})
     public void onViewClick(View view) {
         switch (view.getId()) {
             case R.id.tv_douban_movie_poster: {
@@ -132,9 +134,12 @@ public class SettingFragment extends BaseFragment {
                 }, Manifest.permission.CAMERA);
                 break;
             }
-            case R.id.tv_android_links:{
+            case R.id.tv_android_links: {
                 startActivity(new Intent(mActivity, AboutActivity.class));
                 break;
+            }
+            case R.id.tv_tax:{
+                startActivity(new Intent(mActivity, TaxCalculationActivity.class));
             }
         }
     }

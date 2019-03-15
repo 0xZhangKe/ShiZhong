@@ -45,6 +45,7 @@
         <activity android:name=".page.other.QRCodeActivity"/>
         <activity android:name=".page.other.ShowQRCodeContentActivity"/>
         <activity android:name=".page.other.AboutActivity"/>
+        <activity android:name=".page.other.TaxCalculationActivity"/>
 
         <service android:name=".service.ProcessPlanService"/>
 
