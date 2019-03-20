@@ -1,9 +1,8 @@
 ## ShiZhong
 帮助制定及管理一些乱七八糟的计划，同时提供了几个并没什么用的小工具。
 ## 介绍
-内个什么，这是一个 Android 平台的 APP，项目基于 RxAndroid+Retrofit+Glide 开发，使用MVP架构（好像大家都喜欢这么写......）。
+这是一个 Android 平台的 APP，项目基于 RxAndroid+Retrofit+Glide 开发，使用MVP架构（好像大家都喜欢这么写......）。
 
-![肚子好饿](screenshots/hunger.jpg)
 
 先看一下这个 APP 截图。
 ## 截图
