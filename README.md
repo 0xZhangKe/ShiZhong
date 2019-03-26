@@ -49,3 +49,11 @@ https://www.coolapk.com/apk/199335
 https://github.com/0xZhangKe/ShiZhong
 
 还有啥问题欢迎给我提 issue，我会尽力改的。
+
+如果觉得还不错的话，欢迎关注我的个人公众号，我会不定期发一些干货文章~
+
+![公众号](screenshots/qrcode_for_gsubscription.jpg)
+
+也可以加我微信：
+
+![公众号](screenshots/qrcode_for_account.jpg)
